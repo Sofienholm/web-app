@@ -1,0 +1,27 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  background: #fafafa;
+  color: #333;
+}
+
+main {
+  padding: 1rem;
+}
+
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  border-top: 1px solid #ddd;
+  padding: 0.5rem 0;
+}
+
+.page-header {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
