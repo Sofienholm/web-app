@@ -1,64 +1,65 @@
-/* Header med variabel for side-padding så vi kan kompensere i searchWrap */
-.header {
-  --xpad: 16px;                 /* svarer til px-4 i dit header-padding */
-  padding: 12px var(--xpad);    /* py-3 px-4 */
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* Searchbar: starter helt ude ved venstre skærmkant (kompenserer for header-padding)
-   og fylder 75% af skærmen + den negative margin (så den ser flush ud) */
-.searchWrap {
-  position: relative;
-  margin-left: calc(-2 * var(--xpad));       /* trækker den ud over venstre kant */
-  width: calc(75vw + var(--xpad));           /* så den stadig fylder 75% af skærmen visuelt */
-  max-width: calc(720px + var(--xpad));
-}
-
-/* Input: venstre hjørner = 0 (ikke afrundet), højre hjørner = rund “pille” */
-.searchInput {
-  width: 100%;
+/* Profilknap til højre for søgefeltet */
+.profileButton {
+  background: #264E36;          /* mørk grøn */
+  border: none;
+  border-radius: 50%;
+  width: 44px;
   height: 44px;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-right-radius: 9999px;
-  border-bottom-right-radius: 9999px;
-
-  padding-left: 24px;           /* lidt mere luft, så teksten kommer mod centrum */
-  padding-right: 44px;          /* plads til ikon */
-  background: #FDF5C4;
-  border: 1px solid #E8E2A8;
-  color: #065f46;
-  outline: none;
-  box-shadow: inset 0 1px 0 rgba(0,0,0,0.04);
-  transition: box-shadow 150ms ease, border-color 150ms ease, background-color 150ms ease;
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-/* Kun placeholder centreres lidt mere – selve brugerens tekst forbliver venstrestillet */
-.searchInput::placeholder {
-  color: rgba(6, 95, 70, 0.7);
-  font-size: 1rem;
-  font-weight: 500;
-  text-align: center;           /* træk placeholder mod centrum */
+.profileButton:hover {
+  background: #2f5c42;
 }
 
-/* Fokus-styling */
-.searchInput:focus {
-  background: #ffffff;
-  border-color: rgba(5, 150, 105, 0.4);
-  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
-}
-
-/* Ikonet stadig absolut i højre side inde i feltet */
-.searchIcon {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 20px;
-  width: 20px;
+/* Ikon inde i knappen (farve beholdes som i SVG) */
+.profileIcon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
   pointer-events: none;
-  opacity: 0.85;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .searchInput { transition: none; }
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Profilknap til højre for søgefeltet */
+.profileButton {
+  background: #264E36;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.profileButton:hover {
+  background: #2f5c42;
+}
+
+/* Behold original farve fra SVG */
+.profileIcon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  pointer-events: none;
 }
