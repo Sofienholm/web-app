@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { NavLink,useNavigate } from "react-router";
 
-import homeIcon from "../../assets/icon/ic-home-symbol-nav.svg";
-import plusIcon from "../../assets/icon/ic-add-symbol.svg";
-import catIcon from "../../assets/icon/ic-category-symbol-nav.svg";
+import homeIcon from "../../../public/assets/icon/ic-home-symbol-nav.svg";
+import plusIcon from "../../../public/assets/icon/ic-add-symbol.svg";
+import catIcon from "../../../public/assets/icon/ic-category-symbol-nav.svg";
 
 // vælg de tre action-ikoner du har liggende
-import linkIcon from "../../assets/icon/ic-back-symbol.svg"; // byt til jeres "link"
-import imageIcon from "../../assets/icon/ic-camera-green.svg"; // "billede"
-import manualIcon from "../../assets/icon/ic-edit-symbol.svg"; // "manuelt"
+import linkIcon from "../../../public/assets/icon/ic-back-symbol.svg"; // byt til jeres "link"
+import imageIcon from "../../../public/assets/icon/ic-camera-green.svg"; // "billede"
+import manualIcon from "../../../public/assets/icon/ic-edit-symbol.svg"; // "manuelt"
 
 export default function BottomNav() {
   const [open, setOpen] = useState(false);
