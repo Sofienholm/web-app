@@ -1,6 +1,7 @@
-.body{
-background-color: var(--rod);
+body{
+background-color: var(--beige);
 }
+
 .home {
   position: relative;
   min-height: 100vh;

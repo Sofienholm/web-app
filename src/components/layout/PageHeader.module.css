@@ -16,7 +16,7 @@
 /* Input: venstre hjørner = 0 (ikke afrundet), højre hjørner = rund “pille” */
 .searchInput {
   width: 100%;
-  height: 44px;
+  height: 64px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-top-right-radius: 9999px;
@@ -26,7 +26,7 @@
   padding-right: 44px;          /* plads til ikon */
   background: #FDF5C4;
   border: 1px solid #E8E2A8;
-  color: #065f46;
+  color: #2A5945;
   outline: none;
   box-shadow: inset 0 1px 0 rgba(0,0,0,0.04);
   transition: box-shadow 150ms ease, border-color 150ms ease, background-color 150ms ease;
@@ -37,7 +37,6 @@
   color: rgba(6, 95, 70, 0.7);
   font-size: 1rem;
   font-weight: 500;
-  text-align: center;           /* træk placeholder mod centrum */
 }
 
 /* Fokus-styling */
@@ -50,15 +49,64 @@
 /* Ikonet stadig absolut i højre side inde i feltet */
 .searchIcon {
   position: absolute;
-  right: 12px;
+  right: 18px;
   top: 50%;
   transform: translateY(-50%);
   height: 20px;
   width: 20px;
   pointer-events: none;
   opacity: 0.85;
+
+   /* gør ikonet mørkegrønt (#2A5945) */
+  filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(1021%) hue-rotate(97deg) brightness(93%) contrast(94%);
+
 }
 
 @media (prefers-reduced-motion: reduce) {
   .searchInput { transition: none; }
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+}
+
+/* afstand mellem søgefelt og knap */
+.header { --gap: 12px; } /* du har allerede --xpad; vi tilføjer bare --gap */
+
+/* profil-knap:
+   - fylder resten af vandret plads (flex:1)
+   - runde venstre hjørner, skarpe højre
+   - går helt ud til højre kant via negativ margin, som matcher header-padding
+*/
+.profileButton {
+  flex: 1 1 auto;
+  height: 65px;
+  margin-left: var(--gap);
+  margin-right: calc(-2 * var(--xpad)); /* flush helt til højre skærmkant */
+  background: #264E36;                  /* mørkegrøn */
+  border: 1px solid #214631;
+  border-top-left-radius: 9999px;
+  border-bottom-left-radius: 9999px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.profileButton:hover { background: #2f5c42; }
+.profileButton:active { background: #244a34; }
+
+.profileIcon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  pointer-events: none;
+
+  /* gør SVG-billedet beige */
+  filter: brightness(0) saturate(100%) invert(95%) sepia(17%) saturate(572%) hue-rotate(17deg) brightness(105%) contrast(96%);
 }
