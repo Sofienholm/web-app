@@ -1,10 +1,16 @@
 :root {
-  --bar-bg: #e5e3c7; /* lys pille */
-  --fab-bg: #2e4b3e; /* mørkegrøn cirkel */
-  --close-bg: #ef7a66; /* rød/orange når åben */
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  --sort: #212C23; /* sort */
+  --morkegroen: #2A5945; /* mørkegrøn */
+  --tyrkisgroen: #5CAB7A; /* tyrkisgrøn */
+  --rod: #FB6255; /* rød */
+  --lyserod: #FB97AA; /* lyserød */
+  --lysegroen: #C0E59C; /* lysegrøn */
+  --brun: #903000; /* brun */
+  --beige: #FFF9CB; /* beige */
+  --nav-beige: rgba(242, 237, 197, 0.8); /* beige 80% (til nav) */
+  --off-white: #FDF7ED; /* off-white */
+  --404-beige: #F7DFA4; /* beige til 404-side */
 }
-
 /* ---------- NAV-BAR ---------- */
 .pill-nav {
   position: fixed;
@@ -16,7 +22,7 @@
   margin: 0 auto;
   width: min(680px, 92vw);
   height: 84px;
-  background: var(--bar-bg);
+ 
   border-radius: 42px;
   box-shadow: var(--shadow);
   display: grid;
@@ -115,7 +121,6 @@
   border-radius: 999px;
   border: 0;
   cursor: pointer;
-  background: var(--fab-bg);
   color: #fff;
   display: grid;
   place-items: center;

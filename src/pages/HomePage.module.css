@@ -1,0 +1,99 @@
+.body{
+background-color: var(--rod);
+}
+.home {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  padding-top: 2rem; /* afstand fra header */
+  padding-bottom: 6rem; /* plads over bottomnav */
+}
+
+/* Tekst (hero) */
+.hero {
+  text-align: center;
+  margin-bottom: 2rem;
+  z-index: 2;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #514944;
+  margin: 0.3rem 0 0;
+}
+
+/* Illustration wrapper */
+.illustrations {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 1 / 1;
+  z-index: 1;
+}
+
+/* Fælles for alle billeder */
+.img {
+  position: absolute;
+  width: 110px;
+  opacity: 0.9;
+  transition: transform 4s ease-in-out;
+}
+
+/* Center – mand på bøger */
+.center {
+  position: absolute;
+  width: 17rem;
+  left: 50%;
+  top: 120%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+/* De øvrige fem billeder */
+.cake {
+  top: 10%;
+  left: 14rem;
+}
+
+.noodles {
+  top:40%;
+  left: 1rem;
+}
+
+.pasta {
+  top: 12%;
+  right: 8rem;
+  
+}
+
+.meat {
+  top: 7%;
+  left: 2rem;
+}
+
+.veggie {
+  top: 50%;
+  left: 16rem;
+}
+
+/* Eventuel “svæve” animation */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+.img {
+  animation: float 5s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.5s);
+}
