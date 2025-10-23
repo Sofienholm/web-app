@@ -1,6 +1,12 @@
+import RecipeForm from "../components/recipe/RecipeForm";
 
 export default function CreatePage(){
     return(
-        <h1>hej</h1>
+        <div>
+<h1>hej</h1>
+        <RecipeForm />
+
+        </div>
+        
     )
 }

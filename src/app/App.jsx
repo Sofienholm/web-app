@@ -1,11 +1,11 @@
 import { Routes, Route, Navigate } from "react-router";
-import { AuthProvider } from "./providers/AuthProvider";
-import BottomNav from "./components/layout/BottomNav";
-import PageHeader from "./components/layout/PageHeader";
+import { AuthProvider } from "../providers/AuthProvider.jsx";
+import MainLayout from "./layouts/MainLayout.jsx";
+import FullscreenLayout from "./layouts/FullscreenLayout.jsx";
 
 // Pages
-import HomePage from "./pages/HomePage";
-import CreatePage from "./pages/CreatePage";
+import HomePage from "../pages/HomePage.jsx";
+import CreatePage from "../pages/CreatePage.jsx";
 // import RecipeDetail from "./pages/Recipe/RecipeDetail";
 // import RecipeEdit from "./pages/Recipe/RecipeEdit";
 // import CategoriesPage from "./pages/CategoriesPage";
@@ -17,22 +17,26 @@ import CreatePage from "./pages/CreatePage";
 export default function App() {
   return (
     <AuthProvider>
-      <PageHeader />
-      <main>
-        <Routes>
+      <Routes>
+        {/* Layout med PageHeader + BottomNav */}
+        <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
+          {/* <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/recipe/:id" element={<RecipeDetail />} /> */}
+        </Route>
+
+        {/* Layout uden PageHeader + BottomNav */}
+        <Route element={<FullscreenLayout />}>
           <Route path="/create" element={<CreatePage />} />
-          {/* <Route path="/recipe/:id" element={<RecipeDetail />} />
-          <Route path="/recipe/:id/edit" element={<RecipeEdit />} />
-          <Route path="/categories" element={<CategoriesPage />} />
+          {/* <Route path="/done" element={<DonePage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/done" element={<DonePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupFlow />} /> */}
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </main>
-      <BottomNav />
+        </Route>
+
+        {/* fallback */}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     </AuthProvider>
   );
 }
