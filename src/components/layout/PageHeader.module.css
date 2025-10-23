@@ -22,11 +22,14 @@
   border-top-right-radius: 9999px;
   border-bottom-right-radius: 9999px;
 
+  font-size: 1.1rem;            /* samme størrelse som placeholder */
+  font-weight: 500;             /* samme vægt som placeholder */
+  color: rgba(6, 95, 70, 0.7);  /* samme grønne nuance som placeholder */
+
   padding-left: 34px;           /* lidt mere luft, så teksten kommer mod centrum */
   padding-right: 44px;          /* plads til ikon */
   background: var(--nav-beige);
   border: 1px solid var(--nav-beige);
-  color: #2A5945;
   outline: none;
   box-shadow: inset 0 1px 0 rgba(0,0,0,0.04);
   transition: box-shadow 150ms ease, border-color 150ms ease, background-color 150ms ease;
