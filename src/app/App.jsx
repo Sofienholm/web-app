@@ -21,17 +21,21 @@ export default function App() {
         {/* Layout med PageHeader + BottomNav */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
+
           {/* <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/recipe/:id" element={<RecipeDetail />} /> */}
+
         </Route>
 
         {/* Layout uden PageHeader + BottomNav */}
         <Route element={<FullscreenLayout />}>
           <Route path="/create" element={<CreatePage />} />
+
           {/* <Route path="/done" element={<DonePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupFlow />} /> */}
+          
         </Route>
 
         {/* fallback */}
