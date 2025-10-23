@@ -1,7 +1,7 @@
 /* Header med variabel for side-padding så vi kan kompensere i searchWrap */
 .header {
   --xpad: 16px;                 /* svarer til px-4 i dit header-padding */
-  padding: 12px var(--xpad);    /* py-3 px-4 */
+  padding: 16px var(--xpad);    /* py-3 px-4 */
 }
 
 /* Searchbar: starter helt ude ved venstre skærmkant (kompenserer for header-padding)
@@ -16,16 +16,16 @@
 /* Input: venstre hjørner = 0 (ikke afrundet), højre hjørner = rund “pille” */
 .searchInput {
   width: 100%;
-  height: 64px;
+  height: 72px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-top-right-radius: 9999px;
   border-bottom-right-radius: 9999px;
 
-  padding-left: 24px;           /* lidt mere luft, så teksten kommer mod centrum */
+  padding-left: 34px;           /* lidt mere luft, så teksten kommer mod centrum */
   padding-right: 44px;          /* plads til ikon */
-  background: #FDF5C4;
-  border: 1px solid #E8E2A8;
+  background: var(--nav-beige);
+  border: 1px solid var(--nav-beige);
   color: #2A5945;
   outline: none;
   box-shadow: inset 0 1px 0 rgba(0,0,0,0.04);
@@ -35,25 +35,18 @@
 /* Kun placeholder centreres lidt mere – selve brugerens tekst forbliver venstrestillet */
 .searchInput::placeholder {
   color: rgba(6, 95, 70, 0.7);
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 500;
-}
-
-/* Fokus-styling */
-.searchInput:focus {
-  background: #ffffff;
-  border-color: rgba(5, 150, 105, 0.4);
-  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
 }
 
 /* Ikonet stadig absolut i højre side inde i feltet */
 .searchIcon {
   position: absolute;
-  right: 18px;
+  right: 25px;
   top: 50%;
   transform: translateY(-50%);
-  height: 20px;
-  width: 20px;
+  height: 30px;
+  width: 30px;
   pointer-events: none;
   opacity: 0.85;
 
@@ -72,7 +65,7 @@
 }
 
 /* afstand mellem søgefelt og knap */
-.header { --gap: 12px; } /* du har allerede --xpad; vi tilføjer bare --gap */
+.header { --gap: 30px; } /* du har allerede --xpad; vi tilføjer bare --gap */
 
 /* profil-knap:
    - fylder resten af vandret plads (flex:1)
@@ -81,7 +74,8 @@
 */
 .profileButton {
   flex: 1 1 auto;
-  height: 65px;
+  height: 72px;
+
   margin-left: var(--gap);
   margin-right: calc(-2 * var(--xpad)); /* flush helt til højre skærmkant */
   background: #264E36;                  /* mørkegrøn */
@@ -96,6 +90,7 @@
   justify-content: center;
   cursor: pointer;
   transition: background 0.2s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 .profileButton:hover { background: #2f5c42; }

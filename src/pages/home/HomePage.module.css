@@ -22,14 +22,18 @@ background-color: var(--beige);
 }
 
 .title {
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-family: var(--font-poppins);
+  color: var(--morkegroen);
   margin: 0;
 }
 
 .subtitle {
   font-size: 1.2rem;
-  color: #514944;
+  font-family: var(--font-brushup);
+  color: var(--tyrkisgroen);
   margin: 0.3rem 0 0;
 }
 
