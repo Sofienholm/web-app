@@ -1,4 +1,20 @@
+/* --- IMPORTER FONTS ØVERST --- */
+
+/* Brush Up fra Adobe Fonts (Typekit) */
+@import url('https://use.typekit.net/wtj2bed.css');
+
+/* Poppins fra Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+
 :root {
+
+    /* Font-variabler */
+  --font-brushup: 'brush-up', cursive;
+  --font-poppins: 'Poppins', sans-serif;
+
+
   --sort: #212C23; /* sort */
   --morkegroen: #2A5945; /* mørkegrøn */
   --tyrkisgroen: #5CAB7A; /* tyrkisgrøn */

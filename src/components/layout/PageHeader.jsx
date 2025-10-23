@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { NavLink,useNavigate } from "react-router";
 import styles from "./PageHeader.module.css";
 
 // Ikoner fra public/
@@ -27,7 +27,7 @@ export default function PageHeader() {
           />
         </div>
 
-        {/* NY: profil-knap til højre for søgefeltet */}
+          {/* Profil-knap der navigerer til /profile */}
         <button
           type="button"
           className={styles.profileButton}
