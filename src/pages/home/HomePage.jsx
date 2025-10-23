@@ -1,13 +1,13 @@
 import styles from "./HomePage.module.css";
-import { useAuthUser } from "../hooks/useAuthUser";
+import { useAuthUser } from "../../hooks/useAuthUser";
 
 // Illustrationer (import fra public/assets/home)
-import manBooks from "../../public/assets/home/ill-home-food-man-on-books-pink.svg";
-import cake from "../../public/assets/home/ill-home-food-cake-pink.svg";
-import noodles from "../../public/assets/home/ill-home-food-nudles-pink.svg";
-import pasta from "../../public/assets/home/ill-home-food-pasta-pink.svg";
-import meat from "../../public/assets/home/ill-home-food-meat-pink.svg";
-import veggie from "../../public/assets/home/ill-home-food-veggie-pink.svg";
+import manBooks from "../../../public/assets/home/ill-home-food-man-on-books-pink.svg";
+import cake from "../../../public/assets/home/ill-home-food-cake-pink.svg";
+import noodles from "../../../public/assets/home/ill-home-food-nudles-pink.svg";
+import pasta from "../../../public/assets/home/ill-home-food-pasta-pink.svg";
+import meat from "../../../public/assets/home/ill-home-food-meat-pink.svg";
+import veggie from "../../../public/assets/home/ill-home-food-veggie-pink.svg";
 
 export default function HomePage() {
   const user = useAuthUser(); // henter nuværende bruger (fra AuthProvider)
