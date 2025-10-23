@@ -1,0 +1,119 @@
+
+.page {
+min-height: 100vh;
+background: #F6A9B2; /* lyserød baggrund som reference */
+padding: 16px; /* matcher header padding visuelt */
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.illustrationCard {
+  width: 240px;
+  height: 240px;
+  border-radius: 28px;
+  background: #fff9cb;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.illustrationImg {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(38%) sepia(83%) saturate(1954%) hue-rotate(338deg) brightness(101%) contrast(99%);
+}
+
+.userText {
+  text-align: center;
+  margin-top: 12px;
+}
+
+.userName {
+  margin: 12px 0 0;
+  font-weight: 800;
+  font-size: 1.8rem;
+  font-family: var(--font-brushup);
+  color: var(--beige);
+}
+
+.userEmail {
+  margin: 4px 0 0;
+  color: var(--beige);
+  opacity: 0.9;
+  font-family: var(--font-poppins);
+}
+/* Wrapper for knapperne */
+.actions {
+  width: 100%;
+  max-width: 360px;
+  margin: 16px auto 0;
+  display: grid;
+  gap: 12px;
+}
+
+/* Basis-stil for alle tre knapper */
+.actionBtn {
+  height: 62px;
+  border-radius: 16px;
+  background: #FFE6C2;         /* lys creme */
+  border: 2px solid #E6A98F;   /* varm kant */
+  color: #6B3B2A;              /* tekstfarve */
+  font-weight: 400;
+  font-size: 22px;
+  font-family: var(--font-poppins);
+  transition: transform 0.1s ease, background-color 0.15s ease;
+}
+
+.actionBtn:hover { background: #ffe0b3; }
+.actionBtn:active { transform: translateY(1px); }
+
+.actionLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Individuelle knapper */
+.settingsBtn {
+  width: 60%;
+   margin: 0 auto;
+}
+
+.notificationsBtn {
+  width: 60%;
+    margin: 0 auto;
+}
+
+/* Hjælp skal være smallere og centreret */
+.helpBtn {
+  width: 40%;
+  margin: 0 auto;
+}
+
+
+.logoutBtn {
+  margin-top: 24px;
+  background: transparent;
+  border: none;
+  color: #FB6255;       /* varm rød tekst */
+  font-weight: 800;
+  font-size: 25px;
+  font-family: var(--font-brushup);
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.logoutBtn:hover {
+  opacity: 0.8;
+}
