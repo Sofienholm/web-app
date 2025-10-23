@@ -2,22 +2,22 @@
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-  padding: 1.2rem;
-  background-color: var(--off-white);
+
   border-radius: 14px;
+  z-index: -100;
+  top: 1%;
+  width: 100%;
 }
 
 /* Inputs */
 .form input,
 .form textarea {
-  width: 100%;
-  padding: 0.6rem 0.8rem;
+    border: none;
   font-size: 1rem;
-  border: 1.5px solid var(--morkegroen);
   border-radius: 10px;
-  background-color: white;
-  color: var(--sort);
-  font-family: inherit;
+  background-color: var(--nav-beige);
+  color: var(--brun);
+ 
 }
 
 .form textarea {
@@ -32,7 +32,8 @@
   gap: 0.3rem;
   font-size: 0.9rem;
   font-weight: 500;
-  color: var(--sort);
+  color: var(--brun);
+  padding: 0rem 2rem;
 }
 
 /* Row layout for small grouped fields (fx tid + portioner) */
@@ -61,11 +62,46 @@ button:disabled {
   cursor: not-allowed;
 }
 
+/* --- Billede-vælger --- */
+.imageBox {
+  max-width: 100%;
+  background: var(--404-beige);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: auto;
+  opacity: 0.8;
+  filter: invert(88%) sepia(27%) saturate(583%) hue-rotate(341deg)
+    brightness(85%) contrast(96%);
+}
+.imagePlaceholder path {
+  fill: var(--rod);
+}
+.imagePreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hiddenFile {
+  display: none;
+}
+
+.removeBtn {
+  margin-top: 0.5rem;
+  align-self: flex-end;
+  background: none;
+  color: var(--rod);
+  font-weight: 600;
+}
+
 /* Responsivt layout */
-@media (min-width: 700px) {
+@media (min-width: 1200px) {
   .form {
-    max-width: 550px;
+    width: 600px;
     margin: 0 auto;
-    padding: 2rem;
   }
 }

@@ -1,5 +1,7 @@
-import styles from "./BasicsFields.module.css";
-
+// src/pages/Create/components/BasicsFields.jsx
+import { useRef } from "react";
+import styles from "./RecipeForm.module.css";
+import cameraIcon from "/assets/icon/illu-camera-green.svg";
 
 export default function BasicsFields({
   title,
@@ -13,53 +15,96 @@ export default function BasicsFields({
   image,
   setImage,
 }) {
+  const fileRef = useRef(null);
+
+  function pickFile() {
+    fileRef.current?.click();
+  }
+
+  function onFileChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setImage(reader.result); // dataURL → preview + gemmes i parent
+    reader.readAsDataURL(file);
+  }
+
   return (
-    <section className={styles.basics}>
-      {/* Billede-upload (placeholder) */}
-      <div className={styles.imageBox}>
+    <section className={styles.form}>
+      {/* Billede-vælger */}
+      <div className={styles.imageBox} onClick={pickFile} role="button">
+        {image ? (
+          <img
+            className={styles.imagePreview}
+            src={image}
+            alt="Valgt billede"
+          />
+        ) : (
+          <img
+            className={styles.imagePlaceholder}
+            src={cameraIcon}
+            alt="Vælg billede"
+          />
+        )}
+      </div>
+      <input
+        ref={fileRef}
+        type="file"
+        accept="image/*"
+        className={styles.hiddenFile}
+        onChange={onFileChange}
+      />
+      {image && (
         <button
           type="button"
-          onClick={() => alert("Upload billede (kommer senere)")}
+          className={styles.removeBtn}
+          onClick={() => setImage("")}
         >
-          +
+          Fjern billede
         </button>
-      </div>
+      )}
 
       {/* Titel */}
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Titel"
-        className={styles.titleInput}
-      />
+      <label>
+        Titel
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Fx Pasta med tomatsauce"
+        />
+      </label>
 
       {/* Beskrivelse */}
-      <textarea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Kort beskrivelse af retten"
-        className={styles.descInput}
-      />
+      <label>
+        Beskrivelse
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Kort beskrivelse af retten…"
+        />
+      </label>
 
-      {/* Tid og portioner */}
-      <div className={styles.timeServings}>
-        <div>
-          <label>Tid</label>
+      {/* Tid & portioner */}
+      <div className={styles.row}>
+        <label>
+          Tid (min)
           <input
             type="number"
             value={timeMin}
             onChange={(e) => setTimeMin(e.target.value)}
+            placeholder="30"
           />
-        </div>
-        <div>
-          <label>Portioner</label>
+        </label>
+        <label>
+          Portioner
           <input
             type="number"
             value={servings}
             onChange={(e) => setServings(e.target.value)}
+            placeholder="4"
           />
-        </div>
+        </label>
       </div>
     </section>
   );
