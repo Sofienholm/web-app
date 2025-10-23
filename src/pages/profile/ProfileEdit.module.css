@@ -1,0 +1,95 @@
+.page {
+  min-height: 100vh;
+  width: 100%;
+  background: #F6A9B2;
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 🔸 Tilbage-knap */
+.topButtons {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.profileButton {
+  width: 72px;
+  height: 72px;
+  background: #FB6255;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.profileButton:hover {
+  background: #f75345;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18);
+}
+
+.leftButton {
+  border-top-right-radius: 9999px;
+  border-bottom-right-radius: 9999px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: -16px;
+}
+
+.profileIcon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(95%) sepia(17%) saturate(572%)
+    hue-rotate(17deg) brightness(105%) contrast(96%);
+}
+
+/* 🔸 Profilkort (kan flyttes frit her) */
+.illustrationCard {
+  width: 240px;
+  height: 240px;
+  border-radius: 28px;
+  background: #fff9cb;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+
+  /* Her styrer du hvor langt kortet er nede */
+  margin-top: 21px;
+  margin-bottom: 16px;
+  transition: margin 0.3s ease;
+}
+
+.illustrationImg {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(38%) sepia(83%) saturate(1954%)
+    hue-rotate(338deg) brightness(101%) contrast(99%);
+}
+
+/* 🔸 Tekstsektion */
+.editSection {
+  margin-top: 24px;
+  text-align: center;
+  font-family: var(--font-poppins);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #3c2a1e;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  color: #6b5b4c;
+  font-size: 1rem;
+  opacity: 0.85;
+}
