@@ -4,8 +4,8 @@ import MainLayout from "./layouts/MainLayout.jsx";
 import FullscreenLayout from "./layouts/FullscreenLayout.jsx";
 
 // Pages
-import HomePage from "../pages/HomePage.jsx";
-import CreatePage from "../pages/CreatePage.jsx";
+import HomePage from "../pages/home/HomePage.jsx";
+import CreatePage from "../pages/create/CreatePage.jsx";
 // import RecipeDetail from "./pages/Recipe/RecipeDetail";
 // import RecipeEdit from "./pages/Recipe/RecipeEdit";
 // import CategoriesPage from "./pages/CategoriesPage";
@@ -24,7 +24,6 @@ export default function App() {
 
           {/* <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/recipe/:id" element={<RecipeDetail />} /> */}
-
         </Route>
 
         {/* Layout uden PageHeader + BottomNav */}
@@ -35,7 +34,6 @@ export default function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupFlow />} /> */}
-          
         </Route>
 
         {/* fallback */}
