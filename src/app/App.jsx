@@ -10,6 +10,7 @@ import CreatePage from "../pages/CreatePage.jsx";
 // import RecipeEdit from "./pages/Recipe/RecipeEdit";
 // import CategoriesPage from "./pages/CategoriesPage";
 import ProfilePage from "../pages/profile/ProfilePage.jsx";
+import ProfileEdit from "../pages/profile/ProfileEdit";
 // import DonePage from "./pages/DonePage";
 // import LoginPage from "./pages/Auth/LoginPage";
 // import SignupFlow from "./pages/Auth/SignupFlow";
@@ -32,6 +33,7 @@ export default function App() {
 
           {/* <Route path="/done" element={<DonePage />} /> */}
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/edit" element={<ProfileEdit />} />
           {/* <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupFlow />} /> */}
         </Route>

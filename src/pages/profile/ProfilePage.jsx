@@ -8,6 +8,8 @@ import ActionList from "./components/ActionList";
 import LogoutButton from "./components/LogoutButton";
 
 // illustration
+import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
+import editIcon from "../../../public/assets/icon/ic-edit-symbol.svg";
 import profileIllustration from "../../../public/assets/illustrations/ill-profil-avatar-man-garlic.svg";
 
 export default function ProfilePage() {
@@ -20,6 +22,29 @@ export default function ProfilePage() {
 
   return (
     <div className={styles.page}>
+
+      {/* 🔸 Topknapper */}
+      <div className={styles.topButtons}>
+        <button
+          type="button"
+          className={`${styles.profileButton} ${styles.leftButton}`}
+          aria-label="Gå til forside"
+          onClick={() => navigate("/")}
+        >
+          <img src={backIcon} alt="Tilbage" className={styles.profileIcon} />
+        </button>
+
+        <button
+          type="button"
+          className={`${styles.profileButton} ${styles.rightButton}`}
+          aria-label="Rediger profil"
+          onClick={() => navigate("/profile/edit")}
+        >
+          <img src={editIcon} alt="Rediger" className={styles.profileIcon} />
+        </button>
+      </div>
+
+
       {/* Top: profilbillede + info */}
       <ProfileInfo
         name={user.name}
