@@ -1,4 +1,6 @@
-import styles from "../CreatePage.module.css";
+import styles from "./BasicsFields.module.css";
+
+
 export default function BasicsFields({
   title,
   setTitle,
@@ -58,15 +60,6 @@ export default function BasicsFields({
             onChange={(e) => setServings(e.target.value)}
           />
         </div>
-        <label>
-          Billede (URL)
-          <input
-            type="url"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            placeholder="https://..."
-          />
-        </label>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import RecipeForm from "./components/RecipeForm";
 import { useNavigate } from "react-router";
 import styles from "./CreatePage.module.css";
+import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
 
 export default function CreatePage() {
   const navigate = useNavigate();
@@ -12,17 +13,22 @@ export default function CreatePage() {
     navigate("/"); // Tilbage til forsiden
   }
 
-  // tilbagepil
-  function handleBack() {
-    navigate("/");
-  }
 
   return (
     <section className={styles.createPage}>
-      {/* Tilbagepil */}
-      <button onClick={handleBack} className={styles.backBtn}>
-        ←
-      </button>
+ <div className={styles.topButton}>
+ <button
+          type="button"
+          className={`${styles.profileButton} ${styles.leftButton}`}
+          aria-label="Gå til forside"
+          onClick={() => navigate("/")}
+        >
+          <img src={backIcon} alt="Tilbage" className={styles.profileIcon} />
+        </button>
+
+
+ </div>
+       
 
       {/* Formular */}
       <RecipeForm onSave={handleSave} />
