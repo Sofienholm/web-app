@@ -26,8 +26,8 @@ export default function PageHeader() {
             className={styles.searchIcon}
           />
         </div>
-
-          {/* Profil-knap der navigerer til /profile */}
+     
+        {/* Profil-knap der navigerer til /profile */}
         <button
           type="button"
           className={styles.profileButton}

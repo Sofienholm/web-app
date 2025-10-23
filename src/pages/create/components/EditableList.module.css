@@ -1,0 +1,46 @@
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.itemRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border: 1.5px solid var(--morkegroen);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+}
+
+.itemText {
+  flex: 1;
+  font-size: 0.95rem;
+  color: var(--sort);
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--rod);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.deleteBtn:hover {
+  opacity: 0.7;
+}
+
+.addBtn {
+  background: var(--morkegroen);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 0.6rem;
+  align-self: flex-start;
+}
