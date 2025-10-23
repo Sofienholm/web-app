@@ -5,10 +5,10 @@ import homeIcon from "../../../public/assets/icon/ic-home-symbol-nav.svg";
 import plusIcon from "../../../public/assets/icon/ic-add-symbol.svg";
 import catIcon from "../../../public/assets/icon/ic-category-symbol-nav.svg";
 
-// vælg de tre action-ikoner du har liggende
-import linkIcon from "../../../public/assets/icon/ic-back-symbol.svg"; // byt til jeres "link"
-import imageIcon from "../../../public/assets/icon/ic-camera-green.svg"; // "billede"
-import manualIcon from "../../../public/assets/icon/ic-edit-symbol.svg"; // "manuelt"
+// De tre action-ikoner der popper op når man trykker på "+"
+import linkIcon from "../../../public/assets/icon/ic-link-add.svg"; //link
+import imageIcon from "../../../public/assets/icon/ic-pic-add.svg"; // "billede"
+import manualIcon from "../../../public/assets/icon/ic-manuelt-add.svg"; // "manuelt"
 
 export default function BottomNav() {
   const [open, setOpen] = useState(false);
