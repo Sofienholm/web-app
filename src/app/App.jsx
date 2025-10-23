@@ -8,7 +8,7 @@ import HomePage from "../pages/home/HomePage.jsx";
 import CreatePage from "../pages/create/CreatePage.jsx";
 // import RecipeDetail from "./pages/Recipe/RecipeDetail";
 // import RecipeEdit from "./pages/Recipe/RecipeEdit";
-// import CategoriesPage from "./pages/CategoriesPage";
+import CategoriesPage from "../pages/categories/CategoriesPage.jsx";
 import ProfilePage from "../pages/profile/ProfilePage.jsx";
 import ProfileEdit from "../pages/profile/ProfileEdit";
 // import DonePage from "./pages/DonePage";
@@ -23,8 +23,8 @@ export default function App() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
 
-          {/* <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/recipe/:id" element={<RecipeDetail />} /> */}
+        <Route path="/categories" element={<CategoriesPage />} />
+        {/* <Route path="/recipe/:id" element={<RecipeDetail />} /> */}
         </Route>
 
         {/* Layout uden PageHeader + BottomNav */}
