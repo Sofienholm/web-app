@@ -1,11 +1,10 @@
-// src/components/recipe/RecipeForm.jsx
 import { useState } from "react";
 import BasicsFields from "./BasicsFields.jsx";
 import ChipGroup from "./ChipGroup.jsx";
 import EditableList from "./EditableList.jsx";
 import FormActions from "./FormActions.jsx";
-import Sheet from ".//Sheet.jsx";
-import styles from "../CreatePage.module.css";
+import styles from "./RecipeForm.module.css";
+import Sheet from "./Sheet.jsx";
 
 export default function RecipeForm({ onSave }) {
   // 🔹 State til opskriftens felter
@@ -39,8 +38,8 @@ export default function RecipeForm({ onSave }) {
   }
 
   return (
-    <form className={styles.recipeForm} onSubmit={handleSubmit}>
-      {/* Grundfelter */}
+    <form className="recipe-form" onSubmit={handleSubmit}>
+      {/* FELTER */}
       <BasicsFields
         title={title}
         setTitle={setTitle}
@@ -54,13 +53,13 @@ export default function RecipeForm({ onSave }) {
         setImage={setImage}
       />
 
-      {/* Fremgangsmåde */}
-      <section className={styles.stepsSection}>
+      {/* FREMGANGSMÅDE */}
+      <section className="steps-section">
         <h3>Fremgangsmåde</h3>
         {!showSteps ? (
           <button
             type="button"
-            className={styles.addBtn}
+            className="add-btn"
             onClick={() => setShowSteps(true)}
           >
             +
@@ -75,25 +74,25 @@ export default function RecipeForm({ onSave }) {
         )}
       </section>
 
-      {/* Ingredienser */}
-      <section className={styles.ingredientsSection}>
+      {/* INGREDIENSER */}
+      <section className="ingredients-section">
         <h3>Ingredienser</h3>
         <button
           type="button"
-          className={styles.addBtn}
+          className="add-btn"
           onClick={() => setShowIngredients(true)}
         >
           +
         </button>
       </section>
 
-      {/* Tags */}
+      {/* TAGS */}
       <ChipGroup selected={tags} setSelected={setTags} />
 
-      {/* Gem-knap */}
+      {/* GEM-KNAP */}
       <FormActions />
 
-      {/* Ingredienser i fuldskærm */}
+      {/* INGREDIENSER - FULDSKÆRM */}
       {showIngredients && (
         <Sheet title="Ingredienser" onClose={() => setShowIngredients(false)}>
           <EditableList
