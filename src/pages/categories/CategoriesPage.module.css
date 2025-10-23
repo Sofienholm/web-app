@@ -17,7 +17,7 @@
   position: sticky;
   top: 12px;
   align-self: flex-end;
-  display: flex;                     /* ændret fra grid til flex */
+  display: flex;
   justify-content: flex-start;       /* 🔸 ryk indholdet mod venstre */
   align-items: center;
   padding-left: 28px;                /* 🔸 luft fra venstre kant */
@@ -25,8 +25,13 @@
   height: 54px;
   background: var(--morkegroen);
   border: none;
+
+  /* 🔸 Kun venstre side afrundet */
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+
   box-shadow: 0 6px 16px rgba(0,0,0,.12);
   cursor: pointer;
 
@@ -47,6 +52,7 @@
   align-items: flex-start;
   justify-content: center; /* centrer hele grid’et */
   gap: var(--gap);
+  margin-top: -3rem; /* træk grid’et lidt opad */
 }
 
 .col {
