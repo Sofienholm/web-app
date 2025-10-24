@@ -2,28 +2,34 @@ import { useNavigate } from "react-router";
 import RecipeForm from "./components/RecipeForm.jsx";
 import styles from "./CreatePage.module.css";
 import backIcon from "/assets/icon/ic-back-symbol.svg"; // Vite: brug /assets/...
+import { createRecipe } from "../../services/recipes.local.js";
 
 export default function CreatePage() {
   const navigate = useNavigate();
 
-  function handleSave(recipeData) {
-    console.log("Ny opskrift gemt:", recipeData);
-    navigate("/"); // senere: skriv til Firestore først
+  async function handleSave(recipeData) {
+    // mini-validation (tilpas som du vil)
+    if (!recipeData.title?.trim()) {
+      alert("Tilføj en titel");
+      return;
+    }
+
+    const id = await createRecipe(recipeData);
+    // vælg selv destination: detalje-rute eller hjem
+    // navigate(`/recipe/${id}`);
+    navigate("/"); // nu: tilbage til forsiden
   }
 
   return (
-    <section className={styles.createPage}>
-      <div className={styles.topButton}>
-        <button
-          type="button"
-          className={`${styles.profileButton} ${styles.leftButton}`}
-          aria-label="Gå til forside"
-          onClick={() => navigate("/")}
-        >
-          <img src={backIcon} alt="Tilbage" className={styles.profileIcon} />
-        </button>
-      </div>
-
+    <section>
+      <button
+        type="button"
+        className={`${styles.profileButton} ${styles.leftButton}`}
+        aria-label="Gå til forside"
+        onClick={() => navigate("/")}
+      >
+        <img src={backIcon} alt="Tilbage" className={styles.profileIcon} />
+      </button>
       <RecipeForm onSave={handleSave} />
     </section>
   );

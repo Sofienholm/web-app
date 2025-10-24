@@ -1,29 +1,45 @@
-// src/pages/Create/components/RecipeForm.jsx
 import { useState } from "react";
-import BasicsFields from "./BasicsFields.jsx";
-import FormActions from "./FormActions.jsx";
-import styles from "./RecipeForm.module.css";
+import BasicsSection from "./BasicsSection.jsx";
+import StepsSection from "./StepsSection.jsx";
+import IngredientsSheet from "./IngredientsSheet.jsx";
 
 export default function RecipeForm({ onSave }) {
-  // Minimal state – kun det I bruger nu
+  // basics
+  const [image, setImage] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [timeMin, setTimeMin] = useState("");
   const [servings, setServings] = useState("");
+  const [tags, setTags] = useState([]);
+
+  // steps & ingredients
+  const [steps, setSteps] = useState([]); // [{text}]
+  const [ingredients, setIngredients] = useState([]); // [{amount, unit, name}]
+
+  // UI toggles
+  const [showSteps, setShowSteps] = useState(false);
+  const [showIngredients, setShowIngredients] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
     onSave({
+      image,
       title,
       description,
       timeMin,
       servings,
+      tags,
+      steps,
+      ingredients,
     });
   }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
-      <BasicsFields
+    <form onSubmit={handleSubmit}>
+      {/* 1) BASICS */}
+      <BasicsSection
+        image={image}
+        setImage={setImage}
         title={title}
         setTitle={setTitle}
         description={description}
@@ -32,11 +48,31 @@ export default function RecipeForm({ onSave }) {
         setTimeMin={setTimeMin}
         servings={servings}
         setServings={setServings}
-        // image fjernet for nu – tilføjes senere når I er klar
+        tags={tags}
+        setTags={setTags}
       />
 
-      {/* Kun “Afslut” som submit */}
-      <FormActions />
+      {/* 2) STEPS (lille kasse, toggles inline) */}
+      <StepsSection
+        open={showSteps}
+        onOpen={() => setShowSteps(true)}
+        onClose={() => setShowSteps(false)}
+        steps={steps}
+        setSteps={setSteps}
+      />
+
+      {/* 3) INGREDIENTS (sheet, fullscreen) */}
+      <button type="button" onClick={() => setShowIngredients(true)}>
+        🧄 Ingredienser
+      </button>
+      <IngredientsSheet
+        open={showIngredients}
+        onClose={() => setShowIngredients(false)}
+        ingredients={ingredients}
+        setIngredients={setIngredients}
+      />
+
+      <button type="submit">AFSLUT</button>
     </form>
   );
 }
