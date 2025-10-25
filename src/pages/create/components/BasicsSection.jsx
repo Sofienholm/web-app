@@ -64,7 +64,6 @@ import cameraIcon from "/assets/icon/illu-camera-green.svg"; // Vite: brug /asse
 
        {/* felter */}
        <label className={styles.label}>
-         
          <input
            className={styles.input}
            value={title}
@@ -74,7 +73,6 @@ import cameraIcon from "/assets/icon/illu-camera-green.svg"; // Vite: brug /asse
        </label>
 
        <label className={styles.label}>
-       
          <textarea
            className={styles.textarea}
            value={description}
@@ -85,7 +83,6 @@ import cameraIcon from "/assets/icon/illu-camera-green.svg"; // Vite: brug /asse
 
        <div className={styles.row}>
          <label className={`${styles.label} ${styles.col}`}>
-         
            <input
              className={styles.number}
              placeholder="Tid"
@@ -95,18 +92,18 @@ import cameraIcon from "/assets/icon/illu-camera-green.svg"; // Vite: brug /asse
            />
          </label>
          <label className={`${styles.label} ${styles.col}`}>
-          
            <input
              className={styles.number}
              type="number"
              value={servings}
              onChange={(e) => setServings(e.target.value)}
-                placeholder="Portioner"
+             placeholder="Portioner"
            />
          </label>
        </div>
 
        {/* tags */}
+       <h2 className={styles.tagsTitle}>Tilføj Tags</h2>
        <div className={styles.tags}>
          {ALL_TAGS.map((tag) => (
            <button
