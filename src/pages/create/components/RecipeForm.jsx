@@ -2,6 +2,8 @@ import { useState } from "react";
 import BasicsSection from "./BasicsSection.jsx";
 import StepsSection from "./StepsSection.jsx";
 import IngredientsSheet from "./IngredientsSheet.jsx";
+import styles from "../CreatePage.module.css";
+import Garlictap from "/assets/icon/ic-ingredient-symbol.svg"; // Vite: brug /assets/...
 
 export default function RecipeForm({ onSave }) {
   // basics
@@ -62,8 +64,13 @@ export default function RecipeForm({ onSave }) {
       />
 
       {/* 3) INGREDIENTS (sheet, fullscreen) */}
-      <button type="button" onClick={() => setShowIngredients(true)}>
-        🧄 Ingredienser
+      <button
+        type="button"
+        className={styles.garlictap}
+        onClick={() => setShowIngredients(true)}
+      >
+   <img src={Garlictap} alt="ingredienser" className={styles.garlictapIcon} />
+   
       </button>
       <IngredientsSheet
         open={showIngredients}
@@ -72,7 +79,7 @@ export default function RecipeForm({ onSave }) {
         setIngredients={setIngredients}
       />
 
-      <button type="submit">AFSLUT</button>
+      <button type="submit" className={styles.afslut}>AFSLUT</button>
     </form>
   );
 }
