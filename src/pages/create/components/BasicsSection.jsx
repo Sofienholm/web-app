@@ -65,7 +65,7 @@ import cameraIcon from "/assets/icon/illu-camera-green.svg"; // Vite: brug /asse
        {/* felter */}
        <label className={styles.label}>
          <input
-           className={styles.input}
+           className={styles.title}
            value={title}
            onChange={(e) => setTitle(e.target.value)}
            placeholder="Titel"

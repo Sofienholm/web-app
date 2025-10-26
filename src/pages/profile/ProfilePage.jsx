@@ -32,20 +32,18 @@ export default function ProfilePage() {
       <div className={styles.topButtons}>
         <button
           type="button"
-          className={`${styles.profileButton} ${styles.leftButton}`}
-          aria-label="Gå til forside"
+          className={`bubbleButton bubbleRed bubbleLeft`}
           onClick={() => navigate("/")}
         >
-          <img src={backIcon} alt="Tilbage" className={styles.profileIcon} />
+          <img src={backIcon} alt="Tilbage" className="bubbleIcon" />
         </button>
 
         <button
           type="button"
-          className={`${styles.profileButton} ${styles.rightButton}`}
-          aria-label="Rediger profil"
+          className={`bubbleButton bubbleRed bubbleRight`}
           onClick={() => navigate("/profile/edit")}
         >
-          <img src={editIcon} alt="Rediger" className={styles.profileIcon} />
+          <img src={editIcon} alt="Rediger" className="bubbleIcon" />
         </button>
       </div>
 

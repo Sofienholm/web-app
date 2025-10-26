@@ -38,11 +38,13 @@ export default function ProfileEdit() {
       <div className={styles.topButtons}>
         <button
           type="button"
-          className={`${styles.profileButton} ${styles.leftButton}`}
+          className={`bubbleButton bubbleRed bubbleLeft ${
+            styles.backButtonFixed ?? ""
+          }`}
           aria-label="Tilbage til profil"
           onClick={() => navigate("/profile")}
         >
-          <img src={backIcon} alt="Tilbage" className={styles.profileIcon} />
+          <img src={backIcon} alt="Tilbage" className="bubbleIcon" />
         </button>
       </div>
 

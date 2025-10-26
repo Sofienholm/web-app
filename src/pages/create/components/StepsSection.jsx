@@ -1,5 +1,6 @@
 import { useState } from "react";
-import styles from "../CreatePage.module.css";
+import styles from "./IngredientsStep.module.css";
+import Add from "/assets/icon/ic-add-symbol.svg";
 
 export default function StepsSection({
   open,
@@ -25,7 +26,7 @@ export default function StepsSection({
         <div className={styles.stepsHead}>
           <h3>Fremgangsmåde</h3>
           <button type="button" className={styles.iconBtn} onClick={onOpen}>
-            +
+            <img src={Add}  alt="" />
           </button>
         </div>
       </section>

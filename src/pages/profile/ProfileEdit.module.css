@@ -9,46 +9,18 @@
   align-items: center;
 }
 
-/* 🔸 Tilbage-knap */
+/* Tilbage-knap */
 .topButtons {
   display: flex;
   justify-content: flex-start;
   width: 100%;
 }
 
-.profileButton {
-  width: 72px;
-  height: 72px;
-  background: #FB6255;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-}
-
-.profileButton:hover {
-  background: #f75345;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18);
-}
-
-.leftButton {
-  border-top-right-radius: 9999px;
-  border-bottom-right-radius: 9999px;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+/* hvis den IKKE er fixed men bare sidder lidt ud over kanten: */
+.topButtons > :first-child {
   margin-left: -16px;
 }
 
-.profileIcon {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(95%) sepia(17%) saturate(572%)
-    hue-rotate(17deg) brightness(105%) contrast(96%);
-}
 
 /* 🔸 Profilkort (kan flyttes frit her) */
 .illustrationCard {

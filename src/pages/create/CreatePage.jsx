@@ -24,11 +24,10 @@ export default function CreatePage() {
     <section>
       <button
         type="button"
-        className={`${styles.profileButton} ${styles.leftButton}`}
-        aria-label="Gå til forside"
+        className={`bubbleButton bubbleRed bubbleLeft ${styles.backButtonFixed}`}
         onClick={() => navigate("/")}
       >
-        <img src={backIcon} alt="Tilbage" className={styles.profileIcon} />
+        <img src={backIcon} alt="Tilbage" className="bubbleIcon" />
       </button>
       <RecipeForm onSave={handleSave} />
     </section>

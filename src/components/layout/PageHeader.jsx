@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink,useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import styles from "./PageHeader.module.css";
 
 // Ikoner fra public/
@@ -22,23 +22,21 @@ export default function PageHeader() {
           <img
             src={searchIcon}
             alt=""
-            aria-hidden="true"
             className={styles.searchIcon}
           />
         </div>
-     
+
         {/* Profil-knap der navigerer til /profile */}
         <button
           type="button"
-          className={styles.profileButton}
-          aria-label="Gå til profil"
+          className={`bubbleButton bubbleGreen bubbleRight ${styles.headerProfilePos}`}
           onClick={() => navigate("/profile")}
+          aria-label="Gå til profil"
         >
           <img
             src={profileIcon}
             alt=""
-            aria-hidden="true"
-            className={styles.profileIcon}
+            className="bubbleIconLg"
           />
         </button>
       </div>

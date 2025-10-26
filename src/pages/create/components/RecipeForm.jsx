@@ -66,12 +66,13 @@ export default function RecipeForm({ onSave }) {
       {/* 3) INGREDIENTS (sheet, fullscreen) */}
       <button
         type="button"
-        className={styles.garlictap}
+        className={`bubbleButton bubbleGreen bubbleRight ${styles.ingredientsButtonPos}`}
         onClick={() => setShowIngredients(true)}
+        aria-label="Ingredienser"
       >
-   <img src={Garlictap} alt="ingredienser" className={styles.garlictapIcon} />
-   
+        <img src={Garlictap} alt="ingredienser" className="bubbleIcon" />
       </button>
+      
       <IngredientsSheet
         open={showIngredients}
         onClose={() => setShowIngredients(false)}
@@ -79,7 +80,9 @@ export default function RecipeForm({ onSave }) {
         setIngredients={setIngredients}
       />
 
-      <button type="submit" className={styles.afslut}>AFSLUT</button>
+      <button type="submit" className={styles.afslut}>
+        AFSLUT
+      </button>
     </form>
   );
 }
