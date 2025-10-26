@@ -4,6 +4,7 @@ import StepsSection from "./StepsSection.jsx";
 import IngredientsSheet from "./IngredientsSheet.jsx";
 import styles from "../CreatePage.module.css";
 import Garlictap from "/assets/icon/ic-ingredient-symbol.svg"; // Vite: brug /assets/...
+import Add from "/assets/icon/ic-add-symbol.svg"; // Vite: brug /assets/...
 
 export default function RecipeForm({ onSave }) {
   // basics

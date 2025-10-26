@@ -1,45 +1,86 @@
 /* Steps */
-.steps {
-  border: 1.5px solid var(--morkegroen);
-  border-radius: 14px;
-  padding: 12px;
+/* Kort container */
+.card {
+  background: #f1e5b7;               /* varm lys/beige som i mock */
+  border-radius: 22px;
+  padding: 18px 16px 20px;
 }
-.stepsHead {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-}
-.stepsHead img{
-  width: 32px;
-  height: 32px;
-  filter: invert(35%) sepia(72%) saturate(264%) hue-rotate(81deg)
-    brightness(88%) contrast(85%);
+.title {
+  text-align: center;
+  font-size: 22px;
+  letter-spacing: .5px;
+  margin: 0 0 12px;
+  color: #6a2d18;                     /* brun titel */
 }
 
-.iconBtn {
-  background: none;
+/* Lukket tilstand: stor plus-pill */
+.addPill {
+  width: 100%;
+  height: 68px;
+  border-radius: 24px;
   border: 0;
-  font-size: 18px;
+  background: #ece8c8;                /* lys “pill” */
+  display: grid; place-items: center;
+  font-size: 40px;
+  color: #6a2d18;
   cursor: pointer;
 }
-.stepList {
-  display: grid;
-  gap: 8px;
-  margin: 10px 0;
+
+/* Åben panel */
+.panel {
+  background: #ede8c6;
+  border-radius: 22px;
+  padding: 16px 14px;
 }
-.stepRow {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  align-items: center;
+.list { display: grid; gap: 12px; margin: 2px 0 12px; }
+.row  { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; }
+
+/* Nummer badge (venstre) */
+.index {
+  font-weight: 700;
+  color: #2c4b3f;                      /* mørk grøn */
+  font-size: 22px;
+  width: 26px;
+  text-align: center;
 }
-.stepText {
-  flex: 1;
+
+/* Input-pill */
+.inputPill {
+  background: #e6dfbd;
+  border-radius: 16px;
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 8px;
 }
-.addRow {
-  display: flex;
-  gap: 8px;
+.inputField {
+  border: 0; background: transparent; width: 100%;
+  font: inherit; color: #2c4b3f;
+}
+
+/* Slet-knap */
+.delBtn {
+  background: none; border: 0; cursor: pointer; color: #2c4b3f; font-size: 18px;
+}
+
+/* Lille plus-pill under listen */
+.plusSmall {
+  width: 100%;
+  height: 52px;
+  border-radius: 16px;
+  border: 0;
+  background: #e6dfbd;
+  display: grid; place-items: center;
+  font-size: 32px; color: #2c4b3f; cursor: pointer;
+}
+
+/* Stor check nederst */
+.confirmWrap { display: grid; place-items: center; margin-top: 10px; }
+.confirmBtn {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  border: 0; cursor: pointer;
+  background: transparent;
+  color: #6a2d18;                      /* brun ✓ */
+  font-size: 40px; line-height: 1;
 }
 
 /* Ingredients sheet */
