@@ -1,0 +1,114 @@
+/* =============== */
+/* BUBBLE BUTTONS  */
+/* 72x72 runde knapper der sidder ude i kanten */
+/* bruges i header, profile, edit profile, opret opskrift osv. */
+/* =============== */
+
+.bubbleButton {
+  width: 72px;
+  height: 72px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* farvetema: rød variant */
+.bubbleRed {
+  background: #FB6255;
+}
+.bubbleRed:hover {
+  background: #f75345;
+}
+.bubbleRed:active {
+  background: #e4493c;
+}
+
+/* farvetema: grøn variant */
+.bubbleGreen {
+  background: var(--morkegroen);       /* du har allerede var(--morkegroen) i global */
+  border: 1px solid #214631;           /* brugt i header */
+}
+.bubbleGreen:hover {
+  background: #2f5c42;
+}
+.bubbleGreen:active {
+  background: #244a34;
+}
+
+/* form: boble der sidder ude i venstre side af skærmen */
+.bubbleLeft {
+  border-top-right-radius: 9999px;
+  border-bottom-right-radius: 9999px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* form: boble der sidder ude i højre side af skærmen */
+.bubbleRight {
+  border-top-left-radius: 9999px;
+  border-bottom-left-radius: 9999px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* ikon inde i boble-knappen */
+.bubbleIcon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  pointer-events: none;
+  filter: brightness(0) saturate(100%) invert(95%) sepia(17%) saturate(572%)
+          hue-rotate(17deg) brightness(105%) contrast(96%);
+}
+
+/* hvis du har en større ikon (som i header-profil, 48x48), kan du lave denne: */
+.bubbleIconLg {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  pointer-events: none;
+  filter: brightness(0) saturate(100%) invert(95%) sepia(17%) saturate(572%)
+          hue-rotate(17deg) brightness(105%) contrast(96%);
+}
+
+
+
+/* =============== */
+/* FILTER BUTTON   */
+/* aflange filter-knap på kategori-siden */
+/* =============== */
+
+.filtreButton {
+  height: 54px;
+  width: 175px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 28px;
+  background: var(--morkegroen);
+  border: none;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+  cursor: pointer;
+}
+.filtreIcon {
+  width: 26px;
+  height: 26px;
+  filter: brightness(0) saturate(100%) invert(95%) sepia(17%) saturate(572%)
+          hue-rotate(17deg) brightness(105%) contrast(96%);
+}
+
+
+.filtreWrap {
+  position: sticky;
+  top: 12px;
+  display: flex;
+  justify-content: flex-end;        /* skub knappen helt til højre */
+  margin-inline-end: calc(-1 * var(--xpad)); /* flush med højre skærmkant */
+  z-index: 2;                        /* over content */
+}

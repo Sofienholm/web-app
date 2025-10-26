@@ -152,50 +152,13 @@ html, body {
   margin-bottom: 16px;
 }
 
-/* 🔸 Basis for begge knapper */
-.profileButton {
-  width: 72px;
-  height: 72px;
-  background: #FB6255; /* rød */
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+/* OBS: margin-left:-16px / margin-right:-16px som du havde før
+   kan du nu flytte herind, fx: */
+
+.topButtons > :first-child {
+  margin-left: -16px;
 }
 
-.profileButton:hover {
-  background: #f75345;
-}
-.profileButton:active {
-  background: #e4493c;
-}
-
-/* 🔸 Venstre knap – kommer ud af venstre skærmkant */
-.leftButton {
-  border-top-right-radius: 9999px;
-  border-bottom-right-radius: 9999px;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  margin-left: -16px; /* skubber den ud over kanten */
-}
-
-/* 🔸 Højre knap – kommer ud af højre skærmkant */
-.rightButton {
-  border-top-left-radius: 9999px;
-  border-bottom-left-radius: 9999px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  margin-right: -16px; /* skubber den ud over kanten */
-}
-
-/* 🔸 Ikoner (beige farve) */
-.profileIcon {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(95%) sepia(17%) saturate(572%)
-    hue-rotate(17deg) brightness(105%) contrast(96%);
+.topButtons > :last-child {
+  margin-right: -16px;
 }
