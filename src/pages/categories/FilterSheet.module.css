@@ -156,10 +156,10 @@
 }
 
 .timeChipActive {
-  border: 2px solid #FFF9CB;
-  box-shadow:
-    0 0 0 3px rgba(255,249,203,0.3),
-    0 6px 14px rgba(0,0,0,0.4);
+ background: #2A5945;
+ border: 1px solid #FFF9CB;
+  color: #FFF9CB;
+
 }
 
 /* ====== TAGS ====== */
@@ -232,3 +232,4 @@
     margin-bottom: 24px;
   }
 }
+
