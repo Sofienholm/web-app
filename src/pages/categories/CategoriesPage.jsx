@@ -20,7 +20,8 @@ export default function CategoriesPage() {
   const left  = CATEGORIES.filter((_, i) => i % 2 === 0);
   const right = CATEGORIES.filter((_, i) => i % 2 === 1);
 
-  const goTo = (slug) => navigate(`/categories?cat=${encodeURIComponent(slug)}`);
+const goTo = (slug) => navigate(`/categories/results?cat=${encodeURIComponent(slug)}`);
+
 
   return (
     <div className={styles.page}>

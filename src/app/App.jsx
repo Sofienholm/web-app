@@ -1,14 +1,18 @@
 import { Routes, Route, Navigate } from "react-router";
 import { AuthProvider } from "../providers/AuthProvider.jsx";
+
+// Layouts
 import MainLayout from "./layouts/MainLayout.jsx";
 import FullscreenLayout from "./layouts/FullscreenLayout.jsx";
 
-// Pages
+// Pages (Main layout)
 import HomePage from "../pages/home/HomePage.jsx";
-import CreatePage from "../pages/create/CreatePage.jsx";
-// import RecipeDetail from "./pages/Recipe/RecipeDetail";
-// import RecipeEdit from "./pages/Recipe/RecipeEdit";
 import CategoriesPage from "../pages/categories/CategoriesPage.jsx";
+import CategoryResultPage from "../pages/categories/CategoryResultPage.jsx";  // 🔸 NY
+import SearchPage from "../pages/search/SearchPage.jsx";                      // 🔸 NY
+
+// Pages (Fullscreen layout)
+import CreatePage from "../pages/create/CreatePage.jsx";
 import ProfilePage from "../pages/profile/ProfilePage.jsx";
 import ProfileEdit from "../pages/profile/ProfileEdit";
 // import DonePage from "./pages/DonePage";
@@ -19,26 +23,25 @@ export default function App() {
   return (
     <AuthProvider>
       <Routes>
-        {/* Layout med PageHeader + BottomNav */}
+        {/* 🔹 Layout med PageHeader + BottomNav */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
-
-        <Route path="/categories" element={<CategoriesPage />} />
-        {/* <Route path="/recipe/:id" element={<RecipeDetail />} /> */}
+          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/categories/results" element={<CategoryResultPage />} /> {/* 🔸 NY route */}
+          <Route path="/search" element={<SearchPage />} />                     {/* 🔸 NY route */}
         </Route>
 
-        {/* Layout uden PageHeader + BottomNav */}
+        {/* 🔹 Layout uden PageHeader + BottomNav */}
         <Route element={<FullscreenLayout />}>
           <Route path="/create" element={<CreatePage />} />
-
-          {/* <Route path="/done" element={<DonePage />} /> */}
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/edit" element={<ProfileEdit />} />
-          {/* <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupFlow />} /> */}
+          {/* <Route path="/done" element={<DonePage />} /> */}
+          {/* <Route path="/login" element={<LoginPage />} /> */}
+          {/* <Route path="/signup" element={<SignupFlow />} /> */}
         </Route>
 
-        {/* fallback */}
+        {/* 🔹 Fallback (hvis ingen route matcher) */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </AuthProvider>
