@@ -18,11 +18,19 @@ export default function PageHeader() {
 
   const avatarToShow = chosen || defaultProfileIcon;
 
+  // søg og hop til /search?q=...
+  function runSearch() {
+    const term = searchValue.trim();
+    if (term !== "") {
+      navigate(`/search?q=${encodeURIComponent(term)}`);
+      setSearchValue(""); // valgfrit
+    }
+  }
+
   // når brugeren trykker Enter i søgefeltet
   function handleKeyDown(e) {
-    if (e.key === "Enter" && searchValue.trim() !== "") {
-      navigate(`/search?q=${encodeURIComponent(searchValue.trim())}`);
-      setSearchValue(""); // valgfrit: ryd feltet bagefter
+    if (e.key === "Enter") {
+      runSearch();
     }
   }
 
@@ -40,21 +48,28 @@ export default function PageHeader() {
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyDown={handleKeyDown}
           />
-          <img src={searchIcon} alt="" className={styles.searchIcon} />
+
+          {/* klikbart ikon-knap */}
+          <button
+            type="button"
+            className={styles.searchButton}
+            onClick={runSearch}
+            aria-label="Søg"
+          >
+            <img src={searchIcon} alt="" className={styles.searchIcon} />
+          </button>
         </div>
 
         {/* profil-knap der navigerer til /profile */}
         <button
           type="button"
-          className={`bubbleButton bubbleGreen bubbleRight ${styles.headerProfilePos || ""}`}
+          className={`bubbleButton bubbleGreen bubbleRight ${
+            styles.headerProfilePos || ""
+          }`}
           onClick={() => navigate("/profile")}
           aria-label="Gå til profil"
         >
-          <img
-            src={avatarToShow}
-            alt=""
-            className="bubbleIconLg"
-          />
+          <img src={avatarToShow} alt="" className="bubbleIconLg" />
         </button>
       </div>
     </header>

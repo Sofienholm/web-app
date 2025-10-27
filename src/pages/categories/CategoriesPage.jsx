@@ -4,15 +4,15 @@ import styles from "./CategoriesPage.module.css";
 import FilterSheet from "./FilterSheet.jsx";
 
 const CATEGORIES = [
-  { slug: "asiatisk",  icon: "/assets/categori/ic-category-asiatisk.svg" },
-  { slug: "favorit",   icon: "/assets/categori/ic-category-favorit.svg" },
-  { slug: "pasta",     icon: "/assets/categori/ic-category-pasta.svg" },
-  { slug: "hurtigt",   icon: "/assets/categori/ic-category-hurtig.svg" },
-  { slug: "mexicansk", icon: "/assets/categori/ic-category-mexi.svg" },
-  { slug: "vegetar",   icon: "/assets/categori/ic-category-vegie.svg" },
-  { slug: "mors",      icon: "/assets/categori/ic-category-moms-kitchen.svg" },
-  { slug: "budget",    icon: "/assets/categori/ic-category-budget.svg" },
-  { slug: "morgenmad", icon: "/assets/categori/ic-category-morgenmad.svg" },
+  { slug: "Asiatisk",  icon: "/assets/categori/ic-category-asiatisk.svg" },
+  { slug: "Favorit",   icon: "/assets/categori/ic-category-favorit.svg" },
+  { slug: "Pasta",     icon: "/assets/categori/ic-category-pasta.svg" },
+  { slug: "Hurtigt & Nemt",   icon: "/assets/categori/ic-category-hurtig.svg" },
+  { slug: "Mexicansk", icon: "/assets/categori/ic-category-mexi.svg" },
+  { slug: "Vegetar",   icon: "/assets/categori/ic-category-vegie.svg" },
+  { slug: "Mors Køkken",      icon: "/assets/categori/ic-category-moms-kitchen.svg" },
+  { slug: "Budget",    icon: "/assets/categori/ic-category-budget.svg" },
+  { slug: "Morgenmad", icon: "/assets/categori/ic-category-morgenmad.svg" },
 ];
 
 export default function CategoriesPage() {
@@ -32,9 +32,9 @@ export default function CategoriesPage() {
 
   // globale filtre (kan bruges hvis du vil vise "aktive filtre" i UI senere)
   const [filters, setFilters] = useState({
-    sort: "recent", // "recent" | "az"
-    time: null,     // "<30" | "60-90" | ">90" | null
-    tags: [],       // ["Pasta","Vegetar",...]
+    sort: null,   // <-- var "recent", nu null så ingen er valgt fra start
+    time: null,   // "<30" | "60-90" | ">90" | null
+    tags: [],     // ["Pasta","Vegetar",...]
   });
 
   // kaldes når man trykker "TILFØJ" i sheet'et
@@ -44,8 +44,13 @@ export default function CategoriesPage() {
 
     // byg query params til /categories/filter
     const params = new URLSearchParams();
-    params.set("sort", newFilters.sort);
-    if (newFilters.time) params.set("time", newFilters.time);
+
+    if (newFilters.sort) {
+      params.set("sort", newFilters.sort);
+    }
+    if (newFilters.time) {
+      params.set("time", newFilters.time);
+    }
     if (newFilters.tags.length > 0) {
       params.set("tags", newFilters.tags.join(",")); // "Pasta,Vegetar"
     }

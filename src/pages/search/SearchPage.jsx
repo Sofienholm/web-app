@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from "react-router";
 import useSearchRecipes from "../../hooks/useSearchRecipes.js";
 import styles from "./SearchPage.module.css";
 
+import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
+
 export default function SearchPage() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -15,22 +17,33 @@ export default function SearchPage() {
 
   return (
     <div className={styles.page}>
-      {/* Tilbage-knap */}
-      <button
-        className={styles.backBtn}
-        onClick={() => navigate(-1)}
-        aria-label="Tilbage"
-      >
-        ←
-      </button>
+      {/* HEADER ROW: tilbage-knap + tekst */}
+      <div className={styles.headerRow}>
+        <button
+          type="button"
+          className={`bubbleButton bubbleGreen bubbleLeft ${styles.backButtonFixed || ""}`}
+          onClick={() => navigate(-1)}
+          aria-label="Tilbage"
+        >
+          <img src={backIcon} alt="Tilbage" className="bubbleIcon" />
+        </button>
 
-      <h1 className={styles.heading}>
-        Søger efter: <span className={styles.query}>{q}</span>
-      </h1>
+        <div className={styles.headerTextBlock}>
+          <div className={styles.headingInlineLabel}>Søger efter:</div>
+          <div className={styles.headingInlineValue}>{q}</div>
+        </div>
+      </div>
 
-      {results.length === 0 ? (
-        <p className={styles.empty}>Ingen opskrifter fundet…</p>
-      ) : (
+      {/* LISTE / EMPTY */}
+     {results.length === 0 ? (
+  <div className={styles.illustrationWrap}>
+    <img
+      src="../public/assets/illustrations/illu-404.svg"
+      alt="Ingen opskrifter fundet"
+      className={styles.illustration}
+    />
+  </div>
+) : (
         <ul className={styles.list}>
           {results.map((r) => (
             <li key={r.id} className={styles.item}>

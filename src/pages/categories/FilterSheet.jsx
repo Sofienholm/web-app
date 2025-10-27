@@ -1,60 +1,64 @@
 import React, { useState, useEffect } from "react";
 import styles from "./FilterSheet.module.css";
 
-import closeIcon from "../../../public/assets/icon/ic-add-symbol.svg"; 
-// ^ samme ikon som plus-knappen i bottomnav, vi roterer det i CSS
-
 export default function FilterSheet({ initialFilters, onClose, onApply }) {
   const [localFilters, setLocalFilters] = useState(initialFilters);
   const [isVisible, setIsVisible] = useState(false);
 
-  // når sheet mountes -> start fade/slide ind
+  // sheet slider op lige efter mount
   useEffect(() => {
     const t = setTimeout(() => setIsVisible(true), 0);
     return () => clearTimeout(t);
   }, []);
 
-  function beginClose() {
-    // start animation ned
+  // luk animation (slide ned + fade overlay)
+  function handleClose() {
     setIsVisible(false);
-    // vent til CSS transition er færdig
     setTimeout(() => {
       onClose();
-    }, 400); // skal matche transition-duration i CSS nu (0.4s)
+    }, 250); // matcher CSS transition speed
   }
 
+  // klik på baggrunden = luk
   function handleOverlayClick(e) {
     if (e.target === e.currentTarget) {
-      beginClose();
+      handleClose();
     }
   }
 
+  // toggle sort (så A–Z / SENESTE kan vælges FRA og TIL,
+  // og ingen er aktiv fra start hvis initialFilters.sort === null)
   function selectSort(value) {
-    setLocalFilters((f) => ({ ...f, sort: value }));
+    setLocalFilters((f) => ({
+      ...f,
+      sort: f.sort === value ? null : value,
+    }));
   }
 
+  // toggle tidsfilter (samme logik: klik igen = fjern)
   function selectTime(value) {
     setLocalFilters((f) =>
       f.time === value ? { ...f, time: null } : { ...f, time: value }
     );
   }
 
+  // toggle tag
   function toggleTag(tag) {
     setLocalFilters((f) => {
       const hasIt = f.tags.includes(tag);
       return {
         ...f,
-        tags: hasIt
-          ? f.tags.filter((t) => t !== tag)
-          : [...f.tags, tag],
+        tags: hasIt ? f.tags.filter((t) => t !== tag) : [...f.tags, tag],
       };
     });
   }
 
+  // "TILFØJ" -> send valgene tilbage til parent
   function handleApply() {
     onApply(localFilters);
   }
 
+  // de tags der kan vælges
   const ALL_TAGS = [
     "Budget",
     "Hurtigt & nemt",
@@ -73,32 +77,38 @@ export default function FilterSheet({ initialFilters, onClose, onApply }) {
         isVisible ? styles.overlayVisible : ""
       }`}
       onClick={handleOverlayClick}
+      role="dialog"
+      aria-modal="true"
     >
       <div
         className={`${styles.sheet} ${
           isVisible ? styles.sheetVisible : ""
         }`}
       >
-        {/* Header area (title centered, close icon absolute in corner) */}
-        <div className={styles.sheetHeader}>
-          <h2 className={styles.title}>FILTER</h2>
+        {/* HEADER */}
+        <header className={styles.sheetHeader}>
+          <h1 className={styles.title}>FILTER</h1>
+
           <button
+            type="button"
             className={styles.closeBtn}
-            onClick={beginClose}
-            aria-label="Luk filter"
+            onClick={handleClose}
+            aria-label="Luk"
           >
+            {/* plus-ikonet roteret 45°, stylet i .closeIcon */}
             <img
-              src={closeIcon}
+              src="/assets/icon/ic-add-symbol.svg"
               alt=""
               className={styles.closeIcon}
             />
           </button>
-        </div>
+        </header>
 
-        {/* sortering */}
-        <div className={styles.sortRowWrapper}>
+        {/* SORTERING (A–Z / SENESTE) */}
+        <section className={styles.sortRowWrapper}>
           <div className={styles.sortRow}>
             <button
+              type="button"
               className={`${styles.sortPill} ${
                 localFilters.sort === "az" ? styles.sortPillActive : ""
               }`}
@@ -108,6 +118,7 @@ export default function FilterSheet({ initialFilters, onClose, onApply }) {
             </button>
 
             <button
+              type="button"
               className={`${styles.sortPill} ${
                 localFilters.sort === "recent" ? styles.sortPillActive : ""
               }`}
@@ -116,70 +127,76 @@ export default function FilterSheet({ initialFilters, onClose, onApply }) {
               SENESTE
             </button>
           </div>
-        </div>
+        </section>
 
         {/* TID */}
-        <div className={styles.sectionBlock}>
+        <section className={styles.sectionBlock}>
           <div className={styles.sectionLabel}>TID</div>
-
           <div className={styles.timeRow}>
             <button
+              type="button"
               className={`${styles.timeChip} ${
                 localFilters.time === "<30" ? styles.timeChipActive : ""
               }`}
               onClick={() => selectTime("<30")}
             >
-              &lt;30 MIN
+              {"<30 MIN"}
             </button>
 
             <button
+              type="button"
               className={`${styles.timeChip} ${
                 localFilters.time === "60-90" ? styles.timeChipActive : ""
               }`}
               onClick={() => selectTime("60-90")}
             >
-              60-90 MIN
+              60–90 MIN
             </button>
 
             <button
+              type="button"
               className={`${styles.timeChip} ${
                 localFilters.time === ">90" ? styles.timeChipActive : ""
               }`}
               onClick={() => selectTime(">90")}
             >
-              &gt;90 MIN
+              {">90 MIN"}
             </button>
           </div>
-        </div>
+        </section>
 
         {/* TAGS */}
-        <div className={styles.sectionBlock}>
+        <section className={styles.sectionBlock}>
           <div className={styles.sectionLabel}>TAGS</div>
-
           <div className={styles.tagsWrap}>
             {ALL_TAGS.map((tag) => {
               const active = localFilters.tags.includes(tag);
               return (
                 <button
                   key={tag}
+                  type="button"
+                  onClick={() => toggleTag(tag)}
                   className={`${styles.tagPill} ${
                     active ? styles.tagPillActive : ""
                   }`}
-                  onClick={() => toggleTag(tag)}
                 >
                   {tag}
                 </button>
               );
             })}
           </div>
-        </div>
+        </section>
 
-        {/* CTA */}
-        <div className={styles.footerArea}>
-          <button className={styles.applyBtn} onClick={handleApply}>
+        {/* CTA KNAP */}
+        <footer className={styles.footerArea}>
+          <button
+            type="button"
+            className={styles.applyBtn}
+            onClick={handleApply}
+          >
             TILFØJ
           </button>
-        </div>
+        </footer>
       </div>
     </div>
   );

@@ -1,11 +1,11 @@
 /* Header med variabel for side-padding så vi kan kompensere i searchWrap */
 .header {
   --xpad: 16px;                 /* svarer til px-4 i dit header-padding */
+  --gap: 30px;                  /* afstand mellem søg og profilknap */
   padding: 16px var(--xpad);    /* py-3 px-4 */
 }
 
-/* Searchbar: starter helt ude ved venstre skærmkant (kompenserer for header-padding)
-   og fylder 75% af skærmen + den negative margin (så den ser flush ud) */
+/* wrapper med input + ikonknap */
 .searchWrap {
   position: relative;
   margin-left: calc(-2 * var(--xpad));       /* trækker den ud over venstre kant */
@@ -13,7 +13,7 @@
   max-width: calc(720px + var(--xpad));
 }
 
-/* Input: venstre hjørner = 0 (ikke afrundet), højre hjørner = rund “pille” */
+/* inputfeltet */
 .searchInput {
   width: 100%;
   height: 72px;
@@ -35,45 +35,52 @@
   transition: box-shadow 150ms ease, border-color 150ms ease, background-color 150ms ease;
 }
 
-/* Kun placeholder centreres lidt mere – selve brugerens tekst forbliver venstrestillet */
+/* placeholder-stil */
 .searchInput::placeholder {
   color: rgba(6, 95, 70, 0.7);
   font-size: 1.1rem;
   font-weight: 500;
 }
 
-/* Ikonet stadig absolut i højre side inde i feltet */
-.searchIcon {
+/* klikbart ikon (knap) placeret inde i inputtet til højre */
+.searchButton {
   position: absolute;
   right: 25px;
   top: 50%;
   transform: translateY(-50%);
   height: 30px;
   width: 30px;
-  pointer-events: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* selve ikon-billedet */
+.searchIcon {
+  height: 30px;
+  width: 30px;
   opacity: 0.85;
 
-   /* gør ikonet mørkegrønt (#2A5945) */
-  filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(1021%) hue-rotate(97deg) brightness(93%) contrast(94%);
-
+  /* gør ikonet mørkegrønt (#2A5945) */
+  filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(1021%)
+          hue-rotate(97deg) brightness(93%) contrast(94%);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .searchInput { transition: none; }
 }
 
+/* container for søgefelt + profilknap */
 .inner {
   display: flex;
   align-items: center;
 }
 
-/* afstand mellem søgefelt og knap */
-.header { --gap: 30px; } /* du har allerede --xpad; vi tilføjer bare --gap */
-
-/* button */
+/* profil-knappen (avatar-boblen til højre) */
 .headerProfilePos {
   flex: 1 1 auto;
   height: 72px;
   margin-left: var(--gap);
-  margin-right: calc(-2 * var(--xpad)); /* så den går helt ud */
+  margin-right: calc(-2 * var(--xpad)); /* så den går helt ud til højre kant */
 }
