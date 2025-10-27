@@ -23,6 +23,7 @@
   margin: 0 auto;
 }
 
+
 /* Basics */
 .imageBox {
   width: 100%;
@@ -91,18 +92,22 @@
 }
 .row {
   display: flex;
-  justify-content: center;
-  gap: 12px;
+  gap: 3rem;
+  justify-content: flex-start;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  min-width: 79%;
   margin-bottom: 0.5rem;
 }
 .number {
-  width: 100px;
-  margin-left: 50%;
-  transform: translateX(-50%);
+  
+  text-align: center;
+
 }
 
 .col {
   flex: 1;
+  min-width: 8rem;
 }
 
 /* Tags */

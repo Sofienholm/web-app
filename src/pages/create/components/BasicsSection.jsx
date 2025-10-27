@@ -1,123 +1,150 @@
 // billede + titel + beskrivelse + tid + portioner + tags
-import { useRef } from "react";
-import cameraIcon from "/assets/icon/illu-camera-green.svg"; // Vite: brug /assets/...
- import styles from "../CreatePage.module.css";
+import { useRef, useState } from "react";
+import cameraIcon from "/assets/icon/illu-camera-green.svg";
+import styles from "../CreatePage.module.css";
+ import WheelPicker from "../../../components/WheelPicker";
+const ALL_TAGS = [
+  "Budget",
+  "Hurtigt & nemt",
+  "Vegetar",
+  "Asiatisk",
+  "Pasta",
+  "Mexicansk",
+];
 
- const ALL_TAGS = [
-   "Budget",
-   "Hurtigt & nemt",
-   "Vegetar",
-   "Asiatisk",
-   "Pasta",
-   "Mexicansk",
- ];
+export default function BasicsSection({
+  image,
+  setImage,
+  title,
+  setTitle,
+  description,
+  setDescription,
+  timeMin,
+  setTimeMin,
+  servings,
+  setServings,
+  tags,
+  setTags,
+}) {
+  const fileRef = useRef(null);
 
- export default function BasicsSection({
-   image,
-   setImage,
-   title,
-   setTitle,
-   description,
-   setDescription,
-   timeMin,
-   setTimeMin,
-   servings,
-   setServings,
-   tags,
-   setTags,
- }) {
-   const fileRef = useRef(null);
+  // picker-states
+  const [openTime, setOpenTime] = useState(false);
+  const [openServings, setOpenServings] = useState(false);
 
-   function pickFile() {
-     fileRef.current?.click();
-   }
-   function onFileChange(e) {
-     const f = e.target.files?.[0];
-     if (!f) return;
-     const r = new FileReader();
-     r.onload = () => setImage(r.result);
-     r.readAsDataURL(f);
-   }
-   function toggleTag(tag) {
-     setTags(
-       tags.includes(tag) ? tags.filter((t) => t !== tag) : [...tags, tag]
-     );
-   }
+  function pickFile() {
+    fileRef.current?.click();
+  }
+  function onFileChange(e) {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => setImage(r.result);
+    r.readAsDataURL(f);
+  }
+  function toggleTag(tag) {
+    setTags(
+      tags.includes(tag) ? tags.filter((t) => t !== tag) : [...tags, tag]
+    );
+  }
 
-   return (
-     <section>
-       {/* billede */}
-       <div className={styles.imageBox} onClick={pickFile} role="button">
-         {image ? (
-           <img className={styles.image} src={image} alt="" />
-         ) : (
-           <img className={styles.camera} src={cameraIcon} alt="Vælg billede" />
-         )}
-       </div>
-       <input
-         ref={fileRef}
-         type="file"
-         accept="image/*"
-         className={styles.hidden}
-         onChange={onFileChange}
-       />
+  return (
+    <section>
+      {/* billede */}
+      <div className={styles.imageBox} onClick={pickFile} role="button">
+        {image ? (
+          <img className={styles.image} src={image} alt="" />
+        ) : (
+          <img className={styles.camera} src={cameraIcon} alt="Vælg billede" />
+        )}
+      </div>
+      <input
+        ref={fileRef}
+        type="file"
+        accept="image/*"
+        className={styles.hidden}
+        onChange={onFileChange}
+      />
 
-       {/* felter */}
-       <label className={styles.label}>
-         <input
-           className={styles.title}
-           value={title}
-           onChange={(e) => setTitle(e.target.value)}
-           placeholder="Titel"
-         />
-       </label>
+      {/* titel */}
+      <label className={styles.label}>
+        <input
+          className={styles.title}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Titel"
+        />
+      </label>
 
-       <label className={styles.label}>
-         <textarea
-           className={styles.textarea}
-           value={description}
-           onChange={(e) => setDescription(e.target.value)}
-           placeholder="Kort beskrivelse..."
-         />
-       </label>
+      {/* beskrivelse */}
+      <label className={styles.label}>
+        <textarea
+          className={styles.textarea}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Kort beskrivelse..."
+        />
+      </label>
 
-       <div className={styles.row}>
-         <label className={`${styles.label} ${styles.col}`}>
-           <input
-             className={styles.number}
-             placeholder="Tid"
-             type="number"
-             value={timeMin}
-             onChange={(e) => setTimeMin(e.target.value)}
-           />
-         </label>
-         <label className={`${styles.label} ${styles.col}`}>
-           <input
-             className={styles.number}
-             type="number"
-             value={servings}
-             onChange={(e) => setServings(e.target.value)}
-             placeholder="Portioner"
-           />
-         </label>
-       </div>
+      {/* tid + portioner */}
+      <div className={styles.row}>
+        {/* TID */}
+        <button
+          type="button"
+          className={`${styles.number} ${styles.col}`}
+          onClick={() => setOpenTime(true)}
+        >
+          {timeMin ? `${timeMin} min` : "Tid"}
+        </button>
 
-       {/* tags */}
-       <h2 className={styles.tagsTitle}>Tilføj Tags</h2>
-       <div className={styles.tags}>
-         {ALL_TAGS.map((tag) => (
-           <button
-             key={tag}
-             type="button"
-             onClick={() => toggleTag(tag)}
-             className={`${styles.chip} ${
-               tags.includes(tag) ? styles.chipActive : ""
-             }`}
-           >
-             {tag}
-           </button>
-         ))}
-       </div>
-     </section>
-   );
- }
+        {/* PORTIONER */}
+        <button
+          type="button"
+          className={`${styles.number} ${styles.col}`}
+          onClick={() => setOpenServings(true)}
+        >
+          {servings ? `${servings} pers.` : "Portioner"}
+        </button>
+      </div>
+
+      {/* tags */}
+      <h2 className={styles.tagsTitle}>Tilføj Tags</h2>
+      <div className={styles.tags}>
+        {ALL_TAGS.map((tag) => (
+          <button
+            key={tag}
+            type="button"
+            onClick={() => toggleTag(tag)}
+            className={`${styles.chip} ${
+              tags.includes(tag) ? styles.chipActive : ""
+            }`}
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+
+      {/* WheelPicker til TID */}
+      <WheelPicker
+        label="Tid"
+        open={openTime}
+        onClose={() => setOpenTime(false)}
+        valuesLeft={[...Array(24).keys()]} // 0–23 timer
+        valuesRight={[...Array(12)].map((_, i) => i * 5)} // 0,5,10,...55 minutter
+        onConfirm={(h, m) => {
+          const formatted = `${h}t ${m.toString().padStart(2, "0")}m`;
+          setTimeMin(formatted);
+        }}
+      />
+
+      {/* WheelPicker til PORTIONER */}
+      <WheelPicker
+        label="Portioner"
+        open={openServings}
+        onClose={() => setOpenServings(false)}
+        valuesLeft={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
+        onConfirm={(v) => setServings(v)}
+      />
+    </section>
+  );
+}
