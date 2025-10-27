@@ -1,0 +1,107 @@
+/* Lukket kort */
+.card{
+  background:#f1e5b7;
+  border-radius:22px;
+  padding:18px 16px 20px;
+  position:absolute;
+    bottom:12px; left:12px; right:12px;
+  transition:transform .25s ease, height .25s ease;
+}
+.title{
+  text-align:center;
+  font-size:22px;
+  margin:0 0 12px;
+  color:var(--brun);
+  font-family: var(--font-brushup);
+}
+
+/* Lukket: stor plus-pill */
+.addPill{
+  width:100%;
+  height:68px;
+  border-radius:24px;
+  border:0;
+  background:#ece8c8;
+  display:grid; place-items:center;
+  cursor:pointer;
+}
+.addIcon{ width:34px; height:34px; }
+
+/* ÅBEN: samme kort bliver fixed og udvider SIG OPAD fra bunden */
+.floating{
+  position:fixed;
+  left:12px; right:12px; bottom:12px;   /* anker i bunden */
+  max-height:calc(100dvh - 9rem);
+  overflow:hidden;                      /* indre panel scroller */
+  transform-origin:bottom center;
+  animation:growUp .22s ease;
+  z-index:1000;
+}
+
+@keyframes growUp{
+  from{ transform:scaleY(.92); }
+  to{   transform:scaleY(1);    }
+}
+
+/* Indre panel der kan scrolle */
+.panelInplace{
+  background:#ede8c6;
+  border-radius:22px;
+  padding:16px 14px 20px;
+  max-height:calc(100dvh - 9rem - 60px);
+  overflow:auto;
+}
+
+/* Liste & rækker */
+.list{ display:grid; gap:12px; margin:2px 0 12px; }
+.row{ display:grid; grid-template-columns:auto 1fr auto; gap:10px; align-items:center; }
+.index{ width:26px; text-align:center; font-weight:700; color:#2c4b3f; font-size:22px; font-family: var(--font-brushup);}
+
+.inputPill{
+  background:#e6dfbd;
+  border-radius:16px;
+  padding:10px 14px;
+  display:flex; align-items:center; gap:8px;
+  color: var(--morkegroen);
+}
+.inputField{ border:0; background:transparent; width:100%; font:inherit; color:var(--morkegroen); font-family: var(--font-poppins);}
+.inputField::placeholder {
+    color: var(--morkegroen);
+    opacity: 0.7;
+}
+/* Skraldespand */
+.trashBtn {
+  background: none;
+  border: 0;
+
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: transparent;
+
+  color: #fff;
+  cursor: pointer;
+}
+.trashBtn img {
+  width: 20px;
+  height: 20px;
+ filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(1021%) hue-rotate(97deg) brightness(93%) contrast(94%);
+}
+/* Tilføj-knap i panel */
+.plusSmall{
+  width:100%; height:52px;
+  border-radius:16px; border:0;
+  background:#e6dfbd;
+  display:grid; place-items:center;
+  cursor:pointer;
+}
+.plusSmallIcon{ width:28px; height:28px; filter: invert(30%) sepia(100%) saturate(500%) hue-rotate(340deg) brightness(90%) contrast(85%);}
+
+/* OK-knap nederst */
+.confirmWrap{ display:grid; place-items:center; margin-top:10px; }
+.confirmBtn{ background:none; border:0; cursor:pointer; }
+.okIcon{ width:44px; height:44px; filter: invert(30%) sepia(100%) saturate(500%) hue-rotate(340deg) brightness(90%) contrast(85%);}
+
+.addIcon { width:34px; height:34px; filter: invert(30%) sepia(100%) saturate(500%) hue-rotate(340deg) brightness(90%) contrast(85%);}
+.editIcon { width:30px; height:30px; 
+filter: invert(30%) sepia(100%) saturate(500%) hue-rotate(340deg) brightness(90%) contrast(85%);} 

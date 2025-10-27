@@ -81,9 +81,7 @@ export default function RecipeForm({ onSave }) {
         setIngredients={setIngredients}
       />
 
-      <button type="submit" className={styles.afslut}>
-        AFSLUT
-      </button>
+
     </form>
   );
 }

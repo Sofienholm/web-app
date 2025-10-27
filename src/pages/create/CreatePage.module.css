@@ -9,6 +9,11 @@
   cursor: pointer;
 }
 
+/* OBS: margin-left:-16px / margin-right:-16px som du havde før
+   kan du nu flytte herind, fx: */
+
+
+
 /* Form */
 .form {
   display: flex;
@@ -139,6 +144,12 @@
   position: fixed;
   top: 12px;
   z-index: 10;
+}
+.addButtonFixed{
+  position: fixed;
+  top: 12px;
+  z-index: 10;
+  right: 0;
 }
 .afslut {
   position: absolute;
