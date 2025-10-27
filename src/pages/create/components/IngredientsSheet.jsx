@@ -1,5 +1,6 @@
 import styles from "./Ingredients.module.css";
 import trashIcon from "/assets/icon/ic-delete-symbol.svg";
+import closeIcon from "/assets/icon/ic-add-symbol.svg";
 const UNITS = ["kg", "g", "ml"];
 
 export default function IngredientsSheet({
@@ -29,14 +30,14 @@ export default function IngredientsSheet({
       <div className={styles.sheet} onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className={styles.sheetTopRow}>
-          <h2 className={styles.sheetTitle}>INGREDIENSER</h2>
           <button
             type="button"
             className={styles.closeIconBtn}
             onClick={onClose}
           >
-            ✕
+            <img src={closeIcon} alt="Tilbage" className="bubbleIcon" />
           </button>
+          <h2 className={styles.sheetTitle}>INGREDIENSER</h2>
         </div>
 
         {/* Rækker */}
