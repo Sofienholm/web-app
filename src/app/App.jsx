@@ -8,8 +8,9 @@ import FullscreenLayout from "./layouts/FullscreenLayout.jsx";
 // Pages (Main layout)
 import HomePage from "../pages/home/HomePage.jsx";
 import CategoriesPage from "../pages/categories/CategoriesPage.jsx";
-import CategoryResultPage from "../pages/categories/CategoryResultPage.jsx";  // 🔸 NY
-import SearchPage from "../pages/search/SearchPage.jsx";                      // 🔸 NY
+import CategoryResultPage from "../pages/categories/CategoryResultPage.jsx";  
+import FilteredResultPage from "../pages/categories/FilteredResultPage.jsx";   // ✅ TILFØJET
+import SearchPage from "../pages/search/SearchPage.jsx";                      
 
 // Pages (Fullscreen layout)
 import CreatePage from "../pages/create/CreatePage.jsx";
@@ -27,8 +28,9 @@ export default function App() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/categories" element={<CategoriesPage />} />
-          <Route path="/categories/results" element={<CategoryResultPage />} /> {/* 🔸 NY route */}
-          <Route path="/search" element={<SearchPage />} />                     {/* 🔸 NY route */}
+          <Route path="/categories/result" element={<CategoryResultPage />} />
+          <Route path="/categories/filter" element={<FilteredResultPage />} /> {/* ✅ ny side */}
+          <Route path="/search" element={<SearchPage />} /> {/* ✅ søgesiden */}
         </Route>
 
         {/* 🔹 Layout uden PageHeader + BottomNav */}
@@ -36,9 +38,6 @@ export default function App() {
           <Route path="/create" element={<CreatePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/edit" element={<ProfileEdit />} />
-          {/* <Route path="/done" element={<DonePage />} /> */}
-          {/* <Route path="/login" element={<LoginPage />} /> */}
-          {/* <Route path="/signup" element={<SignupFlow />} /> */}
         </Route>
 
         {/* 🔹 Fallback (hvis ingen route matcher) */}
