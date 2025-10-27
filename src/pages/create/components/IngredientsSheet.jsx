@@ -1,4 +1,4 @@
-import styles from "./IngredientsStep.module.css";
+import styles from "./Ingredients.module.css";
 import trashIcon from "/assets/icon/ic-delete-symbol.svg";
 const UNITS = ["kg", "g", "ml"];
 
