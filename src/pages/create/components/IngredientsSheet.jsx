@@ -44,6 +44,10 @@ export default function IngredientsSheet({
         <ul className={styles.ingListPills}>
           {ingredients.map((it, i) => (
             <li key={i} className={styles.ingRowPills}>
+
+
+
+              
               <div className={styles.pillGroup}>
                 <input
                   className={`${styles.pill} ${styles.pillAmount}`}

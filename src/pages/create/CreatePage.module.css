@@ -1,18 +1,7 @@
-.page {
+.body {
   min-height: 100dvh;
-  background: var(--off-white);
+  background: var(--beige);
 }
-.back {
-  background: none;
-  border: 0;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-/* OBS: margin-left:-16px / margin-right:-16px som du havde før
-   kan du nu flytte herind, fx: */
-
-
 
 /* Form */
 .form {
