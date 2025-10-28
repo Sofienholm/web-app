@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styles from "./SignupAvatarPage.module.css";
-import { setAvatar } from "../../services/auth.local.js";
 
 import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
 
-// dine avatarer
+// de samme avatar SVGs som resten af appen bruger
 const AVATARS = [
   "/assets/illustrations/ill-profil-avatar-woman-eating.svg",
   "/assets/illustrations/ill-profil-avatar-chef.svg",
@@ -18,62 +17,119 @@ const AVATARS = [
 export default function SignupAvatarPage() {
   const navigate = useNavigate();
 
-  const stored = localStorage.getItem("profile.avatarSrc");
-  const [current, setCurrent] = useState(
-    stored || "/assets/illustrations/ill-profil-avatar-man-garlic.svg"
-  );
+  // start fra første kort
+  const [index, setIndex] = useState(0);
 
-  function handleFinish() {
-    setAvatar(current);
-    navigate("/"); // færdig -> hjem
+  // skift avatar venstre/højre
+  function prevAvatar() {
+    setIndex((i) => (i === 0 ? AVATARS.length - 1 : i - 1));
+  }
+  function nextAvatar() {
+    setIndex((i) => (i === AVATARS.length - 1 ? 0 : i + 1));
+  }
+
+  // gem alt permanent + log ind
+  function handleCreate() {
+    const finalName = localStorage.getItem("signup.tmpName") || "";
+    const finalEmail = localStorage.getItem("signup.tmpEmail") || "";
+    const finalPw = localStorage.getItem("signup.tmpPw") || "";
+
+    localStorage.setItem("profile.name", finalName);
+    localStorage.setItem("profile.email", finalEmail);
+    localStorage.setItem("profile.password", finalPw);
+    localStorage.setItem("profile.avatarSrc", AVATARS[index]);
+
+    localStorage.setItem("auth.loggedIn", "true");
+
+    // ryd temp
+    localStorage.removeItem("signup.tmpName");
+    localStorage.removeItem("signup.tmpEmail");
+    localStorage.removeItem("signup.tmpPw");
+
+    navigate("/");
   }
 
   return (
-    <main className={styles.page}>
-      {/* Tilbage-knap */}
-      <button
-        type="button"
-        className={`bubbleButton bubbleGreen bubbleLeft ${styles.backButton}`}
-        onClick={() => navigate(-1)}
-        aria-label="Tilbage"
-      >
-        <img src={backIcon} alt="Tilbage" className="bubbleIcon" />
-      </button>
-
-      <h1 className={styles.title}>Vælg din figur</h1>
-      <p className={styles.sub}>Den vises som din avatar i appen</p>
-
-      {/* Preview kort */}
-      <div className={styles.previewCard}>
-        <img src={current} alt="Valgt avatar" className={styles.previewImg} />
-      </div>
-
-      {/* Grid med valg */}
-      <div className={styles.avatarGrid}>
-        {AVATARS.map((src) => (
-          <button
-            key={src}
-            type="button"
-            className={`${styles.avatarBtn} ${
-              current === src ? styles.avatarBtnActive : ""
-            }`}
-            onClick={() => setCurrent(src)}
-          >
-            <img src={src} alt="" className={styles.avatarThumbImg} />
-          </button>
-        ))}
-      </div>
-
-      {/* CTA */}
-      <div className={styles.submitRow}>
+    <div className={styles.screen}>
+      {/* top header */}
+      <header className={styles.top}>
         <button
-          type="button"
-          onClick={handleFinish}
-          className={styles.submitBtn}
+          className={`bubbleButton bubbleRed bubbleLeft ${styles.backBubble}`}
+          onClick={() => navigate(-1)}
+          aria-label="Tilbage"
         >
-          Færdig
+          <img src={backIcon} alt="" className="bubbleIcon" />
         </button>
-      </div>
-    </main>
+
+        <div className={styles.headBlock}>
+          <div className={styles.appTitle}>MIN KOGEBOG</div>
+          <div className={styles.subline}>
+            Vælg en profil karakter der{" "}
+            <br />
+            passer DIN personlighed
+          </div>
+        </div>
+      </header>
+
+      {/* avatar carousel area */}
+      <main className={styles.mainArea}>
+        <div className={styles.avatarRow}>
+          {/* det store kort */}
+          <div className={styles.avatarCard}>
+            <img
+              src={AVATARS[index]}
+              alt="Valgt avatar"
+              className={styles.avatarImg}
+            />
+          </div>
+
+          {/* "bars" til højre (dummy step indicator look) */}
+          <div className={styles.barsCol}>
+            {AVATARS.map((_, i) => (
+              <div
+                key={i}
+                className={`${styles.bar} ${
+                  i === index ? styles.barActive : ""
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* vælg controls */}
+        <div className={styles.carouselControls}>
+          <button
+            type="button"
+            className={styles.arrowBtn}
+            onClick={prevAvatar}
+            aria-label="Forrige"
+          >
+            ←
+          </button>
+
+          <div className={styles.chooseBubble}>Vælg</div>
+
+          <button
+            type="button"
+            className={styles.arrowBtn}
+            onClick={nextAvatar}
+            aria-label="Næste"
+          >
+            →
+          </button>
+        </div>
+
+        {/* opret knap */}
+        <div className={styles.btnRow}>
+          <button
+            type="button"
+            className={styles.createBtn}
+            onClick={handleCreate}
+          >
+            Opret
+          </button>
+        </div>
+      </main>
+    </div>
   );
 }

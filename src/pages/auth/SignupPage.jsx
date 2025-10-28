@@ -15,14 +15,19 @@ export default function SignupPage() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    // gemmer grunddata i localStorage (uden avatar)
+    // Gem midlertidigt til næste step (avatar-step bruger disse)
+    localStorage.setItem("signup.tmpName", name.trim());
+    localStorage.setItem("signup.tmpEmail", email.trim());
+    localStorage.setItem("signup.tmpPw", pw.trim());
+
+    // (valgfrit) kald din helper hvis du vil have noget ekstra logik derinde
     signupUser({
       name: name.trim(),
       email: email.trim(),
       password: pw.trim(),
     });
 
-    // efter navn+email går vi til avatar-step
+    // videre til avatar-step
     navigate("/signup/avatar");
   }
 

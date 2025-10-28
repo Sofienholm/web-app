@@ -2,38 +2,40 @@ import React from "react";
 import { useNavigate } from "react-router";
 import styles from "./WelcomeIntroPage.module.css";
 
-import heroIllu from "../../../public/assets/home/ill-home-food-man-on-books-pink.svg"; // brug en eksisterende illustration
+import chefStack from "../../../public/assets/home/ill-home-food-man-on-books-pink.svg";
 
 export default function WelcomeIntroPage() {
   const navigate = useNavigate();
 
   return (
-    <main className={styles.page}>
-      <div className={styles.illuWrap}>
-        <img src={heroIllu} alt="" className={styles.illu} />
-      </div>
+    <div className={styles.screen}>
+      <div className={styles.inner}>
+        {/* Illustration */}
+        <img
+          src={chefStack}
+          alt=""
+          className={styles.illustration}
+        />
 
-      <h1 className={styles.title}>Velkommen</h1>
-      <p className={styles.sub}>
-        Gem dine egne opskrifter, find dem hurtigt igen og hold styr på dine
-        favoritter ✌︎
-      </p>
-
-      <div className={styles.actions}>
+        {/* Log in knap */}
         <button
           className={styles.primaryBtn}
-          onClick={() => navigate("/signup")}
-        >
-          Opret profil
-        </button>
-
-        <button
-          className={styles.secondaryBtn}
           onClick={() => navigate("/login")}
         >
-          Log ind
+          Log In
         </button>
+
+        {/* Ny her? */}
+        <div className={styles.signupTeaser}>
+          <div className={styles.teaserQuestion}>NY HER?</div>
+          <button
+            className={styles.signupLink}
+            onClick={() => navigate("/signup")}
+          >
+            OPRET PROFIL
+          </button>
+        </div>
       </div>
-    </main>
+    </div>
   );
 }

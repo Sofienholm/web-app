@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styles from "./LoginPage.module.css";
-import { loginUser } from "../../services/auth.local.js";
 
 import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
 
@@ -12,64 +11,76 @@ export default function LoginPage() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    loginUser({ email, password: pw });
-    navigate("/"); // går til HomePage
+
+    const savedEmail = localStorage.getItem("profile.email");
+    const savedPw = localStorage.getItem("profile.password");
+
+    if (email === savedEmail && pw === savedPw) {
+      localStorage.setItem("auth.loggedIn", "true");
+      navigate("/");
+    } else {
+      alert("Forkert mail eller adgangskode");
+    }
   }
 
   return (
-    <main className={styles.page}>
-      {/* tilbage-knap */}
-      <button
-        type="button"
-        className={`bubbleButton bubbleGreen bubbleLeft ${styles.backButton}`}
-        onClick={() => navigate(-1)}
-        aria-label="Tilbage"
-      >
-        <img src={backIcon} alt="Tilbage" className="bubbleIcon" />
-      </button>
+    <div className={styles.screen}>
+      {/* top header section */}
+      <header className={styles.top}>
+        <button
+          className={`bubbleButton bubbleRed bubbleLeft ${styles.backBubble}`}
+          onClick={() => navigate(-1)}
+          aria-label="Tilbage"
+        >
+          <img src={backIcon} alt="" className="bubbleIcon" />
+        </button>
 
-      <h1 className={styles.title}>Log ind</h1>
-      <p className={styles.sub}>Godt at se dig igen 🫶</p>
-
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <label className={styles.label}>
-          <span className={styles.labelText}>Email</span>
-          <input
-            className={styles.input}
-            type="email"
-            placeholder="din@email.dk"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-
-        <label className={styles.label}>
-          <span className={styles.labelText}>Adgangskode</span>
-          <input
-            className={styles.input}
-            type="password"
-            placeholder="••••••••"
-            value={pw}
-            onChange={(e) => setPw(e.target.value)}
-            required
-          />
-        </label>
-
-        <div className={styles.submitRow}>
-          <button type="submit" className={styles.submitBtn}>
-            Log ind
-          </button>
+        <div className={styles.headlineWrap}>
+          <div className={styles.appTitle}>MIN KOGEBOG</div>
+          <div className={styles.subline}>Log in</div>
         </div>
-      </form>
+      </header>
 
-      <button
-        className={styles.smallLink}
-        type="button"
-        onClick={() => navigate("/signup")}
-      >
-        Har du ikke en profil? Opret her
-      </button>
-    </main>
+      {/* coral form card */}
+      <main className={styles.card}>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <label className={styles.label}>
+            <span className={styles.labelText}>Mail</span>
+            <input
+              className={styles.input}
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+            />
+          </label>
+
+          <label className={styles.label}>
+            <span className={styles.labelText}>Adgangskode</span>
+            <input
+              className={styles.input}
+              type="password"
+              value={pw}
+              onChange={e => setPw(e.target.value)}
+              required
+            />
+          </label>
+
+          <button
+            type="button"
+            className={styles.forgot}
+            onClick={() => alert("kom senere 🙂")}
+          >
+            GLEMT ADGANGSKODE?
+          </button>
+
+          <div className={styles.btnRow}>
+            <button type="submit" className={styles.ctaBtn}>
+              Log In
+            </button>
+          </div>
+        </form>
+      </main>
+    </div>
   );
 }

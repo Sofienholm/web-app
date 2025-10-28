@@ -1,84 +1,78 @@
-.page {
+/* WelcomeAuthPage.module.css */
+
+.screen {
   min-height: 100vh;
-  background: #F6A9B2;
-  padding: 24px 16px;
+  background: var(--nav-beige, #FFF9CB);
+  padding: 24px 16px 40px;
   box-sizing: border-box;
-  color: var(--beige);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: var(--font-poppins);
+  color: #2A5945;
+}
+
+.inner {
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
+  gap: 24px;
 }
 
-.illuWrap {
-  width: 220px;
-  height: 220px;
-  border-radius: 28px;
-  background: #fff9cb;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-  display: grid;
-  place-items: center;
-  margin-top: 24px;
-  margin-bottom: 24px;
-}
-.illu {
-  width: 70%;
-  height: 70%;
+/* kok på bogstak */
+.illustration {
+  width: 260px;
+  max-width: 80%;
+  height: auto;
   object-fit: contain;
   filter: brightness(0) saturate(100%)
-    invert(38%) sepia(83%) saturate(1954%)
-    hue-rotate(338deg) brightness(101%) contrast(99%);
+    invert(23%) sepia(19%) saturate(1021%)
+    hue-rotate(97deg) brightness(93%) contrast(94%);
 }
 
-.title {
-  margin: 0;
-  font-family: var(--font-brushup);
-  font-size: 2.6rem;
-  font-weight: 400;
-  color: var(--beige);
-  line-height: 1.1;
-  letter-spacing: 0.02em;
-}
-
-.sub {
-  max-width: 320px;
-  margin: 12px 0 32px;
-  color: var(--beige);
-  opacity: 0.9;
-  font-size: 0.95rem;
-  line-height: 1.4;
-}
-
-.actions {
-  width: 100%;
-  max-width: 320px;
-  display: grid;
-  gap: 12px;
-}
-
-/* primær CTA (opret) */
 .primaryBtn {
-  height: 62px;
-  border-radius: 16px;
-  background: #FFE6C2;
-  border: 2px solid #E6A98F;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #6B3B2A;
+  background: #FB6255;
+  color: #FFF9CB;
   font-family: var(--font-poppins);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  font-weight: 600;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 20px;
+  min-width: 200px;
+  padding: 16px 24px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
   cursor: pointer;
 }
 
-/* sekundær (log ind) */
-.secondaryBtn {
-  background: transparent;
-  border: none;
-  color: var(--beige);
+.primaryBtn:active {
+  transform: translateY(1px);
+}
+
+.signupTeaser {
+  text-align: center;
+}
+
+.teaserQuestion {
   font-family: var(--font-brushup);
   font-size: 1.8rem;
-  line-height: 1.2;
+  color: #2A5945;
+  margin-bottom: 8px;
+  letter-spacing: 0.03em;
+}
+
+.signupLink {
+  background: none;
+  border: none;
+  font-family: var(--font-poppins);
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #FB6255;
+  text-decoration: underline;
+  letter-spacing: 0.02em;
   cursor: pointer;
 }
