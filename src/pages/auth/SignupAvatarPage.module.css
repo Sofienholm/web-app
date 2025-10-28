@@ -7,7 +7,6 @@
   align-items: stretch;
   font-family: var(--font-poppins);
   color: #2A5945;
-  overflow: hidden;
 }
 
 .shell {
