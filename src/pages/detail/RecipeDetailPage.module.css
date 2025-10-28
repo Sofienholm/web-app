@@ -1,0 +1,173 @@
+
+.page {
+  min-height: 100dvh;
+  background: var(--off-white);
+  padding-bottom: 6rem; /* plads til evt. fast knapper */
+}
+
+/* Top-knapper */
+.backButtonFixed {
+  position: fixed;
+  top: 12px;
+  left: 0;
+  z-index: 10;
+}
+.editButtonFixed {
+  position: fixed;
+  top: 12px;
+  right: 0;
+  z-index: 10;
+}
+
+/* Hero-billede */
+.imageBox {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--404-beige);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Titel + beskrivelse */
+.title {
+  text-align: center;
+  font-family: var(--font-brushup);
+  font-size: 2.5rem;
+  color: #853714;
+  margin: 1rem auto 0.3rem;
+  max-width: 80%;
+}
+.description {
+  font-family: var(--font-poppins);
+  font-size: 1rem;
+  color: var(--brun);
+  text-align: center;
+  margin: 0 auto 1rem;
+  max-width: 80%;
+}
+
+/* Info-række (tid + portioner) */
+.metaRow {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  color: var(--morkegroen);
+  font-family: var(--font-poppins);
+  font-size: 0.95rem;
+}
+
+/* Tags */
+.tagsTitle {
+  font-family: var(--font-brushup);
+  font-size: 1.2rem;
+  color: var(--brun);
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 1.2rem;
+}
+.tag {
+  background: var(--nav-beige);
+  color: var(--brun);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  font-family: var(--font-poppins);
+}
+
+/* Ingrediens-liste (visning) */
+.ingredients {
+  margin: 0 auto 1.5rem;
+  max-width: 640px;
+  background: #ede8c6;
+  border-radius: 18px;
+  padding: 1rem 1.4rem;
+}
+.ingredients h2 {
+  text-align: center;
+  font-family: var(--font-brushup);
+  color: var(--brun);
+  font-size: 1.6rem;
+  margin-bottom: 0.8rem;
+}
+.ingredients ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.ingredients li {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  background: #e6dfbd;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-family: var(--font-poppins);
+  color: var(--morkegroen);
+  font-size: 0.95rem;
+}
+
+/* Fremgangsmåde */
+.steps {
+  margin: 0 auto 2.5rem;
+  max-width: 640px;
+  background: #f1e5b7;
+  border-radius: 22px;
+  padding: 1.2rem 1.4rem 1.6rem;
+}
+.steps h2 {
+  text-align: center;
+  font-family: var(--font-brushup);
+  color: var(--brun);
+  font-size: 1.6rem;
+  margin-bottom: 0.8rem;
+}
+.steps ol {
+  list-style: decimal;
+  margin: 0;
+  padding-left: 1.4rem;
+  display: grid;
+  gap: 6px;
+  color: var(--morkegroen);
+  font-family: var(--font-poppins);
+  font-size: 0.95rem;
+}
+
+/* Redigér-knap */
+.editBtn {
+  position: fixed;
+  bottom: 24px;
+  right: 50%;
+  transform: translateX(50%);
+  border-radius: 1rem;
+  min-width: 6rem;
+  height: 3rem;
+  font-size: 1rem;
+  font-family: var(--font-brushup);
+  background: var(--morkegroen);
+  color: var(--off-white);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+.editBtn:hover {
+  background: #2a5945;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

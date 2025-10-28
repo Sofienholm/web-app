@@ -35,7 +35,7 @@ export default function CreatePage() {
         <button
           type="submit"
           className={`bubbleButton bubbleGreen bubbleRight ${styles.addButtonFixed}`}
-          onClick={() => navigate("/")}
+          onClick={() => document.querySelector("form")?.requestSubmit()}
         >
           <img src={Flueben} alt="Rediger" className="bubbleIcon" />
         </button>

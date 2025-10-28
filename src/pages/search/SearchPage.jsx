@@ -2,26 +2,28 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router";
 import useSearchRecipes from "../../hooks/useSearchRecipes.js";
 import styles from "./SearchPage.module.css";
-
-import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
+import backIcon from "/assets/icon/ic-back-symbol.svg"; // vite-path fix
 
 export default function SearchPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // læs ?q=... fra url
+  // henter søgeordet fra URL'en (?q=...)
   const params = new URLSearchParams(location.search);
   const q = params.get("q") || "";
 
+  // søger i localStorage via vores custom hook
   const results = useSearchRecipes(q);
 
   return (
     <div className={styles.page}>
-      {/* HEADER ROW: tilbage-knap + tekst */}
+      {/* HEADER: tilbageknap + søgetekst */}
       <div className={styles.headerRow}>
         <button
           type="button"
-          className={`bubbleButton bubbleGreen bubbleLeft ${styles.backButtonFixed || ""}`}
+          className={`bubbleButton bubbleGreen bubbleLeft ${
+            styles.backButtonFixed || ""
+          }`}
           onClick={() => navigate(-1)}
           aria-label="Tilbage"
         >
@@ -34,25 +36,34 @@ export default function SearchPage() {
         </div>
       </div>
 
-      {/* LISTE / EMPTY */}
-     {results.length === 0 ? (
-  <div className={styles.illustrationWrap}>
-    <img
-      src="../public/assets/illustrations/illu-404.svg"
-      alt="Ingen opskrifter fundet"
-      className={styles.illustration}
-    />
-  </div>
-) : (
+      {/* VIS LISTE ELLER "INGEN RESULTATER" */}
+      {results.length === 0 ? (
+        <div className={styles.illustrationWrap}>
+          <img
+            src="/assets/illustrations/illu-404.svg"
+            alt="Ingen opskrifter fundet"
+            className={styles.illustration}
+          />
+        </div>
+      ) : (
         <ul className={styles.list}>
           {results.map((r) => (
             <li key={r.id} className={styles.item}>
-              <div className={styles.card}>
+              <div
+                className={styles.card}
+                onClick={() => navigate(`/recipe/${r.id}`)} // åbner detaljesiden
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && navigate(`/recipe/${r.id}`)
+                }
+              >
+                {/* Billede eller fallback-ikon */}
                 <div className={styles.cardImgWrap}>
-                  {r.imageUrl ? (
+                  {r.image ? (
                     <img
-                      src={r.imageUrl}
-                      alt=""
+                      src={r.image}
+                      alt={r.title}
                       className={styles.cardImg}
                     />
                   ) : (
@@ -60,12 +71,14 @@ export default function SearchPage() {
                   )}
                 </div>
 
+                {/* Titel og meta-info */}
                 <div className={styles.cardBody}>
                   <div className={styles.cardTitle}>
                     {r.title || "Uden titel"}
                   </div>
                   <div className={styles.cardMeta}>
-                    {r.timeMinutes ? `${r.timeMinutes} min` : "Ukendt tid"}
+                    {r.timeMin || "Ukendt tid"}
+                    {r.servings ? ` · ${r.servings} pers.` : ""}
                     {r.tags?.length ? " · " + r.tags.join(", ") : ""}
                   </div>
                 </div>

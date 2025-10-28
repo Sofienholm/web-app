@@ -6,21 +6,18 @@ import styles from "../CreatePage.module.css";
 import Garlictap from "/assets/icon/ic-ingredient-symbol.svg"; // Vite: brug /assets/...
 import Add from "/assets/icon/ic-add-symbol.svg"; // Vite: brug /assets/...
 
-export default function RecipeForm({ onSave }) {
+export default function RecipeForm({ onSave, initialData = {} }) {
   // basics
-  const [image, setImage] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [timeMin, setTimeMin] = useState("");
-  const [servings, setServings] = useState("");
-  const [tags, setTags] = useState([]);
-
-  // steps & ingredients
-  const [steps, setSteps] = useState([]); // [{text}]
- const [ingredients, setIngredients] = useState([
-   { amount: "", unit: "Enhed", name: "" },
- ]);
-
+  const [image, setImage] = useState(initialData.image || "");
+  const [title, setTitle] = useState(initialData.title || "");
+  const [description, setDescription] = useState(initialData.description || "");
+  const [timeMin, setTimeMin] = useState(initialData.timeMin || "");
+  const [servings, setServings] = useState(initialData.servings || "");
+  const [tags, setTags] = useState(initialData.tags || []);
+  const [steps, setSteps] = useState(initialData.steps || []);
+  const [ingredients, setIngredients] = useState(
+    initialData.ingredients || [{ amount: "", unit: "Enhed", name: "" }]
+  );
 
   // UI toggles
   const [showSteps, setShowSteps] = useState(false);
@@ -76,15 +73,13 @@ export default function RecipeForm({ onSave }) {
       >
         <img src={Garlictap} alt="ingredienser" className="bubbleIcon" />
       </button>
-      
+
       <IngredientsSheet
         open={showIngredients}
         onClose={() => setShowIngredients(false)}
         ingredients={ingredients}
         setIngredients={setIngredients}
       />
-
-
     </form>
   );
 }

@@ -2,26 +2,28 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router";
 import useRecipesByTag from "../../hooks/useRecipesByTag.js";
 import styles from "./CategoryResultPage.module.css";
-
-import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
+import backIcon from "/assets/icon/ic-back-symbol.svg"; // Vite path fix
 
 export default function CategoryResultPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // ?cat=asiatisk
+  // læs ?cat=... fra URL
   const params = new URLSearchParams(location.search);
   const tag = params.get("cat") || "";
 
+  // hent opskrifter for valgte kategori
   const recipes = useRecipesByTag(tag);
 
   return (
     <div className={styles.page}>
-      {/* HEADER ROW: tilbage-knap + tekst */}
+      {/* HEADER */}
       <div className={styles.headerRow}>
         <button
           type="button"
-          className={`bubbleButton bubbleGreen bubbleLeft ${styles.backButtonFixed || ""}`}
+          className={`bubbleButton bubbleGreen bubbleLeft ${
+            styles.backButtonFixed || ""
+          }`}
           onClick={() => navigate(-1)}
           aria-label="Tilbage"
         >
@@ -30,31 +32,37 @@ export default function CategoryResultPage() {
 
         <div className={styles.headerTextBlock}>
           <div className={styles.headingInlineLabel}>Kategori</div>
-          <div className={styles.headingInlineValue}>
-            {tag || "Kategori"}
-          </div>
+          <div className={styles.headingInlineValue}>{tag || "Kategori"}</div>
         </div>
       </div>
 
-      {/* EMPTY / RESULTS */}
+      {/* RESULTATER */}
       {recipes.length === 0 ? (
-  <div className={styles.illustrationWrap}>
-    <img
-      src="../public/assets/illustrations/illu-404.svg"
-      alt="Ingen opskrifter fundet i denne kategori"
-      className={styles.illustration}
-    />
-  </div>
-) : (
+        <div className={styles.illustrationWrap}>
+          <img
+            src="/assets/illustrations/illu-404.svg"
+            alt="Ingen opskrifter fundet i denne kategori"
+            className={styles.illustration}
+          />
+        </div>
+      ) : (
         <ul className={styles.list}>
           {recipes.map((r) => (
             <li key={r.id} className={styles.item}>
-              <div className={styles.card}>
+              <div
+                className={styles.card}
+                onClick={() => navigate(`/recipe/${r.id}`)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && navigate(`/recipe/${r.id}`)
+                }
+              >
                 <div className={styles.cardImgWrap}>
-                  {r.imageUrl ? (
+                  {r.image ? (
                     <img
-                      src={r.imageUrl}
-                      alt=""
+                      src={r.image}
+                      alt={r.title}
                       className={styles.cardImg}
                     />
                   ) : (
@@ -67,8 +75,8 @@ export default function CategoryResultPage() {
                     {r.title || "Uden titel"}
                   </div>
                   <div className={styles.cardMeta}>
-                    {r.timeMinutes ? `${r.timeMinutes} min` : "Ukendt tid"}
-                    {r.portions ? ` · ${r.portions} pers.` : ""}
+                    {r.timeMin || "Ukendt tid"}
+                    {r.servings ? ` · ${r.servings} pers.` : ""}
                     {r.tags?.length
                       ? ` · ${r.tags.slice(0, 2).join(", ")}`
                       : ""}
@@ -79,7 +87,6 @@ export default function CategoryResultPage() {
           ))}
         </ul>
       )}
-
     </div>
   );
 }

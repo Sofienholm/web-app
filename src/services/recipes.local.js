@@ -30,11 +30,11 @@ export async function createRecipe(data) {
     ...data,
   };
 
-  const list = readAll();
-  list.push(doc);
-  writeAll(list);
-
+  const list = readAll(); // læs eksisterende opskrifter
+  list.push(doc); // tilføj den nye
+  writeAll(list); // gem i localStorage
   return id;
+
 }
 
 // 🔹 READ (én opskrift)

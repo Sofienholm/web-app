@@ -21,6 +21,8 @@ import WelcomeIntroPage from "../pages/auth/WelcomeIntroPage.jsx";
 import LoginPage from "../pages/auth/LoginPage.jsx";
 import SignupPage from "../pages/auth/SignupPage.jsx";
 import SignupAvatarPage from "../pages/auth/SignupAvatarPage.jsx";
+import RecipeDetailPage from "../pages/detail/RecipeDetailPage.jsx";
+import EditRecipePage from "../pages/detail/EditRecipePage.jsx";
 
 export default function App() {
   return (
@@ -40,6 +42,8 @@ export default function App() {
           <Route path="/create" element={<CreatePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/edit" element={<ProfileEdit />} />
+          <Route path="/recipe/:id" element={<RecipeDetailPage />} />
+          <Route path="/edit/:id" element={<EditRecipePage />} />
 
           {/* nye auth sider */}
           <Route path="/welcome" element={<WelcomeIntroPage />} />
