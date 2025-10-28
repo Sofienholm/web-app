@@ -34,7 +34,6 @@ export async function createRecipe(data) {
   list.push(doc); // tilføj den nye
   writeAll(list); // gem i localStorage
   return id;
-
 }
 
 // 🔹 READ (én opskrift)
@@ -58,9 +57,7 @@ export async function listRecipesByTag(tag, { ownerId } = {}) {
     all = all.filter((r) => r.ownerId === ownerId);
   }
 
-  return all.filter(
-    (r) => Array.isArray(r.tags) && r.tags.includes(tag)
-  );
+  return all.filter((r) => Array.isArray(r.tags) && r.tags.includes(tag));
 }
 
 // 🔹 SEARCH (simpel tekstsøgning på titel, beskrivelse, ingredienser, tags)
@@ -78,15 +75,11 @@ export async function searchRecipes(query, { ownerId } = {}) {
     const descHit = r.description?.toLowerCase().includes(term);
 
     const ingHit = Array.isArray(r.ingredients)
-      ? r.ingredients.some((ing) =>
-          ing?.name?.toLowerCase().includes(term)
-        )
+      ? r.ingredients.some((ing) => ing?.name?.toLowerCase().includes(term))
       : false;
 
     const tagHit = Array.isArray(r.tags)
-      ? r.tags.some((tag) =>
-          tag?.toLowerCase().includes(term)
-        )
+      ? r.tags.some((tag) => tag?.toLowerCase().includes(term))
       : false;
 
     return titleHit || descHit || ingHit || tagHit;
@@ -115,3 +108,40 @@ export async function deleteRecipe(id) {
   writeAll(next);
   return true;
 }
+// --- SEED EN STANDARD OPSKRIFT ---
+(function seedExample() {
+  const list = JSON.parse(localStorage.getItem("recipes") || "[]");
+
+  // kun hvis der ikke findes nogen opskrifter i forvejen
+  if (list.length === 0) {
+    const example = {
+      id: "seed-1",
+      title: "Spinatpasta med ",
+      description:
+        "Cremet grøn pasta med spinat, hvidløg og flødeost – perfekt til travle aftener.",
+      timeMin: "25 min",
+      servings: "2",
+      tags: ["Pasta", "Hurtigt & nemt"],
+      image:
+        "https://images.unsplash.com/photo-1603133872878-684f84b61dfb?w=800&q=80",
+      ingredients: [
+        { amount: "250", unit: "g", name: "pasta" },
+        { amount: "100", unit: "g", name: "frisk spinat" },
+        { amount: "1", unit: "stk", name: "hvidløg" },
+        { amount: "100", unit: "g", name: "flødeost" },
+        { amount: "1", unit: "spsk", name: "olivenolie" },
+        { amount: "", unit: "", name: "salt & peber" },
+      ],
+      steps: [
+        "Kog pastaen al dente.",
+        "Svits hvidløg i olivenolie.",
+        "Tilsæt spinat og flødeost, rør til cremet sauce.",
+        "Vend pastaen i saucen, smag til med salt og peber.",
+      ],
+      createdAt: Date.now(),
+      ownerId: "demo-user",
+    };
+
+    localStorage.setItem("recipes", JSON.stringify([example]));
+  }
+})();

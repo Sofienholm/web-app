@@ -32,7 +32,7 @@ body {
   height: 100%;
   overflow-y: auto;   /* tillad kun vertikal scroll */
   overflow-x: hidden; /* forhindrer horisontal scroll */
-  touch-action: pan-y; /* tillad kun vertikale bevægelser */
+  touch-action: none; /* tillad kun vertikale bevægelser */
   overscroll-behavior-x: none; /* fjern “bounce” sideværts på iOS */
 }
 /* ---------- NAV-BAR ---------- */

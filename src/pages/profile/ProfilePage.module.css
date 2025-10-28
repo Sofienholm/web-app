@@ -9,7 +9,6 @@
   align-items: center;
   justify-content: flex-start;
   box-sizing: border-box; /* sikrer padding ikke skubber elementer ud */
-  overflow-x: hidden; /* ingen “ud-af-skærm”-problemer */
 }
 /* Sektionen med profilbillede og navn */
 .infoSection {
