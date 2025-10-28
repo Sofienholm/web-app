@@ -1,106 +1,237 @@
-.page {
+/* Hele skærmen (lys gul baggrund) */
+.screen {
+  height: 100vh;              /* <- lås højde */
   min-height: 100vh;
-  background: #F6A9B2;
+  background: #FFF9CB;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  font-family: var(--font-poppins);
+  color: #2A5945;
+
+  overflow: hidden;           /* <- ingen scroll (hverken x eller y) */
+}
+
+/* Wrapper der holder indhold centreret og styrer spacing */
+.shell {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
   padding: 16px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;               /* <- fylder hele viewport-højden */
+  min-height: 100%;
+  overflow: hidden;           /* <- sikkerhed så intet stikker og skaber scroll */
+}
+
+/* ========== TILBAGE-KNAP ========== */
+.backBubble {
+  position: relative;
+  left: -16px;
+  flex-shrink: 0;
+}
+
+/* ========== OVERSKRIFT BLOK ========== */
+.headBlock {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: var(--beige);
+  text-align: center;
+
+  margin-top: 20px;
+}
+
+/* "MIN KOGEBOG" – stor brushup, centreret */
+.appTitle {
+  font-family: var(--font-brushup);
+  font-size: 3.5rem;
+  line-height: 1.1;
+  font-weight: 400;
+  color: #2A5945;
+  letter-spacing: 0.03em;
+  margin: 12px 0 12px;
+}
+
+/* "Log in" – koral, lige under titlen, stadig centreret */
+.subline {
   font-family: var(--font-poppins);
+  font-size: 1.3rem;
+  line-height: 1.2;
+  font-weight: 600;
+  font-style: italic;
+  color: #FB6255;
+  margin: 0;
   text-align: center;
 }
 
-.backButton {
+/* ========== DET RØDE KORT ========== */
+.card {
+  /* ryk det længere ned fra titlen */
+  margin-top: 54px;
+
+  /* fyld hele bredden – nu endnu bredere end shell'en */
   position: relative;
-  left: -16px;
-  align-self: flex-start;
-  margin-bottom: 12px;
-  background: var(--morkegroen);
-  border: 1px solid #214631;
-}
+  width: calc(100% + 64px);        /* <- bredere end viewport padding */
+  left: -32px;                     /* <- træk den ud til begge sider */
+  /* ingen right/left negative margin, vi styrer med position */
 
-.title {
-  margin: 0;
-  font-family: var(--font-brushup);
-  font-size: 2.4rem;
-  font-weight: 400;
-  color: var(--beige);
-  line-height: 1.1;
-  letter-spacing: 0.02em;
-}
+  /* fyld hele højden ned til bunden */
+  flex: 1;
+  min-height: 0;
+  height: 100%;                    /* <- så den selv kan nå bund */
 
-.sub {
-  margin: 8px 0 24px;
-  font-size: 0.95rem;
-  color: var(--beige);
-  opacity: 0.9;
-}
+  /* farve + illu for toppen */
+  background-image: url("/assets/illustrations/illu-loginkasse.svg");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: top center;
 
-.form {
-  width: 100%;
-  max-width: 360px;
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+
+  color: #FFF9CB;
+
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  padding: 32px 20px 48px;
+  box-sizing: border-box;
+
+  overflow-y: hidden;              /* <- så kortet ikke scroller internt */
+}
+
+/* ========== FORM INDEN I KORTET ========== */
+.form {
+  width: 55%;
+  max-width: 500px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 20px;
+  color: #FFF9CB;
+
+  flex: 1;
+}
+
+/* hver label + input stack */
+.label {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  align-items: center;
+}
+
+/* "Mail", "Adgangskode" */
+.labelText {
+  width: 100%;
+  max-width: 400px;
+
+  font-family: var(--font-poppins);
+  font-size: 1rem;
+  font-weight: 500;
+  color: #FFF9CB;
+
   text-align: left;
 }
 
-.label {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+/* inputs */
+.input {
+  width: 90%;
+  max-width: 400px;
+
+  min-height: 72px;
+  border-radius: 16px;
+  background: #E9DCBD;
+  border: 4px solid #FDF1C6;
+  outline: none;
+
+  font-size: 1.1rem;
+  font-family: var(--font-poppins);
+  color: #2A5945;
+
+  padding: 0 16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
 }
 
-.labelText {
-  font-size: 0.9rem;
+.input::placeholder {
+  color: rgba(42,89,69,0.6);
+}
+
+/* "GLEMT ADGANGSKODE?" */
+.forgot {
+  background: none;
+  border: none;
+  padding: 0;
+
+  font-family: var(--font-brushup);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.2;
   font-weight: 500;
   color: var(--beige);
-}
+  width: 100%;
 
-.input {
-  height: 52px;
-  border-radius: 16px;
-  background: #FFE6C2;
-  border: 2px solid #E6A98F;
-  color: #6B3B2A;
-  font-size: 1rem;
-  padding: 0 14px;
-  outline: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-}
-.input::placeholder {
-  color: rgba(107,59,42,0.6);
-}
-
-.submitRow {
-  display: flex;
-  justify-content: center;
-  margin-top: 8px;
-}
-
-.submitBtn {
-  background: #FFF9CB;
-  color: #2A5945;
-  font-family: var(--font-brushup);
-  font-size: 1.8rem;
-  border: 0;
-  border-radius: 45px;
-  padding: 12px 24px;
-  min-width: 160px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-  cursor: pointer;
+  margin-bottom: 8px;
   text-align: center;
 }
-.submitBtn:active {
+
+/* knappen nederst */
+.btnRow {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* gul knap */
+.ctaBtn {
+  background: #FFF9CB;
+  color: #FB6255;
+  font-family: var(--font-brushup);
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: center;
+
+  border: 0;
+  border-radius: 50px;
+
+  min-width: 170px;
+  min-height: 80px;
+  padding: 16px 24px;
+
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+
+  cursor: pointer;
+}
+
+.ctaBtn:active {
   transform: translateY(1px);
 }
 
-.smallLink {
-  margin-top: 24px;
-  background: transparent;
-  border: none;
-  color: var(--beige);
-  font-size: 0.9rem;
-  text-decoration: underline;
-  cursor: pointer;
+/* --------- RESPONSIVE TWEAKS --------- */
+@media (min-width: 480px) {
+  .appTitle {
+    font-size: 3rem;
+  }
+
+  .subline {
+    font-size: 2rem;
+  }
+
+  .labelText {
+    font-size: 1.4rem;
+  }
+
+  .input {
+    font-size: 1.2rem;
+  }
 }

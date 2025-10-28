@@ -1,84 +1,93 @@
-.page {
+/* Hele skærmen */
+.screen {
   min-height: 100vh;
-  background: #F6A9B2;
-  padding: 24px 16px;
+  background: #FFF9CB;             /* lys gul som i din reference */
+  padding: 24px 16px 40px;
   box-sizing: border-box;
-  color: var(--beige);
-  font-family: var(--font-poppins);
 
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+
   text-align: center;
+  font-family: var(--font-poppins);
+  color: #2A5945;                  /* mørkegrøn tekst */
 }
 
-.illuWrap {
-  width: 220px;
-  height: 220px;
-  border-radius: 28px;
-  background: #fff9cb;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-  display: grid;
-  place-items: center;
-  margin-top: 24px;
-  margin-bottom: 24px;
-}
-.illu {
-  width: 70%;
-  height: 70%;
+/* Illustration i midten */
+.illustration {
+  width: 260px;
+  max-width: 80vw;
+  height: auto;
+  margin-top: 60px;
+  margin-bottom: 48px;
+
+  /* farven i dit mockup er mørkegrøn stregtegning,
+     du har allerede den rigtige svg-farve, så ingen filter her */
   object-fit: contain;
-  filter: brightness(0) saturate(100%)
-    invert(38%) sepia(83%) saturate(1954%)
-    hue-rotate(338deg) brightness(101%) contrast(99%);
 }
 
-.title {
-  margin: 0;
-  font-family: var(--font-brushup);
-  font-size: 2.6rem;
-  font-weight: 400;
-  color: var(--beige);
-  line-height: 1.1;
-  letter-spacing: 0.02em;
+/* Den store koralfarvede "Log In"-knap */
+.loginBtn {
+  background: #F46359;             /* koral / rødlig */
+  color: #FFF9CB;                   /* lys gul tekst */
+  border: none;
+  border-radius: 20px;
+  min-width: 160px;
+  padding: 16px 24px;
+
+  font-family: var(--font-poppins);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.2;
+
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  cursor: pointer;
+
+  margin-bottom: 32px;
 }
 
-.sub {
-  max-width: 320px;
-  margin: 12px 0 32px;
-  color: var(--beige);
-  opacity: 0.9;
-  font-size: 0.95rem;
-  line-height: 1.4;
+.loginBtn:active {
+  transform: translateY(1px);
 }
 
-.actions {
-  width: 100%;
-  max-width: 320px;
-  display: grid;
+/* Blokken under knappen: "NY HER?" + link */
+.signupBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 12px;
 }
 
-/* primær CTA (opret) */
-.primaryBtn {
-  height: 62px;
-  border-radius: 16px;
-  background: #FFE6C2;
-  border: 2px solid #E6A98F;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #6B3B2A;
+/* "NY HER?" – grøn pensel-font i mockup */
+.question {
+  font-family: var(--font-brushup);
+  font-size: 1.6rem;
+  line-height: 1.1;
+  font-weight: 400;
+  color: #2A5945; /* mørkegrøn */
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* "OPRET PROFIL" – koral, caps, understreget */
+.signupLink {
+  background: transparent;
+  border: none;
+  padding: 0;
+
   font-family: var(--font-poppins);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #F46359;         /* samme koral som knappen */
+
+  text-decoration: underline;
+  text-underline-offset: 4px;
   cursor: pointer;
 }
 
-/* sekundær (log ind) */
-.secondaryBtn {
-  background: transparent;
-  border: none;
-  color: var(--beige);
-  font-family: var(--font-brushup);
-  font-size: 1.8rem;
-  line-height: 1.2;
-  cursor: pointer;
+.signupLink:active {
+  transform: translateY(1px);
 }
