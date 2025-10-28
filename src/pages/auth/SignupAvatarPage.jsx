@@ -174,17 +174,6 @@ export default function SignupAvatarPage() {
             </button>
           </div>
         </section>
-
-        {/* Nederste CTA "Opret" */}
-        <div className={styles.btnRow}>
-          <button
-            type="button"
-            onClick={handleFinish}
-            className={styles.ctaBtn}
-          >
-            Opret
-          </button>
-        </div>
       </div>
     </main>
   );
