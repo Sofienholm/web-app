@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../app/firebase";
-import { useAuthUser } from "./useAuthUser";
+// import { doc, getDoc } from "firebase/firestore";
+// import { db } from "../app/firebase";
+// import { useAuthUser } from "./useAuthUser";
 
-export function useRecipe(recipeId) {
-  const user = useAuthUser();
+export function useRecipe(id) {
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
-    if (user && recipeId) {
-      getDoc(doc(db, "users", user.uid, "recipes", recipeId)).then((snap) =>
-        setRecipe(snap.data() || null)
-      );
-    }
-  }, [user, recipeId]);
+    const data = JSON.parse(localStorage.getItem("recipes")) || [];
+    const found = data.find((r) => r.id === id);
+    setRecipe(found);
+  }, [id]);
 
   return recipe;
 }

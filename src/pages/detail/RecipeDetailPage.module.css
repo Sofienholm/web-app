@@ -1,8 +1,6 @@
-
-.page {
+.body {
   min-height: 100dvh;
-  background: var(--off-white);
-  padding-bottom: 6rem; /* plads til evt. fast knapper */
+  background: var(--beige);
 }
 
 /* Top-knapper */
@@ -35,41 +33,85 @@
 }
 
 /* Titel + beskrivelse */
-.title {
-  text-align: center;
-  font-family: var(--font-brushup);
-  font-size: 2.5rem;
-  color: #853714;
-  margin: 1rem auto 0.3rem;
-  max-width: 80%;
+
+.camera {
+  width: 14rem;
+  opacity: 0.9;
+  filter: invert(88%) sepia(27%) saturate(583%) hue-rotate(341deg)
+    brightness(80%) contrast(96%);
 }
-.description {
-  font-family: var(--font-poppins);
-  font-size: 1rem;
-  color: var(--brun);
-  text-align: center;
-  margin: 0 auto 1rem;
-  max-width: 80%;
+.hidden {
+  display: none;
 }
 
-/* Info-række (tid + portioner) */
-.metaRow {
+.label {
   display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-bottom: 1rem;
-  color: var(--morkegroen);
-  font-family: var(--font-poppins);
-  font-size: 0.95rem;
+  flex-direction: column;
+  gap: 6px;
+}
+::placeholder {
+  color: var(--brun);
+}
+.title,
+.textarea,
+.number {
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--nav-beige);
+  font-family: var(--font-brushup);
+  color: var(--brun);
+  font-size: 16px;
+  max-width: fit-content;
+}
+.title {
+  height: 40px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  min-width: 79%;
+  text-align: center;
+  font-size: 2.5rem;
+  color: #853714;
+}
+.textarea {
+  min-height: 4rem;
+  resize: vertical;
+  margin-left: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--brun);
+  font-family: var( --font-poppins);
+  max-width: 60%;
+}
+.row {
+  display: flex;
+  gap: 3rem;
+  justify-content: flex-start;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  min-width: 79%;
+  margin-bottom: 0.5rem;
+}
+.number {
+  
+  text-align: center;
+
+}
+
+.col {
+  flex: 1;
+  min-width: 8rem;
 }
 
 /* Tags */
 .tagsTitle {
   font-family: var(--font-brushup);
-  font-size: 1.2rem;
+  font-size: 2.2rem;
   color: var(--brun);
-  text-align: center;
+  text-align: left;
   margin-bottom: 0.4rem;
+  margin-left: 10%;
 }
 .tags {
   display: flex;
@@ -86,65 +128,24 @@
   font-size: 0.9rem;
   font-family: var(--font-poppins);
 }
-
-/* Ingrediens-liste (visning) */
-.ingredients {
-  margin: 0 auto 1.5rem;
-  max-width: 640px;
-  background: #ede8c6;
-  border-radius: 18px;
-  padding: 1rem 1.4rem;
-}
-.ingredients h2 {
-  text-align: center;
-  font-family: var(--font-brushup);
+.chip {
+  background: var(--nav-beige);
   color: var(--brun);
-  font-size: 1.6rem;
-  margin-bottom: 0.8rem;
-}
-.ingredients ul {
-  list-style: none;
-  padding: 0;
-  display: grid;
-  gap: 6px;
-}
-.ingredients li {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  background: #e6dfbd;
+  border: 3px solid transparent;
   border-radius: 999px;
-  padding: 8px 14px;
-  font-family: var(--font-poppins);
-  color: var(--morkegroen);
-  font-size: 0.95rem;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.chipActive {
+  border: 12px solid transparent;
+  border-image: url("/assets/brush-border.png") 30 round;
+  background-color: #f5edcc;
+  border-image-slice: 80;
 }
 
-/* Fremgangsmåde */
-.steps {
-  margin: 0 auto 2.5rem;
-  max-width: 640px;
-  background: #f1e5b7;
-  border-radius: 22px;
-  padding: 1.2rem 1.4rem 1.6rem;
-}
-.steps h2 {
-  text-align: center;
-  font-family: var(--font-brushup);
-  color: var(--brun);
-  font-size: 1.6rem;
-  margin-bottom: 0.8rem;
-}
-.steps ol {
-  list-style: decimal;
-  margin: 0;
-  padding-left: 1.4rem;
-  display: grid;
-  gap: 6px;
-  color: var(--morkegroen);
-  font-family: var(--font-poppins);
-  font-size: 0.95rem;
-}
+
 
 /* Redigér-knap */
 .editBtn {
@@ -171,3 +172,10 @@
   background: #2a5945;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+.ingredientsButtonPos {
+  position: fixed;
+  bottom: 26.5rem;
+  right: 0;
+  z-index: 10;
+}
+

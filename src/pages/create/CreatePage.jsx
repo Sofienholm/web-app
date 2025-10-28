@@ -9,18 +9,10 @@ import { createRecipe } from "../../services/recipes.local.js";
 export default function CreatePage() {
   const navigate = useNavigate();
 
-  async function handleSave(recipeData) {
-    // mini-validation (tilpas som du vil)
-    if (!recipeData.title?.trim()) {
-      alert("Tilføj en titel");
-      return;
-    }
-
-    const id = await createRecipe(recipeData);
-    // vælg selv destination: detalje-rute eller hjem
-    // navigate(`/recipe/${id}`);
-    navigate("/"); // nu: tilbage til forsiden
-  }
+async function handleSave(data) {
+  const id = await createRecipe(data);
+  navigate(`/recipe/${id}`);
+}
 
   return (
     <section>
