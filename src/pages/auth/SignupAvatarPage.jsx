@@ -78,7 +78,7 @@ export default function SignupAvatarPage() {
         <header className={styles.headBlock}>
           <h1 className={styles.appTitle}>MIN KOGEBOG</h1>
           <p className={styles.sub}>
-            Vælg en profil karakter der passer <br />
+            Vælg en profil-karakter der passer <br />
             <strong>DIN</strong> personlighed
           </p>
         </header>
