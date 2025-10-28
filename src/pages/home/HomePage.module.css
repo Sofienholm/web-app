@@ -1,104 +1,165 @@
-body{
-background-color: var(--beige);
+/* lås scroll kun for forsiden */
+body {
+  background-color: var(--beige);
+  overflow: hidden;
 }
 
 .home {
   position: relative;
   min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+
+  padding-top: 2rem;
+  padding-bottom: 6rem;
+
   overflow: hidden;
-  padding-top: 2rem; /* afstand fra header */
-  padding-bottom: 6rem; /* plads over bottomnav */
 }
 
-/* Tekst (hero) */
+/* ---------- HERO TEKST ---------- */
 .hero {
   text-align: center;
-  margin-bottom: 2rem;
   z-index: 2;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
 }
 
-.title {
-  font-size: 2rem;
-  font-weight: 900;
+.heroTextBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  /* visuelt tekstfelt-område */
+  max-width: 20rem;
+  width: 100%;
+
   text-transform: uppercase;
-  font-family: var(--font-poppins);
   color: var(--morkegroen);
+  font-family: var(--font-poppins);
+}
+
+/* "VELKOMMEN" */
+.welcomeLine {
+  font-weight: 1000;
+  letter-spacing: 0.01em;
   margin: 0;
+  width: 100%;
+  text-align: center;
+  line-height: 0.8;
+  white-space: nowrap;
+
+  -webkit-text-stroke: 2.5px var(--morkegroen);
+  text-rendering: optimizeLegibility;
 }
 
-.subtitle {
-  font-size: 1.2rem;
+/* Navnet */
+.nameLine {
+  font-weight: 1000;
+  letter-spacing: 0.01em;
+  margin: 0.15rem 0 0;
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  word-break: keep-all;
+
+  -webkit-text-stroke: 2.5px var(--morkegroen);
+  text-rendering: optimizeLegibility;
+  color: var(--morkegroen);
+}
+
+/* Subline */
+.subLine {
+  margin-top: 0.25rem;
   font-family: var(--font-brushup);
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1;
   color: var(--tyrkisgroen);
-  margin: 0.3rem 0 0;
+  text-transform: uppercase;
+  width: 100%;
+  text-align: center;
+  word-break: break-word;
 }
 
-/* Illustration wrapper */
+/* ---------- SVÆVENDE ILLUSTRATIONER ---------- */
 .illustrations {
   position: relative;
   width: 100%;
+  height: 45vh;
   max-width: 500px;
-  aspect-ratio: 1 / 1;
   z-index: 1;
+  pointer-events: none;
+  overflow: visible;
 }
 
-/* Fælles for alle billeder */
-.img {
+/* alle mad-ikoner */
+.foodImg {
   position: absolute;
-  width: 110px;
-  opacity: 0.9;
+  width: 83px;
+  opacity: 1;
   transition: transform 4s ease-in-out;
+  animation: float 4s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.5s);
+  filter: none;
 }
 
-/* Center – mand på bøger */
-.center {
-  position: absolute;
-  width: 17rem;
-  left: 50%;
-  top: 120%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-}
-
-/* De øvrige fem billeder */
-.cake {
-  top: 10%;
-  left: 14rem;
-}
-
+/* placeringer */
 .noodles {
-  top:40%;
-  left: 1rem;
+  top: 35%;
+  left: 10%;
 }
-
 .pasta {
-  top: 12%;
-  right: 8rem;
-  
+  top: 10%;
+  right: 15%;
 }
-
 .meat {
-  top: 7%;
-  left: 2rem;
+  top: 10%;
+  left: 20%;
 }
-
 .veggie {
   top: 50%;
-  left: 16rem;
+  left: 75%;
 }
 
-/* Eventuel “svæve” animation */
+/* svæve-animation */
 @keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-8px); }
   100% { transform: translateY(0); }
 }
 
-.img {
-  animation: float 5s ease-in-out infinite;
-  animation-delay: calc(var(--i, 0) * 0.5s);
+/* ---------- LYSE RØDE BAGGRUNDSKORT ---------- */
+.bottomCardMask {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+
+  width: 115vw;
+  max-width: 130vw;
+
+  height: 38vh;
+
+  overflow: visible;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* selve SVG’en */
+.bottomCardImg {
+  width: 115vw;
+  max-width: 115vw;
+  height: auto;
+
+  transform: translateY(-6vh);
+
+  filter: none;
+  user-select: none;
+  pointer-events: none;
 }
