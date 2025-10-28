@@ -27,8 +27,14 @@
   --off-white: #FDF7ED; /* off-white */
   --404-beige: #F7DFA4; /* beige til 404-side */
 }
-
-
+html,
+body {
+  height: 100%;
+  overflow-y: auto;   /* tillad kun vertikal scroll */
+  overflow-x: hidden; /* forhindrer horisontal scroll */
+  touch-action: pan-y; /* tillad kun vertikale bevægelser */
+  overscroll-behavior-x: none; /* fjern “bounce” sideværts på iOS */
+}
 /* ---------- NAV-BAR ---------- */
 .pill-nav {
   position: fixed;

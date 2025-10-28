@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styles from "./CategoriesPage.module.css";
 import FilterSheet from "./FilterSheet.jsx";
+import useUnlockScroll from "../../hooks/useUnlockScroll";
 
 const CATEGORIES = [
   { slug: "Asiatisk",  icon: "/assets/categori/ic-category-asiatisk.svg" },
@@ -16,6 +17,7 @@ const CATEGORIES = [
 ];
 
 export default function CategoriesPage() {
+   useUnlockScroll();
   const navigate = useNavigate();
 
   // venstre / højre kolonne (forskudt)
