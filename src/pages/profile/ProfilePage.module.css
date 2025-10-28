@@ -1,26 +1,16 @@
-/* Sørg for at intet går ud over skærmen */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden; /* forhindrer horisontal scroll */
-}
-
 /* Hovedcontainer for siden */
 .page {
   width: 100%;
-  min-height: 100vh;             /* fylder hele skærmen i højden */
-  background: #F6A9B2;           /* lyserød baggrund */
+  min-height: 100vh; /* fylder hele skærmen i højden */
+  background: #f6a9b2; /* lyserød baggrund */
   padding: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  box-sizing: border-box;        /* sikrer padding ikke skubber elementer ud */
-  overflow-x: hidden;            /* ingen “ud-af-skærm”-problemer */
+  box-sizing: border-box; /* sikrer padding ikke skubber elementer ud */
+  overflow-x: hidden; /* ingen “ud-af-skærm”-problemer */
 }
-
 /* Sektionen med profilbillede og navn */
 .infoSection {
   display: flex;
@@ -85,8 +75,8 @@ html, body {
 .actionBtn {
   height: 62px;
   border-radius: 16px;
-  background: #FFE6C2;
-  border: 2px solid #E6A98F;
+  background: #ffe6c2;
+  border: 2px solid #e6a98f;
   color: var(--brun);
   font-weight: 400;
   font-size: 22px;
@@ -132,7 +122,7 @@ html, body {
   margin-top: 15px;
   background: transparent;
   border: none;
-  color: #FB6255;
+  color: #fb6255;
   font-weight: 800;
   font-size: 25px;
   font-family: var(--font-brushup);

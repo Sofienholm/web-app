@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../../create/components/Step.module.css";
 import Add from "/assets/icon/ic-add-symbol.svg";
-import editIcon from "/assets/icon/ic-edit-symbol.svg";
 
 export default function DetailStepsSection({ steps }) {
   const shellRef = useRef(null);
@@ -35,7 +34,7 @@ export default function DetailStepsSection({ steps }) {
       >
         <h3 className={styles.title}>FREMGANGSMÅDE</h3>
 
-        {/* LUKKET: stor pill med ikon (edit hvis der findes trin; ellers plus) */}
+        {/* LUKKET: vis knap til at åbne trin-listen */}
         {!open && (
           <button
             type="button"
@@ -45,11 +44,7 @@ export default function DetailStepsSection({ steps }) {
               hasSteps ? "Vis fremgangsmåde" : "Tilføj/vis fremgangsmåde"
             }
           >
-            <img
-              src={hasSteps ? editIcon : Add}
-              alt=""
-              className={hasSteps ? styles.editIcon : styles.addIcon}
-            />
+
           </button>
         )}
 

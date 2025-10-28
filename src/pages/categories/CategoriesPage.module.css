@@ -2,7 +2,7 @@
   --gap: 20px;
   --card: 160px; /* kort-størrelse */
   min-height: 100vh;
-  background: #FFF9CB;
+  background: #fff9cb;
   padding: 16px;
   box-sizing: border-box;
   position: relative;
@@ -18,9 +18,9 @@
   top: 12px;
   align-self: flex-end;
   display: flex;
-  justify-content: flex-start;       /* 🔸 ryk indholdet mod venstre */
+  justify-content: flex-start; /* 🔸 ryk indholdet mod venstre */
   align-items: center;
-  padding-left: 28px;                /* 🔸 luft fra venstre kant */
+  padding-left: 28px; /* 🔸 luft fra venstre kant */
   width: 175px;
   height: 54px;
   background: var(--morkegroen);
@@ -32,7 +32,7 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 
-  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
   cursor: pointer;
 
   /* 🔸 Gør knappen flush med højre kant */
@@ -43,7 +43,7 @@
   width: 26px;
   height: 26px;
   filter: brightness(0) saturate(100%) invert(95%) sepia(17%) saturate(572%)
-          hue-rotate(17deg) brightness(105%) contrast(96%);
+    hue-rotate(17deg) brightness(105%) contrast(96%);
 }
 
 /* 🔸 CENTRERET kolonne-layout */
@@ -76,11 +76,15 @@
   display: grid;
   place-items: center;
   cursor: pointer;
-  transition: transform .12s ease;
+  transition: transform 0.12s ease;
 }
 
-.card:hover  { transform: scale(1.03); }
-.card:active { transform: translateY(1px); }
+.card:hover {
+  transform: scale(1.03);
+}
+.card:active {
+  transform: translateY(1px);
+}
 
 .cardImg {
   width: 100%;
@@ -91,9 +95,9 @@
 
 /* 🔸 Responsivt – mindre på smalle skærme */
 @media (max-width: 380px) {
-  .page { 
-    --card: 128px; 
-    --gap: 12px; 
+  .page {
+    --card: 128px;
+    --gap: 12px;
   }
 
   .filterBtn {
