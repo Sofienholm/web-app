@@ -1,7 +1,7 @@
 import styles from "./HomePage.module.css";
-import { useAuthUser } from "../../hooks/useAuthUser";
+import { useLocalAuth } from "../../hooks/useLocalAuth.js";
 
-// Illustrationer (import fra public/assets/home)
+// Illustrationer
 import manBooks from "../../../public/assets/home/ill-home-food-man-on-books-pink.svg";
 import cake from "../../../public/assets/home/ill-home-food-cake-pink.svg";
 import noodles from "../../../public/assets/home/ill-home-food-nudles-pink.svg";
@@ -10,20 +10,20 @@ import meat from "../../../public/assets/home/ill-home-food-meat-pink.svg";
 import veggie from "../../../public/assets/home/ill-home-food-veggie-pink.svg";
 
 export default function HomePage() {
-  const user = useAuthUser(); // henter nuværende bruger (fra AuthProvider)
+  const user = useLocalAuth();
+
+  const firstName =
+    user?.name?.split(" ")[0] ||
+    user?.email?.split("@")[0] ||
+    "ven";
 
   return (
     <section className={styles.home}>
-      {/* Hero tekst */}
       <div className={styles.hero}>
-        <h1 className={styles.title}>
-          Velkommen{" "}
-          {user ? user.displayName || user.email.split("@")[0] : "gæst"}
-        </h1>
+        <h1 className={styles.title}>Velkommen {firstName}</h1>
         <p className={styles.subtitle}>Hvad er der på menuen?</p>
       </div>
 
-      {/* Illustrationer */}
       <div className={styles.illustrations}>
         <img src={manBooks} alt="Mand på bøger" className={styles.center} />
         <img src={cake} alt="Kage" className={`${styles.img} ${styles.cake}`} />

@@ -1,11 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import styles from "./ProfilePage.module.css";
+import { logoutUser } from "../../services/auth.local.js";
+import { useLocalAuth } from "../../hooks/useLocalAuth.js";
 
 // components
 import ProfileInfo from "./components/ProfileInfo";
 import ActionList from "./components/ActionList";
-import LogoutButton from "./components/LogoutButton";
 
 // illustrationer
 import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
@@ -14,17 +15,23 @@ import profileDefault from "../../../public/assets/illustrations/ill-profil-avat
 
 export default function ProfilePage() {
   const navigate = useNavigate();
+  const auth = useLocalAuth();
 
-  // Hent valgt avatar (fra localStorage)
-  const chosen =
-    typeof window !== "undefined"
-      ? localStorage.getItem("profile.avatarSrc")
-      : null;
+  const avatarSrc =
+    (typeof window !== "undefined" &&
+      localStorage.getItem("profile.avatarSrc")) ||
+    profileDefault;
 
-  const user = {
-    name: "Testbruger",
-    email: "test@eksempel.dk",
-  };
+  const name =
+    auth?.name || "Testbruger";
+
+  const email =
+    auth?.email || "test@eksempel.dk";
+
+  function handleLogout() {
+    logoutUser();
+    navigate("/welcome");
+  }
 
   return (
     <div className={styles.page}>
@@ -49,9 +56,9 @@ export default function ProfilePage() {
 
       {/* 🔸 Profilbillede og info */}
       <ProfileInfo
-        name={user.name}
-        email={user.email}
-        illustrationSrc={chosen || profileDefault}
+        name={name}
+        email={email}
+        illustrationSrc={avatarSrc}
       />
 
       {/* 🔸 Action-knapper */}
@@ -76,7 +83,13 @@ export default function ProfilePage() {
       />
 
       {/* 🔸 Log af-knap */}
-      <LogoutButton />
+      <button
+        type="button"
+        className={styles.logoutBtn}
+        onClick={handleLogout}
+      >
+        Log af
+      </button>
     </div>
   );
 }

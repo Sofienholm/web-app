@@ -1,0 +1,81 @@
+/* src/pages/auth/AuthIntroPage.module.css */
+
+.page {
+  min-height: 100vh;
+  background: #FFF9CB; /* lys gul */
+  padding: 32px 16px 48px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  font-family: var(--font-poppins);
+  color: #2A5945;
+}
+
+.illustrationWrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 320px;
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 24px;
+}
+
+.illustration {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%)
+    invert(23%) sepia(19%) saturate(1021%)
+    hue-rotate(97deg) brightness(93%) contrast(94%);
+  /* mørkegrøn tint */
+}
+
+.primaryBtn {
+  background: #F8695F; /* coral rød */
+  border: none;
+  border-radius: 20px;
+  padding: 16px 24px;
+  min-width: 180px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+
+  color: #FFF9CB;
+  font-family: var(--font-poppins);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.primaryBtn:active {
+  transform: translateY(1px);
+}
+
+.signupBlock {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.newHere {
+  font-family: var(--font-brushup);
+  font-size: 1.6rem;
+  color: #2A5945;
+  margin-bottom: 8px;
+}
+
+.signupLink {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-poppins);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #F8695F;
+  text-decoration: underline;
+  cursor: pointer;
+}
