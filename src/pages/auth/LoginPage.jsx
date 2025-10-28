@@ -13,63 +13,69 @@ export default function LoginPage() {
   function handleSubmit(e) {
     e.preventDefault();
     loginUser({ email, password: pw });
-    navigate("/"); // går til HomePage
+    navigate("/");
   }
 
   return (
-    <main className={styles.page}>
-      {/* tilbage-knap */}
-      <button
-        type="button"
-        className={`bubbleButton bubbleGreen bubbleLeft ${styles.backButton}`}
-        onClick={() => navigate(-1)}
-        aria-label="Tilbage"
-      >
-        <img src={backIcon} alt="Tilbage" className="bubbleIcon" />
-      </button>
+    <main className={styles.screen}>
+      <div className={styles.shell}>
+        {/* tilbage-knap */}
+        <button
+          type="button"
+          className={`bubbleButton bubbleRed bubbleLeft ${styles.backBubble}`}
+          onClick={() => navigate(-1)}
+          aria-label="Tilbage"
+        >
+          <img src={backIcon} alt="" className="bubbleIcon" />
+        </button>
 
-      <h1 className={styles.title}>Log ind</h1>
-      <p className={styles.sub}>Godt at se dig igen 🫶</p>
+        {/* titel */}
+        <header className={styles.headBlock}>
+          <h1 className={styles.appTitle}>MIN KOGEBOG</h1>
+          <div className={styles.subline}>Log in på din profil</div>
+        </header>
 
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <label className={styles.label}>
-          <span className={styles.labelText}>Email</span>
-          <input
-            className={styles.input}
-            type="email"
-            placeholder="din@email.dk"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
+        {/* røde kort */}
+        <section className={styles.card}>
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <label className={styles.label}>
+              <span className={styles.labelText}>Mail</span>
+              <input
+                className={styles.input}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </label>
 
-        <label className={styles.label}>
-          <span className={styles.labelText}>Adgangskode</span>
-          <input
-            className={styles.input}
-            type="password"
-            placeholder="••••••••"
-            value={pw}
-            onChange={(e) => setPw(e.target.value)}
-            required
-          />
-        </label>
+            <label className={styles.label}>
+              <span className={styles.labelText}>Adgangskode</span>
+              <input
+                className={styles.input}
+                type="password"
+                value={pw}
+                onChange={(e) => setPw(e.target.value)}
+                required
+              />
+            </label>
 
-        <div className={styles.submitRow}>
-          <button type="submit" className={styles.submitBtn}>
-            Log ind
-          </button>
-        </div>
-      </form>
+            <button
+              type="button"
+              className={styles.forgot}
+              onClick={() => alert("Kommer senere 🙂")}
+            >
+              GLEMT ADGANGSKODE?
+            </button>
 
-      <button
-        className={styles.smallLink}
-        type="button"
-        onClick={() => navigate("/signup")}
-      >
-        Har du ikke en profil? Opret her
-      </button>
+            <div className={styles.btnRow}>
+              <button type="submit" className={styles.ctaBtn}>
+                LOG IN
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
     </main>
   );
 }

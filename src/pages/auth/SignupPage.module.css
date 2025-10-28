@@ -1,102 +1,240 @@
-.page {
+/* ====== GLOBAL ANTI-SCROLL ====== */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* <- kill scroll globalt */
+}
+
+/* ====== SKÆRM ====== */
+.screen {
   min-height: 100vh;
-  background: #F6A9B2;
+  height: 100vh;           /* lås til viewport-højde */
+  background: #FFF9CB;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  font-family: var(--font-poppins);
+  color: #2A5945;
+
+  overflow: hidden;        /* ingen scroll inde i screen */
+}
+
+/* wrapper (samme som login shell) */
+.shell {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
   padding: 16px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100%;
+  height: 100%;            /* fyld hele screen */
+  position: relative;
+
+  overflow: hidden;        /* stop scrolling inde i shell */
+}
+
+/* ====== TOP ROW (pil + titelblok) ====== */
+.topRow {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between; /* pil til venstre, men vi absolute-positioner headBlock */
+  position: relative;
+}
+
+.backBubble {
+  position: relative;
+  left: -16px;
+  flex-shrink: 0;
+  z-index: 2;              /* så den ikke kommer bag headBlock */
+}
+
+/* titelblok – centreret på siden */
+.headBlock {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: var(--beige);
-  font-family: var(--font-poppins);
   text-align: center;
+
+  margin-top: 4px;
 }
 
-/* Tilbage-boble */
-.backButton {
-  position: relative;
-  left: -16px;
-  align-self: flex-start;
-  margin-bottom: 12px;
-  background: var(--morkegroen);
-  border: 1px solid #214631;
-}
-
-/* Titel */
-.title {
-  margin: 0;
+/* "MIN KOGEBOG" – brushup, men lidt mindre end login hero */
+.appTitle {
   font-family: var(--font-brushup);
-  font-size: 2.4rem;
-  font-weight: 400;
-  color: var(--beige);
+  font-size: 2.25rem;
   line-height: 1.1;
-  letter-spacing: 0.02em;
+  font-weight: 400;
+  color: #2A5945;
+  letter-spacing: 0.03em;
+  margin: 0 0 6px;
 }
 
-.sub {
-  margin: 8px 0 24px;
-  font-size: 0.95rem;
-  color: var(--beige);
-  opacity: 0.9;
+/* "Opret profil" i koral */
+.subline {
+  font-family: var(--font-poppins);
+  font-size: 0.9rem;
+  line-height: 1.2;
+  font-weight: 600;
+  font-style: italic;
+  color: #FB6255;
   text-align: center;
-  max-width: 320px;
 }
 
-/* Form */
-.form {
-  width: 100%;
-  max-width: 360px;
+/* ====== DET RØDE KORT ====== */
+.card {
+  /* afstand fra header ned til kortet */
+  margin-top: 32px;
+
+  /* fuld bredde ud over shell padding (samme hack som login) */
+  width: calc(100% + 32px);        /* 16px padding på hver side */
+  margin-left: -16px;
+  margin-right: -16px;
+
+  /* fyld resten af siden ned til bunden */
+  flex: 1;
+  min-height: 0;
+  height: 100%;                    /* fyld resten */
+
+  /* baggrundskasse */
+  background-image: url("../../../public/assets/illustrations/illu-langkort.svg");
+  background-repeat: no-repeat;
+  background-size: 110% auto;      /* lidt bredere end viewport */
+  background-position: top center;
+
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+
+  color: #FFF9CB;
+
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  padding: 32px 20px 48px;
+  box-sizing: border-box;
+
+  overflow-x: hidden;              /* ingen side-scroll */
+  overflow-y: hidden;              /* ingen vertical scroll inde i kortet */
+}
+
+/* ====== FORM ====== */
+.form {
+  width: 55%;
+  max-width: 200px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 15px;
+  color: #FFF9CB;
+
+  flex: 1;
+}
+
+/* label + input blok */
+.label {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: px;
+  align-items: center;
+}
+
+/* Label tekst over inputs */
+.labelText {
+  width: 100%;
+  max-width: 400px;
+
+  font-family: var(--font-poppins);
+  font-size: 1rem;
+  font-weight: 500;
+  color: #FFF9CB;
   text-align: left;
 }
 
-.label {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.labelText {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--beige);
-}
-
+/* inputs */
 .input {
-  height: 52px;
+  width: 90%;
+  max-width: 400px;
+
+  min-height: 72px;
   border-radius: 16px;
-  background: #FFE6C2;
-  border: 2px solid #E6A98F;
-  color: #6B3B2A;
-  font-size: 1rem;
-  padding: 0 14px;
+  background: #E9DCBD;
+  border: 4px solid #FDF1C6;
   outline: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-}
-.input::placeholder {
-  color: rgba(107, 59, 42, 0.6);
+
+  font-size: 1.1rem;
+  font-family: var(--font-poppins);
+  color: #2A5945;
+
+  padding: 0 16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
 }
 
-/* Gem-knap */
-.submitRow {
+.input::placeholder {
+  color: rgba(42,89,69,0.6);
+}
+
+/* ====== CTA KNAP ====== */
+.btnRow {
+  width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
-.submitBtn {
+.ctaBtn {
   background: #FFF9CB;
-  color: #2A5945;
+  color: #FB6255;
   font-family: var(--font-brushup);
-  font-size: 1.8rem;
-  border: 0;
-  border-radius: 45px;
-  padding: 12px 24px;
-  min-width: 160px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-  cursor: pointer;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.2;
   text-align: center;
+
+  border: 0;
+  border-radius: 50px;
+
+  min-width: 170px;
+  min-height: 80px;
+  padding: 16px 24px;
+
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  cursor: pointer;
 }
-.submitBtn:active {
+
+.ctaBtn:active {
   transform: translateY(1px);
+}
+
+/* ====== RESPONSIVE ====== */
+@media (min-width: 480px) {
+  .appTitle {
+    font-size: 2.6rem;
+  }
+
+  .subline {
+    font-size: 1.4rem;
+  }
+
+  .labelText {
+    font-size: 1.2rem;
+  }
+
+  .input {
+    font-size: 1.2rem;
+  }
 }
