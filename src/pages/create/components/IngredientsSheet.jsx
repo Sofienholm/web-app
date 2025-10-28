@@ -1,7 +1,7 @@
 import styles from "./Ingredients.module.css";
 import trashIcon from "/assets/icon/ic-delete-symbol.svg";
 import closeIcon from "/assets/icon/ic-add-symbol.svg";
-const UNITS = ["kg", "g", "ml"];
+
 
 export default function IngredientsSheet({
   open,
@@ -18,7 +18,7 @@ export default function IngredientsSheet({
   }
 
   function addEmpty() {
-    setIngredients([...ingredients, { amount: "", unit: "g", name: "" }]);
+    setIngredients([...ingredients, { amount: "", unit: "Enhed", name: "" }]);
   }
 
   function remove(i) {
@@ -44,38 +44,46 @@ export default function IngredientsSheet({
         <ul className={styles.ingListPills}>
           {ingredients.map((it, i) => (
             <li key={i} className={styles.ingRowPills}>
-              {/* Mængde-pill */}
-              <input
-                className={`${styles.pill} ${styles.pillAmount}`}
-                type="number"
-                inputMode="decimal"
-                placeholder=""
-                value={it.amount ?? ""}
-                onChange={(e) => update(i, { amount: e.target.value })}
-              />
+              <div className={styles.pillGroup}>
+                <input
+                  className={`${styles.pill} ${styles.pillAmount}`}
+                  type="number"
+                  value={it.amount ?? ""}
+                  onChange={(e) => update(i, { amount: e.target.value })}
+                />
+                <div className={styles.pillSelect}>
+                  <button
+                    type="button"
+                    className={styles.pillSelectBtn}
+                    onClick={() => update(i, { open: !it.open })}
+                  >
+                    {it.unit || "Enhed"} <span className={styles.arrow}></span>
+                  </button>
 
-              {/* Enhed-pill (select) */}
-              <div className={`${styles.pill} ${styles.pillSelect}`}>
-                <select
-                  className={styles.pillSelectField}
-                  value={it.unit ?? "g"}
-                  onChange={(e) => update(i, { unit: e.target.value })}
-                >
-                  {UNITS.map((u) => (
-                    <option key={u} value={u}>
-                      {u}
-                    </option>
-                  ))}
-                </select>
-                <span className={styles.pillCaret}>▾</span>
+                  {it.open && (
+                    <ul className={styles.dropdown}>
+                      {["tsk.", "spk.", "g", "kg", "ml", "dl"].map((unit) => (
+                        <li
+                          key={unit}
+                          onClick={() => {
+                            update(i, { unit, open: false });
+                          }}
+                        >
+                          {unit}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
 
               {/* Navn-pill (lys, med + ikon) */}
               <div className={`${styles.pill} ${styles.pillName}`}>
-                <span className={styles.pillPlus}>+</span>
                 <input
                   className={styles.pillNameField}
-                  placeholder=""
+                  placeholder={
+                    "Ingrediens" + (ingredients.length > 1 ? ` ${i + 1}` : "")
+                  }
                   value={it.name ?? ""}
                   onChange={(e) => update(i, { name: e.target.value })}
                 />
@@ -102,7 +110,7 @@ export default function IngredientsSheet({
             className={styles.bigPlusBtn}
             onClick={addEmpty}
           >
-            +
+            <img src={closeIcon} alt="Tilbage" className="bubbleIcon" />
           </button>
         </div>
       </div>

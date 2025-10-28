@@ -15,33 +15,71 @@ export default function WheelPicker({
   const [rightVal, setRightVal] = useState(valuesRight ? valuesRight[0] : null);
   const ITEM_HEIGHT = 48;
 
+  // 🔒 Lås scroll bagved (desktop + mobil)
   useEffect(() => {
     if (open) {
-      scrollToSelected(leftRef, valuesLeft, leftVal);
-      if (valuesRight) scrollToSelected(rightRef, valuesRight, rightVal);
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      document.body.style.touchAction = "";
     }
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      document.body.style.touchAction = "";
+    };
   }, [open]);
 
-  function scrollToSelected(ref, values, val) {
-    if (!ref.current) return;
-    const idx = values.indexOf(val);
-    ref.current.scrollTo({
-      top: idx * ITEM_HEIGHT - 2 * ITEM_HEIGHT, // centrerer midt
-      behavior: "auto",
-    });
-  }
+  // Når åbnet → scroll til valgt værdi
+  useEffect(() => {
+    if (!open) return;
+    scrollToSelected(leftRef, valuesLeft, leftVal);
+    if (valuesRight) scrollToSelected(rightRef, valuesRight, rightVal);
+  }, [open]);
 
-  function handleScroll(ref, values, setVal, val) {
-    const scrollTop = ref.current.scrollTop + ITEM_HEIGHT * 2; // midt offset
-    const index = Math.round(scrollTop / ITEM_HEIGHT);
+function scrollToSelected(ref, values, val) {
+  if (!ref.current) return;
+  const idx = values.indexOf(val);
+  ref.current.scrollTo({
+    top: idx * ITEM_HEIGHT, // fjern +2
+    behavior: "auto",
+  });
+}
+
+
+  function handleScroll(ref, values, setVal, currentVal) {
+    if (!ref.current) return;
+    // vi starter faktisk 2 "items" nede pga. padding
+const index = Math.round(ref.current.scrollTop / ITEM_HEIGHT);
+
     const newVal = values[index];
-    if (newVal !== val) setVal(newVal);
+    if (newVal !== undefined && newVal !== currentVal) {
+      setVal(newVal);
+    }
   }
 
   function handleConfirm() {
     if (valuesRight) onConfirm(leftVal, rightVal);
     else onConfirm(leftVal);
     onClose();
+  }
+
+  // Tilføjer tomme elementer før/efter så yderste værdier kan centreres
+  function renderWheel(values) {
+    return (
+      <>
+        <div style={{ height: ITEM_HEIGHT * 2 }} />
+        {values.map((v) => (
+          <div key={v} className={styles.wheelItem}>
+            {v}
+          </div>
+        ))}
+        <div style={{ height: ITEM_HEIGHT * 2 }} />
+      </>
+    );
   }
 
   if (!open) return null;
@@ -52,6 +90,7 @@ export default function WheelPicker({
         <h3 className={styles.title}>{label}</h3>
 
         <div className={styles.wheels}>
+          {/* Venstre hjul */}
           <div className={styles.venstredel}>
             <div
               className={styles.wheel}
@@ -60,17 +99,12 @@ export default function WheelPicker({
                 handleScroll(leftRef, valuesLeft, setLeftVal, leftVal)
               }
             >
-              {valuesLeft.map((v) => (
-                <div key={v} className={styles.wheelItem}>
-                  {v}
-                </div>
-              ))}
+              {renderWheel(valuesLeft)}
             </div>
-
-            {/* vis “T” kun hvis der er en højre del */}
             {valuesRight && <p>T</p>}
           </div>
 
+          {/* Højre hjul */}
           {valuesRight ? (
             <div className={styles.hojredel}>
               <div
@@ -80,22 +114,18 @@ export default function WheelPicker({
                   handleScroll(rightRef, valuesRight, setRightVal, rightVal)
                 }
               >
-                {valuesRight.map((v) => (
-                  <div key={v} className={styles.wheelItem}>
-                    {v}
-                  </div>
-                ))}
+                {renderWheel(valuesRight)}
               </div>
               <p>M</p>
             </div>
           ) : (
-            // hvis der ikke er højre del → vis label "portioner"
             <div className={styles.hojredel}>
               <p>portioner</p>
             </div>
           )}
 
-          <div className={styles.selectionBox}></div>
+          {/* Midtermarkering */}
+          <div className={styles.selectionBox} />
         </div>
 
         <button className={styles.confirmBtn} onClick={handleConfirm}>
