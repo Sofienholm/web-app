@@ -17,7 +17,10 @@ export default function RecipeForm({ onSave }) {
 
   // steps & ingredients
   const [steps, setSteps] = useState([]); // [{text}]
-  const [ingredients, setIngredients] = useState([]); // [{amount, unit, name}]
+ const [ingredients, setIngredients] = useState([
+   { amount: "", unit: "Enhed", name: "" },
+ ]);
+
 
   // UI toggles
   const [showSteps, setShowSteps] = useState(false);
