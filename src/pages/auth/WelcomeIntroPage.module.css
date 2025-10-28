@@ -1,0 +1,84 @@
+.page {
+  min-height: 100vh;
+  background: #F6A9B2;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  color: var(--beige);
+  font-family: var(--font-poppins);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.illuWrap {
+  width: 220px;
+  height: 220px;
+  border-radius: 28px;
+  background: #fff9cb;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  display: grid;
+  place-items: center;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+.illu {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%)
+    invert(38%) sepia(83%) saturate(1954%)
+    hue-rotate(338deg) brightness(101%) contrast(99%);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-brushup);
+  font-size: 2.6rem;
+  font-weight: 400;
+  color: var(--beige);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+
+.sub {
+  max-width: 320px;
+  margin: 12px 0 32px;
+  color: var(--beige);
+  opacity: 0.9;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.actions {
+  width: 100%;
+  max-width: 320px;
+  display: grid;
+  gap: 12px;
+}
+
+/* primær CTA (opret) */
+.primaryBtn {
+  height: 62px;
+  border-radius: 16px;
+  background: #FFE6C2;
+  border: 2px solid #E6A98F;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #6B3B2A;
+  font-family: var(--font-poppins);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  cursor: pointer;
+}
+
+/* sekundær (log ind) */
+.secondaryBtn {
+  background: transparent;
+  border: none;
+  color: var(--beige);
+  font-family: var(--font-brushup);
+  font-size: 1.8rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
