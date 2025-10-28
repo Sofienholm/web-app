@@ -9,7 +9,6 @@
   font-family: var(--font-poppins);
   color: #2A5945;
 
-  overflow: hidden;           /* <- ingen scroll (hverken x eller y) */
 }
 
 /* Wrapper der holder indhold centreret og styrer spacing */
@@ -26,7 +25,6 @@
 
   height: 100%;               /* <- fylder hele viewport-højden */
   min-height: 100%;
-  overflow: hidden;           /* <- sikkerhed så intet stikker og skaber scroll */
 }
 
 /* ========== TILBAGE-KNAP ========== */
