@@ -14,10 +14,10 @@ import styles from "./RecipeDetailPage.module.css";
 import backIcon from "/assets/icon/ic-back-symbol.svg";
 import editIcon from "/assets/icon/ic-edit-symbol.svg";
 
-import useUnlockScroll from "../../hooks/useUnlockScroll.js";
+
 
 export default function RecipeDetailPage() {
-  useUnlockScroll(); // tillader vertikal scroll kun på denne side
+
   
   const { id } = useParams();
   const navigate = useNavigate();
