@@ -1,7 +1,8 @@
-import styles from "../../create/components/Step.module.css";
-import closeIcon from "/assets/icon/ic-add-symbol.svg"; // byt gerne til et "chevron-down" ikon
 import { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 
+import styles from "../../create/components/Step.module.css";
+import closeIcon from "/assets/icon/ic-add-symbol.svg"; // byt evt. til "chevron-down"
 
 /**
  * Parallax-agtig "scroll-to-reveal" sektion.
@@ -10,6 +11,9 @@ import { useEffect, useRef, useState } from "react";
  */
 export default function DetailStepsSection({ steps }) {
   const sectionRef = useRef(null);
+
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   // 100% = helt nede, 0% = helt oppe
   const [offset, setOffset] = useState(100);
@@ -61,6 +65,11 @@ export default function DetailStepsSection({ steps }) {
     setOffset(100);
   }
 
+  function handleDone() {
+    // når brugeren trykker “Færdig”, hop til done-siden
+    navigate(`/recipe/${id}/done`);
+  }
+
   return (
     <section
       ref={sectionRef}
@@ -84,7 +93,8 @@ export default function DetailStepsSection({ steps }) {
             <img src={closeIcon} alt="Luk" className="bubbleIcon" />
           </button>
         </div>
-        {/* Samme layout som CreatePage → panelInplace + list + row */}
+
+        {/* samme layout som CreatePage → panelInplace + list + row */}
         <div className={styles.panelInplace}>
           <ul className={styles.list}>
             {Array.isArray(steps) && steps.length > 0 ? (
@@ -106,17 +116,16 @@ export default function DetailStepsSection({ steps }) {
             )}
           </ul>
         </div>
+
         <div className={styles.done}>
           <button
-          type="button"
-          className={styles.doneBtn}
-      
-       >
+            type="button"
+            className={styles.doneBtn}
+            onClick={handleDone}
+          >
             Færdig
           </button>
-
         </div>
-       
       </div>
     </section>
   );
