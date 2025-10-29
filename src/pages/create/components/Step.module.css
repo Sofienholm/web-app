@@ -69,6 +69,7 @@
   display: grid;
   gap: 12px;
   margin: 2px 0 12px;
+  padding: 0;
 }
 .row {
   display: grid;
@@ -174,31 +175,13 @@
     brightness(90%) contrast(85%);
 }
 
-/* detailStepsSection: starter skjult nedenfor skærmen */
-.detailStepsSection {
-  position: absolute;
-  bottom: -60%;              /* skjult */
-  left: 0;
-  right: 0;
-  height: 70vh;               /* fylder næsten hele skærmen */
-  background: #f1e5b7;
-  border-radius: 28px 28px 0 0;
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
-  transition: bottom 0.8s cubic-bezier(0.25, 1, 0.3, 1);
-  z-index: 20;
-  overflow-y: auto;
-  touch-action: pan-y;
-}
 
 /* Når synlig */
 .detailStepsSection.visible {
   bottom: 0; /* glider op */
 }
 
-/* Indhold */
-.detailStepsSection .inner {
-  padding: 2rem 1.5rem 4rem;
-}
+
 
 .detailStepsSection h2 {
   text-align: center;
@@ -206,6 +189,7 @@
   font-size: 1.8rem;
   color: var(--brun);
   margin-bottom: 1rem;
+ 
 }
 
 .detailStepsSection ol {
@@ -217,4 +201,97 @@
   font-family: var(--font-poppins);
   font-size: 1rem;
   color: var(--morkegroen);
+}
+
+
+
+.closeStepsBtn img {
+  width: 28px;
+  height: 28px;
+  filter: invert(30%) sepia(100%) saturate(500%) hue-rotate(340deg)
+    brightness(90%) contrast(85%);
+    rotate: 45deg;
+}
+
+
+
+/* Altid synlig lille "grabber"-zone i bunden af skærmen */
+.stepsGrabberDock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 6px;              /* lidt op fra bunden */
+  z-index: 51;              /* over indhold, under selve sheetet når åbent */
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+  /* lad ikke siden scrolle pga. touch på grabber */
+  touch-action: none;
+}
+
+.stepsGrabberBar {
+  width: 56px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.18);
+}
+
+/* Selve sheetet (starter nede) */
+.detailStepsSection {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  height: 90vh;                  /* fyld det meste af skærmen */
+  background: #f1e5b7;           /* match din steps-baggrund */
+  border-radius: 28px 28px 0 0;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.12);
+
+  transform: translateY(100%);
+  transition: transform 260ms cubic-bezier(0.22,1,0.36,1);
+  will-change: transform;
+
+  z-index: 52;
+  overflow: hidden;              /* vi styrer indre scroll dynamisk */
+}
+
+/* Indre container */
+.detailStepsSection .inner {
+  padding: 1rem 1.2rem 2rem;
+  height: 100%;
+}
+
+/* Header (titel + luk) */
+.stepsHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 1rem;
+  padding-left: 15%;
+}
+
+.closeStepsBtn {
+  background: none;
+  border: none;
+
+}
+
+.inputFieldReadOnly {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 999px;
+  font-family: var(--font-poppins);
+  font-size: 0.95rem;
+  color: var(--morkegroen);
+  line-height: 1.3;
+  pointer-events: none; /* gør den ikke klikbar */
+}
+
+/* fallback hvis ingen trin */
+.rowEmpty {
+  opacity: 0.6;
+  text-align: center;
+  font-style: italic;
+  padding: 1rem 0;
 }
