@@ -3,11 +3,13 @@
 // Matcher layout fra CreatePage, men uden inputs.
 import styles from "../RecipeDetailPage.module.css";
 import garlicIcon from "/assets/icon/ic-ingredient-symbol.svg";
+import { useState } from "react";
 
 export default function DetailBasicsSection({ recipe, onOpenIngredients }) {
   if (!recipe) return null;
-
+const [showFullDesc, setShowFullDesc] = useState(false);
   const { image, title, description, timeMin, servings, tags } = recipe;
+
 
   return (
     <section>
@@ -37,12 +39,28 @@ export default function DetailBasicsSection({ recipe, onOpenIngredients }) {
         </div>
       </div>
 
-      {/* Beskrivelse */}
+      {/* Beskrivelse (med “Læs mere”) */}
       {description ? (
         <div className={styles.label}>
-          <div className={styles.textarea} aria-label="Beskrivelse">
+          <div
+            className={`${styles.textarea} ${
+              showFullDesc ? styles.expanded : styles.collapsed
+            }`}
+            aria-label="Beskrivelse"
+          >
             {description}
           </div>
+
+          {/* Læs mere / Vis mindre */}
+          {description.length > 200 && (
+            <button
+              type="button"
+              className={styles.readMoreBtn}
+              onClick={() => setShowFullDesc(!showFullDesc)}
+            >
+              {showFullDesc ? "Vis mindre" : "Læs mere"}
+            </button>
+          )}
         </div>
       ) : null}
 
@@ -51,7 +69,10 @@ export default function DetailBasicsSection({ recipe, onOpenIngredients }) {
         <div className={`${styles.number} ${styles.col}`} aria-label="Tid">
           {timeMin || "Ukendt tid"}
         </div>
-        <div className={`${styles.number} ${styles.col}`} aria-label="Portioner">
+        <div
+          className={`${styles.number} ${styles.col}`}
+          aria-label="Portioner"
+        >
           {servings ? `${servings} prs.` : "Ukendt antal"}
         </div>
       </div>
