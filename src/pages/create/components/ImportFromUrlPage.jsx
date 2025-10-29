@@ -9,55 +9,68 @@ export default function ImportFromUrlPage() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  async function handleImport() {
-    if (!url.trim()) return;
-    setLoading(true);
-    setError("");
+ async function handleImport() {
+   if (!url.trim()) return;
+   setLoading(true);
+   setError("");
 
-    try {
-      // 🔹 kald din Firebase Function med Spoonacular
-      const res = await fetch(
-        `https://us-central1-minkogebog-9a065.cloudfunctions.net/importRecipeFromUrl?url=${encodeURIComponent(
-          url
-        )}`
-      );
-      const data = await res.json();
+   try {
+     const res = await fetch(
+       `https://us-central1-minkogebog-9a065.cloudfunctions.net/importRecipeFromUrl?url=${encodeURIComponent(
+         url
+       )}`
+     );
+     const data = await res.json();
+     console.log("🔍 Spoonacular data:", data);
 
-      if (!res.ok || data.error) throw new Error(data.error || "Import fejl");
+     if (!res.ok || data.error) throw new Error(data.error || "Import fejl");
 
-      // 🔹 transformer Spoonacular-data → dit lokale dataformat
-      const recipe = {
-        title: data.title || "Uden titel",
-        description:
-          data.summary?.replace(/<[^>]+>/g, "") ||
-          data.instructions?.slice(0, 200) ||
-          "",
-        image: data.image || "",
-        timeMin: data.readyInMinutes || "",
-        servings: data.servings || "",
-        ingredients: (data.extendedIngredients || []).map((i) => ({
-          amount: i.amount || "",
-          unit: i.unit || "",
-          name: i.original || i.name || "",
-        })),
-        steps:
-          data.analyzedInstructions?.[0]?.steps?.map((s) => s.step) ||
-          (data.instructions ? data.instructions.split(/\n+/) : []),
-        tags: data.dishTypes || [],
-      };
+     // 🧩 Normaliser Spoonacular → dit lokale format
+     const recipe = {
+       title: data.title || "Uden titel",
+       description: (
+         data.description?.replace(/<[^>]+>/g, "") ||
+         data.summary?.replace(/<[^>]+>/g, "") ||
+         data.steps?.join(" ") ||
+         ""
+       )
+         .trim()
+         .slice(0, 200), // kun første 200 tegn
 
-      // 🔹 gem i localStorage
-      const id = await createRecipe(recipe);
+       image: data.image || "",
+       timeMin: data.timeMin ? `${data.timeMin} min` : "",
+       servings: data.servings ? `${data.servings} pers.` : "",
+       tags: data.tags?.length ? data.tags : ["Importeret opskrift"],
 
-      // 🔹 send brugeren til den nye opskrift
-      navigate(`/recipe/${id}`);
-    } catch (err) {
-      console.error(err);
-      setError("Der opstod en fejl ved importen. Prøv igen.");
-    } finally {
-      setLoading(false);
-    }
-  }
+       // 🥄 Ingredienser uden gentagelse af mængde/enhed
+       ingredients: (data.ingredients || []).map((i) => ({
+         amount:
+           i.amount && i.amount % 1 !== 0
+             ? i.amount.toFixed(1)
+             : i.amount || "",
+         unit: i.unit || "",
+         name: i.name || i.originalName || "",
+       })),
+
+       // 👣 Steps (fanger begge formater)
+       steps: data.steps?.length
+         ? data.steps.map((s) => s.trim())
+         : data.analyzedInstructions?.[0]?.steps?.map((s) => s.step.trim()) ||
+           [],
+     };
+
+     // 🔹 Gem lokalt
+     const id = await createRecipe(recipe);
+
+     // 🔹 Naviger til detaljevisning
+     navigate(`/recipe/${id}`);
+   } catch (err) {
+     console.error("❌ Import fejl:", err);
+     setError("Der opstod en fejl ved importen. Prøv igen.");
+   } finally {
+     setLoading(false);
+   }
+ }
 
   return (
     <div className={styles.page}>

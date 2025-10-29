@@ -179,3 +179,28 @@
   z-index: 10;
 }
 
+.textarea {
+  transition: max-height 0.3s ease;
+  overflow: hidden;
+}
+
+/* Lukket version – samme højde som CreatePage */
+.collapsed {
+  max-height: 8rem; /* justér til samme som CreatePage */
+}
+
+/* Åben version – udvider hele teksten */
+.expanded {
+  max-height: none;
+}
+
+.readMoreBtn {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--morkegroen);
+  font-size: 0.9rem;
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
