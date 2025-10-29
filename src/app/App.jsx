@@ -23,7 +23,7 @@ import SignupPage from "../pages/auth/SignupPage.jsx";
 import SignupAvatarPage from "../pages/auth/SignupAvatarPage.jsx";
 import RecipeDetailPage from "../pages/detail/RecipeDetailPage.jsx";
 import EditRecipePage from "../pages/detail/EditRecipePage.jsx";
-import ImportFromUrlPage from "../pages/create/ImportFromUrlPage.jsx";
+import ImportFromUrlPage from "../pages/create/components/ImportFromUrlPage.jsx";
 
 // 🔥 NY SIDE efter man har lavet/madet opskriften
 import RecipeDonePage from "../pages/detail/RecipeDonePage.jsx";

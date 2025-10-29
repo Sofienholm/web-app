@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { createRecipe } from "../../services/recipes.local"; // din lokale CRUD
-import styles from "./ImportFromUrlPage.module.css"; // vi kan lave den bagefter
+import { createRecipe } from "../../../services/recipes.local.js"; // din lokale CRUD
+import styles from "./ImportFromUrlPage.module.css";
 
 export default function ImportFromUrlPage() {
   const [url, setUrl] = useState("");
@@ -11,12 +11,11 @@ export default function ImportFromUrlPage() {
 
   async function handleImport() {
     if (!url.trim()) return;
-
     setLoading(true);
     setError("");
 
     try {
-      // kald din Firebase function
+      // 🔹 kald din Firebase Function med Spoonacular
       const res = await fetch(
         `https://us-central1-minkogebog-9a065.cloudfunctions.net/importRecipeFromUrl?url=${encodeURIComponent(
           url
@@ -24,20 +23,33 @@ export default function ImportFromUrlPage() {
       );
       const data = await res.json();
 
-      if (data.error) throw new Error(data.error);
+      if (!res.ok || data.error) throw new Error(data.error || "Import fejl");
 
-      // opret opskrift i localStorage
-      const id = await createRecipe({
+      // 🔹 transformer Spoonacular-data → dit lokale dataformat
+      const recipe = {
         title: data.title || "Uden titel",
-        description: data.description || "",
-        ingredients: data.ingredients || [],
-        steps: data.steps || [],
+        description:
+          data.summary?.replace(/<[^>]+>/g, "") ||
+          data.instructions?.slice(0, 200) ||
+          "",
         image: data.image || "",
-        timeMin: data.time || "",
-        tags: data.tags || [],
-      });
+        timeMin: data.readyInMinutes || "",
+        servings: data.servings || "",
+        ingredients: (data.extendedIngredients || []).map((i) => ({
+          amount: i.amount || "",
+          unit: i.unit || "",
+          name: i.original || i.name || "",
+        })),
+        steps:
+          data.analyzedInstructions?.[0]?.steps?.map((s) => s.step) ||
+          (data.instructions ? data.instructions.split(/\n+/) : []),
+        tags: data.dishTypes || [],
+      };
 
-      // naviger til den nye detail-side
+      // 🔹 gem i localStorage
+      const id = await createRecipe(recipe);
+
+      // 🔹 send brugeren til den nye opskrift
       navigate(`/recipe/${id}`);
     } catch (err) {
       console.error(err);
@@ -54,7 +66,7 @@ export default function ImportFromUrlPage() {
       <div className={styles.form}>
         <input
           className={styles.input}
-          type="text"
+          type="url"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="Indsæt link til opskrift..."

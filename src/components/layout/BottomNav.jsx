@@ -76,12 +76,13 @@ export default function BottomNav() {
         <button
           className={styles.dialBtn}
           style={{ "--x": "0px", "--y": "-110px" }}
+          aria-label="Importer opskrift via link"
           onClick={() => {
             setOpen(false);
-            navigate("/create"); // gå til opret-side
+            navigate("/create/link"); // <-- RIGTIG sti til ImportFromUrlPage
           }}
         >
-          <img src={linkIcon} alt="" />
+          <img src={linkIcon} alt="Importer opskrift" />
         </button>
 
         {/* 2️⃣ Tilføj via billede */}
