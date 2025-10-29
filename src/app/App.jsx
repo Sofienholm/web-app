@@ -24,6 +24,9 @@ import SignupAvatarPage from "../pages/auth/SignupAvatarPage.jsx";
 import RecipeDetailPage from "../pages/detail/RecipeDetailPage.jsx";
 import EditRecipePage from "../pages/detail/EditRecipePage.jsx";
 
+// 🔥 NY SIDE efter man har lavet/madet opskriften
+import RecipeDonePage from "../pages/detail/RecipeDonePage.jsx";
+
 export default function App() {
   return (
     <AuthProvider>
@@ -42,10 +45,14 @@ export default function App() {
           <Route path="/create" element={<CreatePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/edit" element={<ProfileEdit />} />
+
           <Route path="/recipe/:id" element={<RecipeDetailPage />} />
           <Route path="/edit/:id" element={<EditRecipePage />} />
 
-          {/* nye auth sider */}
+          {/* 🔥 ny route: “Færdig / tilføj tips & tricks / afslut” */}
+          <Route path="/recipe/:id/done" element={<RecipeDonePage />} />
+
+          {/* auth sider */}
           <Route path="/welcome" element={<WelcomeIntroPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
