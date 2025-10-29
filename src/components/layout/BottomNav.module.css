@@ -1,0 +1,140 @@
+.nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0));
+  margin: 0 auto;
+  max-width:60%;
+  height: 84px;
+  gap: 6rem;
+  border-radius: 42px;
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  padding: 0 28px;
+  z-index: 50;
+  background-color: var(--nav-beige);
+
+}
+
+.item {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+  display: block;
+filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(1021%) hue-rotate(97deg) brightness(93%) contrast(94%);
+}
+
+/* FAB (plusknap) */
+.fab {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -45%);
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  background: var(--fab-bg);
+  box-shadow: var(--shadow);
+  display: grid;
+  place-items: center;
+  border: 0;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fabIcon {
+  display: block;
+  width: 64px;
+
+  transition: opacity 0.12s ease;
+  background-color: var(--morkegroen);
+    border-radius: 50%;
+    padding: 1rem;
+  transition: opacity 0.12s ease;
+}
+
+.x {
+  position: absolute;
+  font-size: 52px;
+  line-height: 1;
+  color: var(--beige);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.12s, transform 0.12s;
+  rotate: 45deg;
+}
+
+.open .fab {
+
+}
+
+.open .fabIcon {
+  opacity: 1;
+    background: var(--rod);
+  
+}
+
+.open .x {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* DIAL-knapper */
+.dial {
+  position: absolute;
+  left: 45%;
+  bottom: 150px;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  
+
+}
+
+.dialBtn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(var(--x), var(--y)) scale(0.6);
+  opacity: 0;
+  pointer-events: auto;
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  transition: transform 0.22s ease, opacity 0.22s ease, box-shadow 0.22s ease;
+  -webkit-tap-highlight-color: transparent;
+   background-color: var(--morkegroen);
+}
+
+.dialBtn img {
+  width: 28px;
+  height: 28px;
+  filter: invert(1) brightness(2);
+}
+
+.dialBtn:active {
+  transform: translate(var(--x), var(--y)) scale(0.96);
+}
+
+.open .dialBtn {
+  opacity: 1;
+  transform: translate(var(--x), var(--y)) scale(1);
+}

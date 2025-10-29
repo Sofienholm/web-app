@@ -1,29 +1,37 @@
 import { useEffect, useState } from "react";
-import { NavLink,useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
+import styles from "./BottomNav.module.css";
 
+// 🔹 Ikoner
 import homeIcon from "../../../public/assets/icon/ic-home-symbol-nav.svg";
-import plusIcon from "../../../public/assets/icon/ic-add-symbol.svg";
+import plusIcon from "../../../public/assets/icon/illu-add-symbol-beige.svg";
 import catIcon from "../../../public/assets/icon/ic-category-symbol-nav.svg";
-
-// De tre action-ikoner der popper op når man trykker på "+"
-import linkIcon from "../../../public/assets/icon/ic-link-add.svg"; //link
-import imageIcon from "../../../public/assets/icon/ic-pic-add.svg"; // "billede"
-import manualIcon from "../../../public/assets/icon/ic-manuelt-add.svg"; // "manuelt"
+import linkIcon from "../../../public/assets/icon/ic-link-add.svg";
+import imageIcon from "../../../public/assets/icon/ic-pic-add.svg";
+import manualIcon from "../../../public/assets/icon/ic-manuelt-add.svg";
 
 export default function BottomNav() {
+  // 🔹 State: holder styr på om "plus-menuen" er åben
   const [open, setOpen] = useState(false);
+
+  // 🔹 Bruges til at navigere mellem sider
   const navigate = useNavigate();
 
-  // luk på esc + klik udenfor
+  // 🔹 Luk menuen med ESC eller klik udenfor
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && setOpen(false);
+
     const onDown = (e) => {
       if (!open) return;
-      const root = document.querySelector(".pill-nav");
+      const root = document.querySelector(`.${styles.nav}`);
+      // hvis man klikker udenfor navbaren → luk
       if (root && !root.contains(e.target)) setOpen(false);
     };
+
     window.addEventListener("keydown", onKey);
     window.addEventListener("pointerdown", onDown);
+
+    // fjern event listeners, når komponent unmountes
     return () => {
       window.removeEventListener("keydown", onKey);
       window.removeEventListener("pointerdown", onDown);
@@ -31,91 +39,70 @@ export default function BottomNav() {
   }, [open]);
 
   return (
+    // 🔹 Selve navbaren
     <nav
-      className={`pill-nav ${open ? "is-open" : ""}`}
+      className={`${styles.nav} ${open ? styles.open : ""}`}
       aria-label="Bundnavigation"
     >
-      {/* venstre: Home */}
-      <NavLink to="/" className="pill-nav__item" aria-label="Home">
-        <img
-          src={homeIcon}
-          alt=""
-          className="pill-nav__icon"
-          width="44"
-          height="44"
-        />
+      {/* 🔹 Venstre ikon: Home */}
+      <NavLink to="/" className={styles.item} aria-label="Home">
+        <img src={homeIcon} alt="" className={styles.icon} />
       </NavLink>
 
-      {/* højre: Kategorier */}
-      <NavLink
-        to="/categories"
-        className="pill-nav__item"
-        aria-label="Kategorier"
-      >
-        <img
-          src={catIcon}
-          alt=""
-          className="pill-nav__icon"
-          width="44"
-          height="44"
-        />
+      {/* 🔹 Højre ikon: Kategorier */}
+      <NavLink to="/categories" className={styles.item} aria-label="Kategorier">
+        <img src={catIcon} alt="" className={styles.icon} />
       </NavLink>
 
-      {/* midter-PLUS / CLOSE */}
+      {/* 🔹 Midter-ikonet: Plus / Luk (Floating Action Button) */}
       <button
-        className="pill-nav__fab"
+        className={styles.fab}
         aria-expanded={open}
         aria-label={open ? "Luk" : "Åbn tilføj-menu"}
         onClick={() => setOpen((v) => !v)}
       >
-        {/* plus-ikon skjules når åben */}
-        <img
-          src={plusIcon}
-          alt=""
-          className="pill-nav__fab-icon"
-          width="72"
-          height="72"
-        />
-        {/* x som CSS-tegn, kun når åben */}
-        <span className="pill-nav__x" aria-hidden>
-          ×
+        {/* Plus-ikon (vises som standard) */}
+        <img src={plusIcon} alt="" className={styles.fabIcon} />
+
+        {/* X-ikon (vises kun når åben) */}
+        <span className={styles.x} aria-hidden>
+          <img src={plusIcon} alt="" className={styles.fabIcon} />
         </span>
       </button>
 
-      {/* speed-dial (popper op i en bue) */}
-      <div className="dial" aria-hidden={!open}>
+      {/* 🔹 Pop-up menu (“speed dial”) – tre valg der dukker op over plusknappen */}
+      <div className={styles.dial} aria-hidden={!open}>
+        {/* 1️⃣ Tilføj via link */}
         <button
-          className="dial-btn"
+          className={styles.dialBtn}
           style={{ "--x": "0px", "--y": "-110px" }}
-          aria-label="Gem via link"
           onClick={() => {
             setOpen(false);
-            navigate("/create"); // <--- ændr til din ønskede route
+            navigate("/create"); // gå til opret-side
           }}
         >
-          <img src={linkIcon} alt="" width="28" height="28" />
+          <img src={linkIcon} alt="" />
         </button>
 
+        {/* 2️⃣ Tilføj via billede */}
         <button
-          className="dial-btn"
+          className={styles.dialBtn}
           style={{ "--x": "-82px", "--y": "-70px" }}
-          aria-label="Gem via billede"
-          onClick={() => {
-            setOpen(false); /* navigate('/create/image') */
-          }}
+          onClick={() => setOpen(false)}
         >
-          <img src={imageIcon} alt="" width="28" height="28" />
+          <img src={imageIcon} alt="" />
         </button>
 
+        {/* 3️⃣ Tilføj manuelt */}
         <button
-          className="dial-btn"
+          className={styles.dialBtn}
           style={{ "--x": "82px", "--y": "-70px" }}
-          aria-label="Tilføj manuelt"
           onClick={() => {
-            setOpen(false); /* navigate('/create/manual') */
+            setOpen(false);
+            navigate("/create"); // gå til opret-side
           }}
         >
-          <img src={manualIcon} alt="" width="28" height="28" />
+          <img src={manualIcon} alt="" />
         </button>
       </div>
     </nav>
