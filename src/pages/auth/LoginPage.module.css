@@ -1,17 +1,28 @@
-/* Hele skærmen (lys gul baggrund) */
 .screen {
-  height: 100vh;              /* <- lås højde */
-  min-height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  min-height: calc(var(--vh, 1vh) * 100);
   background: #FFF9CB;
   display: flex;
   justify-content: flex-start;
   align-items: stretch;
   font-family: var(--font-poppins);
   color: #2A5945;
-
+  position: relative;
+  overflow: hidden;
 }
 
-/* Wrapper der holder indhold centreret og styrer spacing */
+/* bundens røde fill */
+.bottomFill {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 15vh; /* nok til at dække “hul” bag illu */
+  background: #FB6255;
+  z-index: 0;
+}
+
+/* resten uændret */
 .shell {
   position: relative;
   width: 100%;
@@ -19,32 +30,24 @@
   margin: 0 auto;
   padding: 16px;
   box-sizing: border-box;
-
   display: flex;
   flex-direction: column;
-
-  height: 100%;               /* <- fylder hele viewport-højden */
+  height: 100%;
   min-height: 100%;
+  z-index: 1;
 }
-
-/* ========== TILBAGE-KNAP ========== */
 .backBubble {
   position: relative;
   left: -16px;
   flex-shrink: 0;
 }
-
-/* ========== OVERSKRIFT BLOK ========== */
 .headBlock {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-
   margin-top: 20px;
 }
-
-/* "MIN KOGEBOG" – stor brushup, centreret */
 .appTitle {
   font-family: var(--font-brushup);
   font-size: 3.5rem;
@@ -54,72 +57,45 @@
   letter-spacing: 0.03em;
   margin: 12px 0 12px;
 }
-
-/* "Log in" – koral, lige under titlen, stadig centreret */
 .subline {
   font-family: var(--font-poppins);
   font-size: 1.3rem;
-  line-height: 1.2;
   font-weight: 600;
   font-style: italic;
   color: #FB6255;
-  margin: 0;
-  text-align: center;
 }
-
-/* ========== DET RØDE KORT ========== */
 .card {
-  /* ryk det længere ned fra titlen */
   margin-top: 54px;
-
-  /* fyld hele bredden – nu endnu bredere end shell'en */
   position: relative;
-  width: calc(100% + 64px);        /* <- bredere end viewport padding */
-  left: -32px;                     /* <- træk den ud til begge sider */
-  /* ingen right/left negative margin, vi styrer med position */
-
-  /* fyld hele højden ned til bunden */
+  width: calc(100% + 64px);
+  left: -32px;
   flex: 1;
   min-height: 0;
-  height: 100%;                    /* <- så den selv kan nå bund */
-
-  /* farve + illu for toppen */
+  height: 100%;
   background-image: url("/assets/illustrations/illu-loginkasse.svg");
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: top center;
-
   border-top-left-radius: 28px;
   border-top-right-radius: 28px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-
   color: #FFF9CB;
-
   display: flex;
   flex-direction: column;
   padding: 32px 20px 48px;
   box-sizing: border-box;
-
-  overflow-y: hidden;              /* <- så kortet ikke scroller internt */
+  overflow-y: hidden;
 }
-
-/* ========== FORM INDEN I KORTET ========== */
 .form {
   width: 55%;
   max-width: 500px;
   margin: 0 auto;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   row-gap: 20px;
   color: #FFF9CB;
-
   flex: 1;
 }
-
-/* hver label + input stack */
 .label {
   width: 100%;
   display: flex;
@@ -127,109 +103,53 @@
   row-gap: 8px;
   align-items: center;
 }
-
-/* "Mail", "Adgangskode" */
 .labelText {
   width: 100%;
   max-width: 400px;
-
   font-family: var(--font-poppins);
   font-size: 1rem;
   font-weight: 500;
   color: #FFF9CB;
-
   text-align: left;
 }
-
-/* inputs */
 .input {
   width: 90%;
   max-width: 400px;
-
   min-height: 72px;
   border-radius: 16px;
   background: #E9DCBD;
   border: 4px solid #FDF1C6;
-  outline: none;
-
-  font-size: 1.1rem;
+  font-size: 16px;
   font-family: var(--font-poppins);
   color: #2A5945;
-
   padding: 0 16px;
   box-shadow: 0 10px 24px rgba(0,0,0,0.25);
 }
-
-.input::placeholder {
-  color: rgba(42,89,69,0.6);
-}
-
-/* "GLEMT ADGANGSKODE?" */
 .forgot {
   background: none;
   border: none;
-  padding: 0;
-
   font-family: var(--font-brushup);
-  font-size: 1rem;
   font-style: italic;
-  line-height: 1.2;
-  font-weight: 500;
   color: var(--beige);
-  width: 100%;
-
-  margin-bottom: 8px;
   text-align: center;
+  margin-bottom: 8px;
 }
-
-/* knappen nederst */
 .btnRow {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-
-/* gul knap */
 .ctaBtn {
   background: #FFF9CB;
   color: #FB6255;
   font-family: var(--font-brushup);
   font-size: 2rem;
-  font-weight: 400;
-  line-height: 1.2;
-  text-align: center;
-
-  border: 0;
   border-radius: 50px;
-
   min-width: 170px;
   min-height: 80px;
-  padding: 16px 24px;
-
   box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-
   cursor: pointer;
 }
-
 .ctaBtn:active {
   transform: translateY(1px);
-}
-
-/* --------- RESPONSIVE TWEAKS --------- */
-@media (min-width: 480px) {
-  .appTitle {
-    font-size: 3rem;
-  }
-
-  .subline {
-    font-size: 2rem;
-  }
-
-  .labelText {
-    font-size: 1.4rem;
-  }
-
-  .input {
-    font-size: 1.2rem;
-  }
 }

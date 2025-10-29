@@ -1,14 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import styles from "./LoginPage.module.css";
 import { loginUser } from "../../services/auth.local.js";
-
 import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
+
+  // --- mobil keyboard / viewport fix ---
+  useEffect(() => {
+    function updateVH() {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    }
+    updateVH();
+    window.addEventListener("resize", updateVH);
+    window.addEventListener("orientationchange", updateVH);
+    return () => {
+      window.removeEventListener("resize", updateVH);
+      window.removeEventListener("orientationchange", updateVH);
+    };
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -18,8 +32,10 @@ export default function LoginPage() {
 
   return (
     <main className={styles.screen}>
+      {/* bund-baggrundsfarve */}
+      <div className={styles.bottomFill} />
+
       <div className={styles.shell}>
-        {/* tilbage-knap */}
         <button
           type="button"
           className={`bubbleButton bubbleRed bubbleLeft ${styles.backBubble}`}
@@ -29,13 +45,11 @@ export default function LoginPage() {
           <img src={backIcon} alt="" className="bubbleIcon" />
         </button>
 
-        {/* titel */}
         <header className={styles.headBlock}>
           <h1 className={styles.appTitle}>MIN KOGEBOG</h1>
           <div className={styles.subline}>Log in på din profil</div>
         </header>
 
-        {/* røde kort */}
         <section className={styles.card}>
           <form className={styles.form} onSubmit={handleSubmit}>
             <label className={styles.label}>

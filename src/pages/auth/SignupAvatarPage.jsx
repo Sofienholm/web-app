@@ -10,8 +10,8 @@ const AVATARS = [
   "/assets/illustrations/ill-profil-avatar-chef.svg",
   "/assets/illustrations/ill-profil-avatar-mom-cooking.svg",
   "/assets/illustrations/ill-profil-avatar-woman-pokadots.svg",
+   "/assets/illustrations/ill-profil-avatar-man-garlic.svg",
   "/assets/illustrations/ill-profil-avatar-man-burger.svg",
-  "/assets/illustrations/ill-profil-avatar-man-garlic.svg",
 ];
 
 export default function SignupAvatarPage() {
