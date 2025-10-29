@@ -44,34 +44,47 @@
   display: grid;
   place-items: center;
   cursor: pointer;
+  border-radius: 12px;
+  border: 2px solid rgba(0,0,0,0.05);
+  background: rgba(0,0,0,0.03);
+  overflow: hidden;
 }
 
-/* Kamera i #D2A067 */
+/* hvis vi har taget billede */
+.takenPhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* fallback kamera-illustration */
 .cameraIllustration {
   width: 100%;
   height: 100%;
   object-fit: contain;
   opacity: 0.9;
-
-  /* filter tweaket mod #D2A067 */
   filter:
     brightness(0) saturate(100%)
-    invert(76%)         /* løfter os ind i beige/guld område */
+    invert(76%)
     sepia(37%)
     saturate(654%)
-    hue-rotate(340deg)  /* lidt rød/orange */
+    hue-rotate(340deg)
     brightness(67%)
     contrast(92%);
 }
 
-/* Tekst under kamera i samme farve (#D2A067) */
+.hiddenInput {
+  display: none;
+}
+
+/* Tekst under kamera */
 .photoCta {
   margin-top: 8px;
   margin-bottom: 6px;
   font-family: var(--font-brushup);
-  font-size: 1.5rem;
+  font-size: 1rem;
   line-height: 1.1;
-  color: #9d774c; /* <--- ny farve */
+  color: #9d774c;
   text-transform: uppercase;
   text-align: center;
   letter-spacing: 0.03em;
@@ -85,6 +98,7 @@
   width: 100%;
   max-width: 700px;
   margin-top: 12px;
+  background: rgba(0, 0, 0, 0.08);
 }
 
 /* ---------- INDHOLD ---------- */
@@ -139,15 +153,44 @@
     hue-rotate(87deg) brightness(91%) contrast(88%);
 }
 
-.tipBubble {
+/* redigerbart tip-felt */
+.tipBubbleInput {
   flex: 1;
   background: #F5EDCC;
   border-radius: 12px;
-  padding: 10px 14px;
+  border: 2px solid rgba(0,0,0,0.05);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+
   font-size: 1rem;
   line-height: 1.3;
   font-family: var(--font-poppins);
   color: var(--morkegroen);
+
+  padding: 10px 14px;
+  outline: none;
+  border-width: 2px;
+}
+
+.tipBubbleInput:focus {
+  box-shadow: 0 0 0 3px rgba(42,89,69,0.15);
+  border-color: var(--morkegroen);
+}
+
+/* række med + Tilføj tip */
+.addTipRow {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.addTipBtn {
+  background: transparent;
+  border: none;
+  font-family: var(--font-brushup);
+  font-size: 1.2rem;
+  color: var(--morkegroen);
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 /* note */
@@ -168,6 +211,7 @@
   font-size: 1rem;
   line-height: 1.4;
   color: #7A2C14;
+  font-family: var(--font-poppins);
 }
 
 .editBtn {
@@ -226,4 +270,8 @@
   min-width: 8rem;
   cursor: pointer;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+.finishBtn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }

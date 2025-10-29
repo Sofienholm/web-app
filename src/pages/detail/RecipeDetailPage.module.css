@@ -1,6 +1,8 @@
-.body {
+.page {
   min-height: 100dvh;
   background: var(--beige);
+  padding-bottom: 6rem; /* så knappen i bunden ikke overlapper indhold */
+  position: relative;
 }
 
 /* Top-knapper */
@@ -33,7 +35,6 @@
 }
 
 /* Titel + beskrivelse */
-
 .camera {
   width: 14rem;
   opacity: 0.9;
@@ -81,7 +82,7 @@
   margin-left: 2rem;
   margin-bottom: 0.5rem;
   color: var(--brun);
-  font-family: var( --font-poppins);
+  font-family: var(--font-poppins);
   max-width: 60%;
 }
 .row {
@@ -94,17 +95,14 @@
   margin-bottom: 0.5rem;
 }
 .number {
-  
   text-align: center;
-
 }
-
 .col {
   flex: 1;
   min-width: 8rem;
 }
 
-/* Tags */
+/* Tags (eksisterende) */
 .tagsTitle {
   font-family: var(--font-brushup);
   font-size: 2.2rem;
@@ -145,16 +143,26 @@
   border-image-slice: 80;
 }
 
+/* --- NY: DINE TIPS blok under tags --- */
+.tipsBlock {
+  margin: 0 0 1.5rem 0;
+}
+.tipsTitle {
+  font-family: var(--font-brushup);
+  font-size: 1.6rem;
+  color: var(--brun);
+  text-align: center;
+  margin: 0 0 0.5rem 0;
+}
 
-
-/* Redigér-knap */
+/* Knap i bunden ("Færdig med retten") */
 .editBtn {
   position: fixed;
   bottom: 24px;
   right: 50%;
   transform: translateX(50%);
   border-radius: 1rem;
-  min-width: 6rem;
+  min-width: 10rem;
   height: 3rem;
   font-size: 1rem;
   font-family: var(--font-brushup);
@@ -172,10 +180,11 @@
   background: #2a5945;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+/* knap til “Ingredienser”-sheet (uændret) */
 .ingredientsButtonPos {
   position: fixed;
   bottom: 26.5rem;
   right: 0;
   z-index: 10;
 }
-

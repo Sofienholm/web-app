@@ -8,7 +8,7 @@ import FullscreenLayout from "./layouts/FullscreenLayout.jsx";
 // Pages (Main layout)
 import HomePage from "../pages/home/HomePage.jsx";
 import CategoriesPage from "../pages/categories/CategoriesPage.jsx";
-import CategoryResultPage from "../pages/categories/CategoryResultPage.jsx";  
+import CategoryResultPage from "../pages/categories/CategoryResultPage.jsx";
 import FilteredResultPage from "../pages/categories/FilteredResultPage.jsx";
 import SearchPage from "../pages/search/SearchPage.jsx";
 
@@ -21,6 +21,7 @@ import WelcomeIntroPage from "../pages/auth/WelcomeIntroPage.jsx";
 import LoginPage from "../pages/auth/LoginPage.jsx";
 import SignupPage from "../pages/auth/SignupPage.jsx";
 import SignupAvatarPage from "../pages/auth/SignupAvatarPage.jsx";
+
 import RecipeDetailPage from "../pages/detail/RecipeDetailPage.jsx";
 import EditRecipePage from "../pages/detail/EditRecipePage.jsx";
 
