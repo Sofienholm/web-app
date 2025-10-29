@@ -1,5 +1,4 @@
 const functions = require("firebase-functions");
-const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 
 // HTTP trigger: /importRecipeFromUrl?url=https://...

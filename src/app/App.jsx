@@ -23,6 +23,7 @@ import SignupPage from "../pages/auth/SignupPage.jsx";
 import SignupAvatarPage from "../pages/auth/SignupAvatarPage.jsx";
 import RecipeDetailPage from "../pages/detail/RecipeDetailPage.jsx";
 import EditRecipePage from "../pages/detail/EditRecipePage.jsx";
+import ImportFromUrlPage from "../pages/create/ImportFromUrlPage.jsx";
 
 // 🔥 NY SIDE efter man har lavet/madet opskriften
 import RecipeDonePage from "../pages/detail/RecipeDonePage.jsx";
@@ -48,6 +49,7 @@ export default function App() {
 
           <Route path="/recipe/:id" element={<RecipeDetailPage />} />
           <Route path="/edit/:id" element={<EditRecipePage />} />
+          <Route path="/create/link" element={<ImportFromUrlPage />} />
 
           {/* 🔥 ny route: “Færdig / tilføj tips & tricks / afslut” */}
           <Route path="/recipe/:id/done" element={<RecipeDonePage />} />
