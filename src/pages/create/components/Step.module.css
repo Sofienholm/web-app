@@ -62,11 +62,10 @@
   border-radius: 22px;
   padding: 16px 14px 20px;
   max-height: calc(100dvh - 9rem - 60px);
-    min-height: 0;  
+  min-height: 0;
   overflow: auto;
-    -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch;
 }
-
 
 /* Liste & rækker */
 .list {
@@ -179,13 +178,10 @@
     brightness(90%) contrast(85%);
 }
 
-
 /* Når synlig */
 .detailStepsSection.visible {
   bottom: 0; /* glider op */
 }
-
-
 
 .detailStepsSection h2 {
   text-align: center;
@@ -193,7 +189,6 @@
   font-size: 1.8rem;
   color: var(--brun);
   margin-bottom: 1rem;
- 
 }
 
 .detailStepsSection ol {
@@ -207,25 +202,21 @@
   color: var(--morkegroen);
 }
 
-
-
 .closeStepsBtn img {
   width: 28px;
   height: 28px;
   filter: invert(30%) sepia(100%) saturate(500%) hue-rotate(340deg)
     brightness(90%) contrast(85%);
-    rotate: 45deg;
+  rotate: 45deg;
 }
-
-
 
 /* Altid synlig lille "grabber"-zone i bunden af skærmen */
 .stepsGrabberDock {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 6px;              /* lidt op fra bunden */
-  z-index: 51;              /* over indhold, under selve sheetet når åbent */
+  bottom: 6px; /* lidt op fra bunden */
+  z-index: 51; /* over indhold, under selve sheetet når åbent */
   display: grid;
   place-items: center;
   pointer-events: auto;
@@ -237,7 +228,7 @@
   width: 56px;
   height: 6px;
   border-radius: 999px;
-  background: rgba(0,0,0,0.18);
+  background: rgba(0, 0, 0, 0.18);
 }
 
 /* Selve sheetet (starter nede) */
@@ -247,23 +238,23 @@
   left: 0;
   right: 0;
 
-  height: 90vh;                  /* fyld det meste af skærmen */
-  background: #f1e5b7;           /* match din steps-baggrund */
+  height: 90vh; /* fyld det meste af skærmen */
+  background: #f1e5b7; /* match din steps-baggrund */
   border-radius: 28px 28px 0 0;
-  box-shadow: 0 -4px 12px rgba(0,0,0,0.12);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
 
   transform: translateY(100%);
-  transition: transform 260ms cubic-bezier(0.22,1,0.36,1);
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 
   z-index: 52;
-  overflow: hidden;              /* vi styrer indre scroll dynamisk */
+  overflow: hidden; /* vi styrer indre scroll dynamisk */
 }
 
 /* Indre container */
 .detailStepsSection .inner {
   padding: 1rem 1.2rem 2rem;
-   display: flex;
+  display: flex;
   flex-direction: column;
   height: 100%;
 }
@@ -280,7 +271,6 @@
 .closeStepsBtn {
   background: none;
   border: none;
-
 }
 
 .inputFieldReadOnly {
