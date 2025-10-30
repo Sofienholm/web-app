@@ -4,7 +4,8 @@
   right: 0;
   bottom: calc(16px + env(safe-area-inset-bottom, 0));
   margin: 0 auto;
-  max-width:60%;
+  margin-bottom: 1rem;
+  max-width: 50%;
   height: 84px;
   gap: 6rem;
   border-radius: 42px;
@@ -13,10 +14,9 @@
   grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-items: center;
-  padding: 0 28px;
-  z-index: 50;
+  padding: 0 30px;
+  z-index: 50; /* VIGTIG: over overlay */
   background-color: var(--nav-beige);
-
 }
 
 .item {
@@ -28,17 +28,18 @@
 }
 
 .icon {
-  width: 44px;
+  width: 54px;
   height: 44px;
   display: block;
-filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(1021%) hue-rotate(97deg) brightness(93%) contrast(94%);
+  filter: brightness(0) saturate(100%) invert(23%) sepia(19%)
+    saturate(1021%) hue-rotate(97deg) brightness(93%) contrast(94%);
 }
 
 /* FAB (plusknap) */
 .fab {
   position: absolute;
-  left: 50%;
-  top: 0;
+  left: 51%;
+  top: -0.4rem;
   transform: translate(-50%, -45%);
   width: 120px;
   height: 120px;
@@ -56,11 +57,9 @@ filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(1021%) hue-
 .fabIcon {
   display: block;
   width: 64px;
-
-  transition: opacity 0.12s ease;
   background-color: var(--morkegroen);
-    border-radius: 50%;
-    padding: 1rem;
+  border-radius: 50%;
+  padding: 1.2rem;
   transition: opacity 0.12s ease;
 }
 
@@ -75,14 +74,9 @@ filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(1021%) hue-
   rotate: 45deg;
 }
 
-.open .fab {
-
-}
-
 .open .fabIcon {
   opacity: 1;
-    background: var(--rod);
-  
+  background: var(--rod);
 }
 
 .open .x {
@@ -93,14 +87,12 @@ filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(1021%) hue-
 /* DIAL-knapper */
 .dial {
   position: absolute;
-  left: 45%;
+  left: 40%;
   bottom: 150px;
   transform: translateX(-50%);
   width: 0;
   height: 0;
   pointer-events: none;
-  
-
 }
 
 .dialBtn {
@@ -110,8 +102,8 @@ filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(1021%) hue-
   transform: translate(var(--x), var(--y)) scale(0.6);
   opacity: 0;
   pointer-events: auto;
-  width: 52px;
-  height: 52px;
+  width: 60px;
+  height: 60px;
   border-radius: 999px;
   border: 0;
   cursor: pointer;
@@ -121,7 +113,7 @@ filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(1021%) hue-
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
   transition: transform 0.22s ease, opacity 0.22s ease, box-shadow 0.22s ease;
   -webkit-tap-highlight-color: transparent;
-   background-color: var(--morkegroen);
+  background-color: var(--morkegroen);
 }
 
 .dialBtn img {
@@ -138,3 +130,25 @@ filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(1021%) hue-
   opacity: 1;
   transform: translate(var(--x), var(--y)) scale(1);
 }
+
+/* ---------- BLUR-OVERLAY ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40; /* lige under .nav (50) */
+
+  /* 🌫️ Øget sløring og lysere baggrund for “frosted glass”-look */
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(3px) saturate(150%);
+  background: rgba(255, 255, 255, 0.25);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.showOverlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+

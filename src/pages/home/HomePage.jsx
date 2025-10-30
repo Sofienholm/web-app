@@ -4,6 +4,7 @@ import { useLocalAuth } from "../../hooks/useLocalAuth.js";
 
 // Svævende mad-illustrationer (uden kagen)
 import noodles from "../../../public/assets/home/ill-home-food-nudles-pink.svg";
+import cake from "../../../public/assets/home/ill-home-food-cake-pink.svg";
 import pasta from "../../../public/assets/home/ill-home-food-pasta-pink.svg";
 import meat from "../../../public/assets/home/ill-home-food-meat-pink.svg";
 import veggie from "../../../public/assets/home/ill-home-food-veggie-pink.svg";
@@ -148,6 +149,13 @@ export default function HomePage() {
           alt="Nudler"
           className={`${styles.foodImg} ${styles.noodles}`}
         />
+
+         <img
+          src={cake}
+          alt="cake"
+          className={`${styles.foodImg} ${styles.cake}`}
+        />
+
         <img
           src={pasta}
           alt="Pasta"
