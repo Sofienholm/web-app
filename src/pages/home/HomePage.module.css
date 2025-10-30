@@ -91,7 +91,7 @@ body {
 .illustrations {
   position: relative;
   width: 100%;
-  height: 45vh;
+  height: 40vh;
   max-width: 500px;
   z-index: 1;
   pointer-events: none;
@@ -114,13 +114,19 @@ body {
   top: 35%;
   left: 10%;
 }
-.pasta {
+
+.cake {
   top: 10%;
+  left: 20%;
+}
+
+.pasta {
+  top: 7%;
   right: 15%;
 }
 .meat {
-  top: 10%;
-  left: 20%;
+   top: 28%;
+  left: 40%;
 }
 .veggie {
   top: 50%;
@@ -144,7 +150,7 @@ body {
   width: 115vw;
   max-width: 130vw;
 
-  height: 38vh;
+  height: 42vh;
 
   overflow: visible;
   z-index: 1;
