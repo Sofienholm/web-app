@@ -1,36 +1,59 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import Lottie from "lottie-react";
 import styles from "./WelcomeIntroPage.module.css";
-
-// den illustration du viste (personen på bøgerne)
-// du bruger allerede den i andre steder, så vi genbruger den
-import heroIllu from "../../../public/assets/home/ill-home-food-man-on-books-pink.svg";
 
 export default function WelcomeIntroPage() {
   const navigate = useNavigate();
+  const [animationData, setAnimationData] = useState(null);
+  const [showButtons, setShowButtons] = useState(false);
+
+  // hent animationen fra public
+  useEffect(() => {
+    fetch("/data/splash-screen.json")
+      .then((res) => res.json())
+      .then(setAnimationData);
+  }, []);
+
+  // vis knapper efter animation er færdig (ca. 3 sek)
+  // vis knapper efter animation er færdig (5.6 sek)
+  useEffect(() => {
+    const t = setTimeout(() => setShowButtons(true), 5600);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <main className={styles.screen}>
-      {/* Illustration */}
-      <img src={heroIllu} alt="" className={styles.illustration} />
+      {/* Splash animation */}
+      <div className={styles.splashContainer}>
+        {animationData && (
+          <Lottie
+            animationData={animationData}
+            loop={false}
+            autoplay
+            className={styles.splashAnimation}
+          />
+        )}
+      </div>
 
-      {/* Primær CTA: Log In */}
-      <button
-        className={styles.loginBtn}
-        onClick={() => navigate("/login")}
+      {/* CTA’er: vises efter splash */}
+      <div
+        className={`${styles.ctaBlock} ${showButtons ? styles.ctaVisible : ""}`}
       >
-        Log In
-      </button>
-
-      {/* Signup teaser */}
-      <div className={styles.signupBlock}>
-        <div className={styles.question}>NY HER?</div>
-        <button
-          className={styles.signupLink}
-          onClick={() => navigate("/signup")}
-        >
-          OPRET PROFIL
+        <button className={styles.loginBtn} onClick={() => navigate("/login")}>
+          Log In
         </button>
+
+        <div className={styles.signupBlock}>
+          <div className={styles.question}>NY HER?</div>
+          <button
+            className={styles.signupLink}
+            onClick={() => navigate("/signup")}
+          >
+            OPRET PROFIL
+          </button>
+        </div>
       </div>
     </main>
   );

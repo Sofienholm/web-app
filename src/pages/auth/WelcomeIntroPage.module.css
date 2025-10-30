@@ -1,32 +1,18 @@
 /* Hele skærmen */
 .screen {
-  min-height: 100vh;
+  width: 100vw;
   background: #FFF9CB;             /* lys gul som i din reference */
   padding: 24px 16px 40px;
   box-sizing: border-box;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-
   text-align: center;
   font-family: var(--font-poppins);
   color: #2A5945;                  /* mørkegrøn tekst */
 }
 
-/* Illustration i midten */
-.illustration {
-  width: 260px;
-  max-width: 80vw;
-  height: auto;
-  margin-top: 60px;
-  margin-bottom: 48px;
-
-  /* farven i dit mockup er mørkegrøn stregtegning,
-     du har allerede den rigtige svg-farve, så ingen filter her */
-  object-fit: contain;
-}
 
 /* Den store koralfarvede "Log In"-knap */
 .loginBtn {
@@ -90,4 +76,35 @@
 
 .signupLink:active {
   transform: translateY(1px);
+}
+.splashContainer {
+margin: 0;
+  z-index: 2;
+  padding: 0;
+
+}
+
+
+.ctaBlock {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  z-index: 3;
+  margin-top: -8rem;
+}
+
+.ctaVisible {
+  opacity: 1;
+}
+
+
+.splashAnimation{
+  width: 100%;
+  height: auto;
+}
+.illustration {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  opacity: 0.15; /* hvis du vil have den bag splash */
+  z-index: 1;
 }
