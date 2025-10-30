@@ -80,15 +80,17 @@
   font-family: var( --font-poppins);
   max-width: 60%;
 }
+
 .row {
   display: flex;
-  gap: 3rem;
+  gap: 0.5rem;
   justify-content: flex-start;
-  margin-left: 50%;
+  margin-left: 38%;
   transform: translateX(-50%);
-  min-width: 79%;
+  min-width: 59%;
   margin-bottom: 0.5rem;
 }
+
 .number {
   
   text-align: center;
@@ -102,7 +104,6 @@
 
 /* Tags */
 .tagsTitle {
-
   margin-bottom: 6px;
   font-family: var(--font-brushup);
   text-align: center;
@@ -110,6 +111,7 @@
   color: var(--brun);
 }
 .tags {
+  margin-left: 10px;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -168,7 +170,7 @@
 }
 .ingredientsButtonPos {
   position: fixed;
-  bottom: 26.5rem;
+  bottom: 28.5rem;
   right: 0;
   z-index: 10;
 }

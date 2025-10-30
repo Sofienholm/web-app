@@ -1,14 +1,13 @@
-// DetailStepsSection.jsx
+// src/pages/detail/components/DetailStepsSection.jsx
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
 import styles from "../../create/components/Step.module.css";
-import closeIcon from "/assets/icon/ic-add-symbol.svg"; // byt evt. til "chevron-down"
+import closeIcon from "/assets/icon/ic-add-symbol.svg"; // roteres i css
 
 /**
  * Parallax-agtig "scroll-to-reveal" sektion.
- * Brugeren forsøger at scrolle på siden, men i stedet bevæger step-sektionen sig op.
- * Når man slipper fingeren, snapper den op eller ned alt efter hvor langt man "scroll-ede".
+ * Brugeren kan swipe sektionen op fra bunden for at læse fremgangsmåden.
  */
 
 export default function DetailStepsSection({ steps }) {
@@ -16,7 +15,6 @@ export default function DetailStepsSection({ steps }) {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  // === NYT: “peek”-konstant (20% synligt) ===
   const PEEK = 80;
   const [offset, setOffset] = useState(PEEK);
   const [scrolling, setScrolling] = useState(false);
@@ -27,66 +25,45 @@ export default function DetailStepsSection({ steps }) {
 
   useEffect(() => {
     const handleTouchStart = (e) => {
-      // start-koordinat
       startY.current = e.touches[0].clientY;
       startOffset.current = offset;
       setScrolling(true);
-
-      // tjek om vi startede scroll på panelInplace
       const path = e.composedPath?.() || [];
       isTouchInPanel.current = path.some((el) => el === panelRef.current);
     };
 
     const handleTouchMove = (e) => {
       if (!scrolling) return;
-
       const y = e.touches[0].clientY;
       const deltaY = startY.current - y; // + = swipe op
 
-      // Hvis vi er helt åbne og finger er i panelet, så lad panelet scrolle
       if (offset === 0 && isTouchInPanel.current && panelRef.current) {
         const el = panelRef.current;
         const atTop = el.scrollTop <= 0;
-        const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
-
-        const draggingDown = deltaY < 0; // finger ned
-        const draggingUp = deltaY > 0; // finger op
-
-        // Kun overtag drag, hvis man forsøger at "trække forbi" panelets kanter
+        const atBottom =
+          el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+        const draggingDown = deltaY < 0;
+        const draggingUp = deltaY > 0;
         const shouldDragSheet =
           (atTop && draggingDown) || (atBottom && draggingUp);
-
-        if (!shouldDragSheet) {
-          // tillad native scroll i panelet
-          return;
-        }
-        // ellers: vi lader sheetet tage over -> prevent default + drag
+        if (!shouldDragSheet) return;
       }
 
-      // Normal sheet-drag (clamp mod 0..PEEK)
-      const next = Math.max(
-        0,
-        Math.min(PEEK, startOffset.current - deltaY / 4)
-      );
+      const next = Math.max(0, Math.min(PEEK, startOffset.current - deltaY / 4));
       setOffset(next);
-      e.preventDefault(); // stop sidescroll
+      e.preventDefault();
     };
 
     const handleTouchEnd = () => {
       setScrolling(false);
       isTouchInPanel.current = false;
-
-      // Snap kun hvis vi faktisk havde gang i sheet-drag (offset != 0 eller != PEEK)
       setOffset((prev) => (prev < PEEK / 2 ? 0 : PEEK));
     };
 
-    document.body.addEventListener("touchstart", handleTouchStart, {
-      passive: false,
-    });
-    document.body.addEventListener("touchmove", handleTouchMove, {
-      passive: false,
-    });
+    document.body.addEventListener("touchstart", handleTouchStart, { passive: false });
+    document.body.addEventListener("touchmove", handleTouchMove, { passive: false });
     document.body.addEventListener("touchend", handleTouchEnd);
+
     return () => {
       document.body.removeEventListener("touchstart", handleTouchStart);
       document.body.removeEventListener("touchmove", handleTouchMove);
@@ -95,7 +72,6 @@ export default function DetailStepsSection({ steps }) {
   }, [offset, scrolling]);
 
   function handleClose() {
-    // === NYT: luk = “peek” i stedet for helt væk
     setOffset(PEEK);
   }
 
@@ -127,16 +103,13 @@ export default function DetailStepsSection({ steps }) {
           </button>
         </div>
 
-        {/* samme layout som CreatePage → panelInplace + list + row */}
+        {/* Liste med trin */}
         <div ref={panelRef} className={styles.panelInplace}>
           <ul className={styles.list}>
             {Array.isArray(steps) && steps.length > 0 ? (
               steps.map((text, i) => (
                 <li key={i} className={styles.row}>
-                  {/* Trin-nummer */}
                   <span className={styles.index}>{i + 1}</span>
-
-                  {/* Input-pill erstattet med read-only tekst */}
                   <div className={styles.inputPill}>
                     <div className={styles.inputFieldReadOnly}>
                       {text || "Ingen tekst"}
@@ -150,8 +123,13 @@ export default function DetailStepsSection({ steps }) {
           </ul>
         </div>
 
-        <div className={styles.done}>
-          <button type="button" className={styles.doneBtn} onClick={handleDone}>
+        {/* Færdig-knap */}
+        <div className={styles.doneWrap}>
+          <button
+            type="button"
+            className={styles.doneBtn}
+            onClick={handleDone}
+          >
             Færdig
           </button>
         </div>

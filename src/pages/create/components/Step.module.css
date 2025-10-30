@@ -60,11 +60,19 @@
   flex: 1;
   background: #ede8c6;
   border-radius: 22px;
-  padding: 16px 14px 20px;
-  max-height: calc(100dvh - 9rem - 60px);
+  padding: 16px 14px 16px;   /* før: 20px — mindre padding i bunden */
+  max-height: calc(100dvh - 27rem); /* kortere end før */
   min-height: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+.doneWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;       /* før: auto — lidt tættere på panelet */
+  margin-bottom: 0.8rem;    /* lille luft under */
+  padding-top: 0.5rem;
 }
 
 /* Liste & rækker */
@@ -238,7 +246,7 @@
   left: 0;
   right: 0;
 
-  height: 90vh; /* fyld det meste af skærmen */
+  height: 80vh; /* fyld det meste af skærmen */
   background: #f1e5b7; /* match din steps-baggrund */
   border-radius: 28px 28px 0 0;
   box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
@@ -290,4 +298,33 @@
   text-align: center;
   font-style: italic;
   padding: 1rem 0;
+}
+
+/* Færdig-knap nederst i detail-step sektionen */
+.doneWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem; /* skub ned i bunden af sheetet */
+  padding-top: 1rem;
+}
+
+.doneBtn {
+  background: var(--morkegroen);
+  color: var(--beige);
+  font-family: var(--font-brushup);
+  font-size: 1.6rem;
+  border: none;
+  border-radius: 14px;
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.doneBtn:active {
+  transform: scale(0.97);
+}
+
+.doneBtn:hover {
+  background: #2a5945;
 }
