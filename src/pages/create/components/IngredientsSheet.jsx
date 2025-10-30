@@ -1,7 +1,7 @@
+import { useEffect, useRef } from "react";
 import styles from "./Ingredients.module.css";
 import trashIcon from "/assets/icon/ic-delete-symbol.svg";
 import closeIcon from "/assets/icon/ic-add-symbol.svg";
-
 
 export default function IngredientsSheet({
   open,
@@ -10,6 +10,23 @@ export default function IngredientsSheet({
   setIngredients,
 }) {
   if (!open) return null;
+
+  const panelRef = useRef(null);
+
+  // Lås baggrundsscroll når sheet er åbent (ændrer ikke UI)
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    const prevTouch = document.body.style.touchAction;
+    const prevOverscroll = document.body.style.overscrollBehavior;
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
+    document.body.style.overscrollBehavior = "none";
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.body.style.touchAction = prevTouch;
+      document.body.style.overscrollBehavior = prevOverscroll;
+    };
+  }, []);
 
   function update(i, patch) {
     const next = [...ingredients];
@@ -34,88 +51,97 @@ export default function IngredientsSheet({
             type="button"
             className={styles.closeIconBtn}
             onClick={onClose}
+            aria-label="Luk"
           >
-            <img src={closeIcon} alt="Tilbage" className="bubbleIcon" />
+            <img src={closeIcon} alt="" />
           </button>
           <h2 className={styles.sheetTitle}>INGREDIENSER</h2>
         </div>
 
-        {/* Rækker */}
-        <ul className={styles.ingListPills}>
-          {ingredients.map((it, i) => (
-            <li key={i} className={styles.ingRowPills}>
+        {/* SCROLL-område (NY WRAPPER) */}
+        <div ref={panelRef} className={styles.panelScroll}>
+          {/* Din eksisterende liste i PILL-stil */}
+          <ul className={styles.ingListPills}>
+            {ingredients.map((it, i) => (
+              <li key={i} className={styles.ingRowPills}>
+                {/* Mængde + enhed */}
+                <div className={styles.pillGroup}>
+                  <input
+                    className={`${styles.pill} ${styles.pillAmount}`}
+                    type="number"
+                    inputMode="decimal"
+                    value={it.amount ?? ""}
+                    onChange={(e) => update(i, { amount: e.target.value })}
+                    placeholder="0"
+                    aria-label="Mængde"
+                  />
 
+                  <div className={styles.pillSelect}>
+                    <button
+                      type="button"
+                      className={styles.pillSelectBtn}
+                      onClick={() => update(i, { open: !it.open })}
+                      aria-haspopup="listbox"
+                      aria-expanded={!!it.open}
+                    >
+                      {it.unit || "Enhed"}
+                    </button>
 
-
-              
-              <div className={styles.pillGroup}>
-                <input
-                  className={`${styles.pill} ${styles.pillAmount}`}
-                  type="number"
-                  value={it.amount ?? ""}
-                  onChange={(e) => update(i, { amount: e.target.value })}
-                />
-                <div className={styles.pillSelect}>
-                  <button
-                    type="button"
-                    className={styles.pillSelectBtn}
-                    onClick={() => update(i, { open: !it.open })}
-                  >
-                    {it.unit || "Enhed"} <span className={styles.arrow}></span>
-                  </button>
-
-                  {it.open && (
-                    <ul className={styles.dropdown}>
-                      {["tsk.", "spk.", "g", "kg", "ml", "dl"].map((unit) => (
-                        <li
-                          key={unit}
-                          onClick={() => {
-                            update(i, { unit, open: false });
-                          }}
-                        >
-                          {unit}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                    {it.open && (
+                      <ul className={styles.dropdown} role="listbox">
+                        {["tsk.", "spk.", "g", "kg", "ml", "dl"].map((unit) => (
+                          <li
+                            key={unit}
+                            role="option"
+                            onClick={() => update(i, { unit, open: false })}
+                          >
+                            {unit}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              {/* Navn-pill (lys, med + ikon) */}
-              <div className={`${styles.pill} ${styles.pillName}`}>
-                <input
-                  className={styles.pillNameField}
-                  placeholder={
-                    "Ingrediens" + (ingredients.length > 1 ? ` ${i + 1}` : "")
-                  }
-                  value={it.name ?? ""}
-                  onChange={(e) => update(i, { name: e.target.value })}
-                />
-              </div>
+                {/* Navn */}
+                <div className={`${styles.pill} ${styles.pillName}`}>
+                  <input
+                    className={styles.pillNameField}
+                    placeholder={`Ingrediens${
+                      ingredients.length > 1 ? ` ${i + 1}` : ""
+                    }`}
+                    value={it.name ?? ""}
+                    onChange={(e) => update(i, { name: e.target.value })}
+                    aria-label="Ingrediensnavn"
+                  />
+                </div>
 
-              {/* Skraldespand */}
-              <button
-                type="button"
-                className={styles.trashBtn}
-                aria-label="Slet ingrediens"
-                onClick={() => remove(i)}
-                title="Slet"
-              >
-                <img src={trashIcon} alt="" />
-              </button>
-            </li>
-          ))}
-        </ul>
+                {/* Slet */}
+                <button
+                  type="button"
+                  className={styles.trashBtn}
+                  aria-label="Slet ingrediens"
+                  onClick={() => remove(i)}
+                  title="Slet"
+                >
+                  <img src={trashIcon} alt="" />
+                </button>
+              </li>
+            ))}
+          </ul>
 
-        {/* Stor plus i midten */}
-        <div className={styles.bigPlusWrap}>
-          <button
-            type="button"
-            className={styles.bigPlusBtn}
-            onClick={addEmpty}
-          >
-            <img src={closeIcon} alt="Tilbage" className="bubbleIcon" />
-          </button>
+          {/* Din eksisterende “stor plus” kan ligge her og vil scrolle med */}
+          <div className={styles.bigPlusWrap}>
+            <button
+              type="button"
+              className={styles.bigPlusBtn}
+              onClick={addEmpty}
+              aria-label="Tilføj ingrediens"
+              title="Tilføj ingrediens"
+            >
+              <span className={styles.pillPlus}>+</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

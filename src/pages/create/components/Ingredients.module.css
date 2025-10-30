@@ -17,14 +17,12 @@
   animation: slide 0.25s ease;
   display: flex;
   flex-direction: column;
+  /* (valgfrit men sikkert) skjul overløb; kun midten scroller */
+  overflow: hidden;
 }
 @keyframes slide {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
 }
 .sheetHead {
   display: flex;
@@ -96,17 +94,18 @@
   width: 100%;
   height: 48px;
 }
-/* Liste med pill-stil */
+
+/* LISTE (PILL-STIL) — uændret */
 .ingListPills {
   display: grid;
   gap: 16px;
-  margin-top: 16px 0 0 0;
+  margin: 16px 0 0 0;
   padding: 0;
 }
 .ingRowPills {
   display: flex;
   justify-content: space-between;
-gap: 3px;
+  gap: 3px;
   align-items: center;
   flex-direction: row;
 }
@@ -117,22 +116,19 @@ gap: 3px;
   border-radius: 999px;
   display: flex;
   align-items: center;
-
-
   border: 0;
 }
 .pillGroup {
   display: flex;
   border-radius: 999px;
-  
   padding: 5px;
   gap: 8px;
   justify-content: center;
   align-items: center;
-
   background: rgba(0, 0, 0, 0.15);
 }
-/* Venstre (mængde) pill – mørk grøn */
+
+/* Venstre (mængde) */
 .pillAmount {
   background: #5cab7a;
   color: #e9ebd5;
@@ -140,7 +136,7 @@ gap: 3px;
   width: 100%;
   max-width: 80px;
   padding: 0;
-   height: 38px;
+  height: 38px;
   font-family: var(--font-poppins);
 }
 .pillAmount::-webkit-outer-spin-button,
@@ -148,18 +144,10 @@ gap: 3px;
   -webkit-appearance: none;
   margin: 0;
 }
-.pillAmount {
-  appearance: textfield;
-}
+.pillAmount { appearance: textfield; }
 
-/* Enhed-pill (select) – mørk grøn med tekst “Enhed ▾” look */
-.pillSelect {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
-
+/* Enhed-select */
+.pillSelect { position: relative; display: flex; flex-direction: column; align-items: stretch; }
 .pillSelectBtn {
   background: #5cab7a;
   color: #e9ebd5;
@@ -174,8 +162,6 @@ gap: 3px;
   justify-content: space-between;
   padding: 0 14px;
 }
-
-
 .dropdown {
   position: absolute;
   top: 50px;
@@ -190,7 +176,7 @@ gap: 3px;
   z-index: 100;
   animation: fadeIn 0.15s ease;
 }
-
+@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
 .dropdown li {
   padding: 6px 14px;
   list-style: none;
@@ -200,21 +186,11 @@ gap: 3px;
   text-align: center;
   font-family: var(--font-poppins);
 }
+.dropdown li:hover { background: #4f8162; }
 
-.dropdown li:hover {
-  background: #4f8162;
-}
-
-/* Navn-pill – lys */
-.pillName {
-  background: #efecc7;
-  color: #2b4b3f;
-
-}
-.pillPlus {
-  font-size: 22px;
-  opacity: 0.9;
-}
+/* Navn */
+.pillName { background: #efecc7; color: #2b4b3f; }
+.pillPlus { font-size: 22px; opacity: 0.9; }
 .pillNameField {
   border: 0;
   background: transparent;
@@ -229,7 +205,6 @@ gap: 3px;
 .trashBtn {
   background: none;
   border: 0;
-
   display: grid;
   place-items: center;
   border-radius: 8px;
@@ -239,20 +214,21 @@ gap: 3px;
 .trashBtn img {
   width: 20px;
   height: 20px;
-  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(100%)
-    contrast(80%);
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(100%) contrast(80%);
 }
-/* Stor plus i midten */
-.bigPlusWrap {
-  display: grid;
-  place-items: center;
-  margin-top: 28px;
+
+/* Stor plus */
+.bigPlusWrap { display: grid; place-items: center; margin-top: 28px; }
+.bigPlusBtn  { font-size: 64px; line-height: 1; background: none; border: 0; color: #efecc7; cursor: pointer; }
+
+/* ===== NYT: scroll-container til indhold (ændrer IKKE look) ===== */
+/* Læg bare disse linjer ind i din eksisterende .panelScroll */
+.panelScroll {
+  flex: 1 1 auto;
+  min-height: 0;                     /* vigtigt i flex column */
+  overflow: auto;                    /* egen scroll */
+  -webkit-overflow-scrolling: touch; /* iOS momentum */
+  overscroll-behavior: contain;      /* undgå baggrunds-bounce */
+  touch-action: pan-y;               /* TILLAD vertikal scroll her */
 }
-.bigPlusBtn {
-  font-size: 64px;
-  line-height: 1;
-  background: none;
-  border: 0;
-  color: #efecc7;
-  cursor: pointer;
-}
+
