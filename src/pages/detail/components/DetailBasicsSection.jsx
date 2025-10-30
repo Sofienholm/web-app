@@ -1,15 +1,33 @@
-
 // Viser billedet + titel + beskrivelse + tid + portioner + tags (read-only)
 // Matcher layout fra CreatePage, men uden inputs.
+import { useEffect, useRef, useState } from "react"; // <-- tilføj useRef her
 import styles from "../RecipeDetailPage.module.css";
 import garlicIcon from "/assets/icon/ic-ingredient-symbol.svg";
-import { useState } from "react";
+import useAutoFitText from "../../../hooks/useAutoFitText";
 
 export default function DetailBasicsSection({ recipe, onOpenIngredients }) {
   if (!recipe) return null;
-const [showFullDesc, setShowFullDesc] = useState(false);
-  const { image, title, description, timeMin, servings, tags } = recipe;
 
+  const [showDescPopup, setShowDescPopup] = useState(false);
+  const titleRef = useRef(null);
+
+  // Lås baggrundsscroll når popup er åben
+  useEffect(() => {
+    document.body.style.overflow = showDescPopup ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showDescPopup]);
+
+  // Auto-fit titlen når den ændrer sig
+  useAutoFitText(titleRef, [recipe?.title], {
+    max: 1.8,
+    min: 1.0,
+    step: 0.05,
+    unit: "rem",
+  });
+
+  const { image, title, description, timeMin, servings, tags } = recipe;
 
   return (
     <section>
@@ -22,7 +40,7 @@ const [showFullDesc, setShowFullDesc] = useState(false);
         )}
       </div>
 
-      {/* “Ingredienser”-knap (samme placering som på Create) */}
+      {/* Ingredienser-knap */}
       <button
         type="button"
         className={`bubbleButton bubbleGreen bubbleRight ${styles.ingredientsButtonPos}`}
@@ -32,39 +50,51 @@ const [showFullDesc, setShowFullDesc] = useState(false);
         <img src={garlicIcon} alt="Ingredienser" className="bubbleIcon" />
       </button>
 
-      {/* Titel */}
+      {/* Titel (auto-fit) */}
       <div className={styles.label}>
-        <div className={styles.title} aria-label="Titel">
+        <div ref={titleRef} className={styles.title} aria-label="Titel">
           {title || "Uden titel"}
         </div>
       </div>
 
-      {/* Beskrivelse (med “Læs mere”) */}
-      {description ? (
-        <div className={styles.label}>
-          <div
-            className={`${styles.textarea} ${
-              showFullDesc ? styles.expanded : styles.collapsed
-            }`}
-            aria-label="Beskrivelse"
-          >
-            {description}
+      {/* Beskrivelse (klik for popup) */}
+      {description && (
+        <>
+          <div className={styles.label}>
+            <div
+              className={styles.textarea}
+              aria-label="Beskrivelse"
+              onClick={() => setShowDescPopup(true)}
+            >
+              {description}
+            </div>
           </div>
 
-          {/* Læs mere / Vis mindre */}
-          {description.length > 200 && (
-            <button
-              type="button"
-              className={styles.readMoreBtn}
-              onClick={() => setShowFullDesc(!showFullDesc)}
+          {showDescPopup && (
+            <div
+              className={styles.overlay}
+              onClick={() => setShowDescPopup(false)}
             >
-              {showFullDesc ? "Vis mindre" : "Læs mere"}
-            </button>
+              <div
+                className={styles.popup}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <h2 className={styles.popupTitle}>Beskrivelse</h2>
+                <p className={styles.popupText}>{description}</p>
+                <button
+                  type="button"
+                  className={styles.closeBtn}
+                  onClick={() => setShowDescPopup(false)}
+                >
+                  Luk
+                </button>
+              </div>
+            </div>
           )}
-        </div>
-      ) : null}
+        </>
+      )}
 
-      {/* Tid + Portioner (samme pills, men som tekst) */}
+      {/* Tid + Portioner */}
       <div className={styles.row}>
         <div className={`${styles.number} ${styles.col}`} aria-label="Tid">
           {timeMin || "Ukendt tid"}

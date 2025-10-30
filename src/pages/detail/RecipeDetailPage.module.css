@@ -179,28 +179,68 @@
   z-index: 10;
 }
 
+/* Klikbart beskrivelsesfelt */
 .textarea {
-  transition: max-height 0.3s ease;
-  overflow: hidden;
-}
-
-/* Lukket version – samme højde som CreatePage */
-.collapsed {
-  max-height: 8rem; /* justér til samme som CreatePage */
-}
-
-/* Åben version – udvider hele teksten */
-.expanded {
-  max-height: none;
-}
-
-.readMoreBtn {
-  display: block;
-  margin-top: 0.5rem;
-  color: var(--morkegroen);
-  font-size: 0.9rem;
-  background: none;
-  border: none;
-  text-decoration: underline;
   cursor: pointer;
+  overflow: hidden;
+  max-height: 8rem; /* samme højde som CreatePage */
+  text-overflow: ellipsis;
+  transition: background 0.2s;
+}
+
+.textarea:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Popup-overlay baggrund */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* Popup-boksen */
+.popup {
+  background: var(--off-white);
+  color: var(--sort);
+  border-radius: 20px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 500px;
+  max-height: 70vh;
+  overflow-y: auto;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  text-align: left;
+}
+
+.popupTitle {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  color: var(--morkegroen);
+}
+
+.popupText {
+  line-height: 1.6;
+  font-size: 1rem;
+  white-space: pre-wrap;
+}
+
+/* Luk-knap */
+.closeBtn {
+  margin-top: 1.5rem;
+  background: var(--morkegroen);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+}
+
+.closeBtn:hover {
+  opacity: 0.9;
 }

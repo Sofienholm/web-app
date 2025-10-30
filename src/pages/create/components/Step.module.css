@@ -57,12 +57,16 @@
 
 /* Indre panel der kan scrolle */
 .panelInplace {
+  flex: 1;
   background: #ede8c6;
   border-radius: 22px;
   padding: 16px 14px 20px;
   max-height: calc(100dvh - 9rem - 60px);
+    min-height: 0;  
   overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
+
 
 /* Liste & rækker */
 .list {
@@ -259,6 +263,8 @@
 /* Indre container */
 .detailStepsSection .inner {
   padding: 1rem 1.2rem 2rem;
+   display: flex;
+  flex-direction: column;
   height: 100%;
 }
 

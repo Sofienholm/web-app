@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import cameraIcon from "/assets/icon/illu-camera-green.svg";
 import styles from "../CreatePage.module.css";
  import WheelPicker from "../../../components/WheelPicker";
+ import useAutoFitText from "../../../hooks/useAutoFitText";
 const ALL_TAGS = [
   "Budget",
   "Hurtigt & nemt",
@@ -27,6 +28,17 @@ export default function BasicsSection({
   setTags,
 }) {
   const fileRef = useRef(null);
+  // ⬅️ NYT: reference til titel-input
+  const titleRef = useRef(null);
+
+  // ⬅️ NYT: auto-fit når title ændrer sig
+  useAutoFitText(titleRef, [title], {
+    max: 1.8, // svarer til din normale overskriftsstørrelse
+    min: 1.0, // hvor lille vi må gå ned
+    step: 0.05,
+    unit: "rem",
+    pad: 0,
+  });
 
   // picker-states
   const [openTime, setOpenTime] = useState(false);
@@ -69,6 +81,7 @@ export default function BasicsSection({
       {/* titel */}
       <label className={styles.label}>
         <input
+          ref={titleRef}
           className={styles.title}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
