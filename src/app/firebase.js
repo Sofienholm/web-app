@@ -1,26 +1,26 @@
-// Importer de nødvendige funktioner fra Firebase SDK
+// src/lib/firebase.js
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
+// (valgfrit) import { getAnalytics } from "firebase/analytics";
 
-// 🔑 Indsæt jeres egen konfiguration her (fra Firebase Console)
 const firebaseConfig = {
-  apiKey: "AIzaSyDb7gf5zzRoiZ8_Nl4yjqShoVwHttnijeo",
-  authDomain: "minkogebog-9a065.firebaseapp.com",
-  databaseURL:
-    "https://minkogebog-9a065-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "minkogebog-9a065",
-  storageBucket: "minkogebog-9a065.firebasestorage.app",
-  messagingSenderId: "478821179479",
-  appId: "1:478821179479:web:392badc58b22f4c1574312",
-  measurementId: "G-QRL02N8V1H",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  // Kun hvis du vil bruge analytics nu:
+  ...(import.meta.env.VITE_FIREBASE_MEASUREMENT_ID && {
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+  }),
 };
 
-// 🔥 Initialiser Firebase
 const app = initializeApp(firebaseConfig);
 
-// 📦 Eksporter de services, I skal bruge i appen
-export const db = getFirestore(app); // Firestore (database)
-export const auth = getAuth(app); // Authentication (login)
-export const storage = getStorage(app); // Storage (billeduploads)
+export const db = getFirestore(app);
+export const auth = getAuth(app);
+export const storage = getStorage(app);
+// (valgfrit) export const analytics = getAnalytics(app);
