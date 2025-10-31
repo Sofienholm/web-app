@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styles from "./ProfileEdit.module.css";
 
+// services
+import { setAvatar } from "../../services/auth.local.js";
+
 // illustrationer
 import profileIllustration from "../../../public/assets/illustrations/ill-profil-avatar-man-garlic.svg";
 import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
@@ -9,11 +12,15 @@ import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
 export default function ProfileEdit() {
   const navigate = useNavigate();
 
-  // læs tidligere valg (hvis nogen)
-  const stored =
-    typeof window !== "undefined"
-      ? localStorage.getItem("profile.avatarSrc")
-      : null;
+  // læs avatar fra samlet profile-objekt
+  let stored = null;
+  try {
+    const raw =
+      typeof window !== "undefined" ? localStorage.getItem("profile") : null;
+    stored = raw ? JSON.parse(raw)?.avatarSrc ?? null : null;
+  } catch {
+    stored = null;
+  }
 
   const [selected, setSelected] = useState(stored);
 
@@ -27,10 +34,10 @@ export default function ProfileEdit() {
     "/assets/illustrations/ill-profil-avatar-man-garlic.svg",
   ];
 
-  const handlePick = (src) => {
+  function handlePick(src) {
     setSelected(src);
-    localStorage.setItem("profile.avatarSrc", src); // gør valget synligt på ProfilePage
-  };
+    setAvatar(src); // opdaterer profile + udsender "local-auth-changed"
+  }
 
   return (
     <div className={styles.page}>

@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router";
 import styles from "./ProfilePage.module.css";
 import { logoutUser } from "../../services/auth.local.js";
-import { useLocalAuth } from "../../hooks/useLocalAuth.js";
+import useLocalAuth from "../../hooks/useLocalAuth.js";
 
 // components
 import ProfileInfo from "./components/ProfileInfo";
@@ -15,22 +15,15 @@ import profileDefault from "../../../public/assets/illustrations/ill-profil-avat
 
 export default function ProfilePage() {
   const navigate = useNavigate();
-  const auth = useLocalAuth();
+  const { user } = useLocalAuth(); // <- samlet profil fra local auth
 
-  const avatarSrc =
-    (typeof window !== "undefined" &&
-      localStorage.getItem("profile.avatarSrc")) ||
-    profileDefault;
-
-  const name =
-    auth?.name || "Testbruger";
-
-  const email =
-    auth?.email || "test@eksempel.dk";
+  const avatarSrc = user?.avatarSrc || profileDefault;
+  const name = user?.name || "Testbruger";
+  const email = user?.email || "test@eksempel.dk";
 
   function handleLogout() {
     logoutUser();
-    navigate("/welcome");
+    navigate("/login", { replace: true }); // <- korrekt efter logout
   }
 
   return (
@@ -41,6 +34,7 @@ export default function ProfilePage() {
           type="button"
           className={`bubbleButton bubbleRed bubbleLeft`}
           onClick={() => navigate("/")}
+          aria-label="Tilbage"
         >
           <img src={backIcon} alt="Tilbage" className="bubbleIcon" />
         </button>
@@ -49,17 +43,14 @@ export default function ProfilePage() {
           type="button"
           className={`bubbleButton bubbleRed bubbleRight`}
           onClick={() => navigate("/profile/edit")}
+          aria-label="Rediger profil"
         >
           <img src={editIcon} alt="Rediger" className="bubbleIcon" />
         </button>
       </div>
 
       {/* 🔸 Profilbillede og info */}
-      <ProfileInfo
-        name={name}
-        email={email}
-        illustrationSrc={avatarSrc}
-      />
+      <ProfileInfo name={name} email={email} illustrationSrc={avatarSrc} />
 
       {/* 🔸 Action-knapper */}
       <ActionList
@@ -83,11 +74,7 @@ export default function ProfilePage() {
       />
 
       {/* 🔸 Log af-knap */}
-      <button
-        type="button"
-        className={styles.logoutBtn}
-        onClick={handleLogout}
-      >
+      <button type="button" className={styles.logoutBtn} onClick={handleLogout}>
         Log af
       </button>
     </div>

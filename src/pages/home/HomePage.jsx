@@ -13,12 +13,11 @@ import veggie from "../../../public/assets/home/ill-home-food-veggie-pink.svg";
 import bottomCardBg from "../../../public/assets/illustrations/illu-homekort.svg";
 
 export default function HomePage() {
-  const user = useLocalAuth();
+  // ⬇️ vigtig ændring: få user ud af hook-objektet
+  const { user } = useLocalAuth();
 
   const firstName =
-    user?.name?.split(" ")[0] ||
-    user?.email?.split("@")[0] ||
-    "ven";
+    user?.name?.split(" ")[0] || user?.email?.split("@")[0] || "ven";
 
   // måle-span (usynlig) og styling-states
   const measureRef = useRef(null);
@@ -31,9 +30,9 @@ export default function HomePage() {
 
     // målbare konstanter
     const TARGET_WIDTH = 260; // px: den visuelle kolonne vi vil matche
-    const MIN_SIZE = 24;      // mindste font-size vi accepterer
-    const MAX_SIZE = 110;     // største font-size vi accepterer
-    const STEP = 1;           // hvor fint vi tuner
+    const MIN_SIZE = 24; // mindste font-size vi accepterer
+    const MAX_SIZE = 110; // største font-size vi accepterer
+    const STEP = 1; // hvor fint vi tuner
 
     // helper der måler given size
     const widthAt = (sizePx) => {
@@ -42,11 +41,11 @@ export default function HomePage() {
       return measurer.offsetWidth;
     };
 
-    // 1) find baseline: hvor bredt er navnet ved en mellem størrelse?
+    // 1) baseline
     let testSize = 64;
     let currentWidth = widthAt(testSize);
 
-    // 2) Hvis navnet er SMALLERE end target -> vi prøver at SKALERE OP
+    // 2) skalér op hvis for smalt
     if (currentWidth < TARGET_WIDTH) {
       while (testSize < MAX_SIZE) {
         const next = testSize + STEP;
@@ -57,7 +56,7 @@ export default function HomePage() {
       }
     }
 
-    // 3) Hvis navnet er BREDDERE end target -> vi skalerer NED
+    // 3) skalér ned hvis for bredt
     if (currentWidth > TARGET_WIDTH) {
       while (testSize > MIN_SIZE) {
         const next = testSize - STEP;
@@ -72,17 +71,13 @@ export default function HomePage() {
       }
     }
 
-    // testSize er nu "den rigtige" størrelse
     setNameFontSize(testSize);
 
-    // line-height tweak:
-    // lange navne -> mindre font -> mere luft mellem "VELKOMMEN" og navnet
-    // korte navne -> kæmpe font -> vi strammer linjehøjden
-    // vi mapper fontSize (MIN_SIZE..MAX_SIZE) -> lineHeight (1.25..0.7)
+    // line-height mapping
     const span = MAX_SIZE - MIN_SIZE;
     const pct = span === 0 ? 0 : (testSize - MIN_SIZE) / span;
-    const lhMax = 1.25; // mest luft
-    const lhMin = 0.7;  // tættest
+    const lhMax = 1.25;
+    const lhMin = 0.7;
     const computedLH = lhMax - pct * (lhMax - lhMin);
 
     setNameLineHeight(parseFloat(computedLH.toFixed(2)));
@@ -90,7 +85,7 @@ export default function HomePage() {
 
   return (
     <section className={styles.home}>
-      {/* skjult måle-node til at udregne navnets bredde */}
+      {/* skjult måle-node */}
       <span
         ref={measureRef}
         style={{
@@ -107,18 +102,13 @@ export default function HomePage() {
       {/* HERO TEKST */}
       <div className={styles.hero}>
         <div className={styles.heroTextBox}>
-          {/* linje 1: VELKOMMEN */}
           <div
             className={styles.welcomeLine}
-            style={{
-              maxWidth: "260px",
-              fontSize: "2.5rem",
-            }}
+            style={{ maxWidth: "260px", fontSize: "2.5rem" }}
           >
             VELKOMMEN
           </div>
 
-          {/* linje 2: Navn auto-fit (samme maxWidth som VELKOMMEN) */}
           <div
             className={styles.nameLine}
             style={{
@@ -130,13 +120,7 @@ export default function HomePage() {
             {firstName}
           </div>
 
-          {/* linje 3 */}
-          <div
-            className={styles.subLine}
-            style={{
-              maxWidth: "260px",
-            }}
-          >
+          <div className={styles.subLine} style={{ maxWidth: "260px" }}>
             HVAD ER DER PÅ MENUEN?
           </div>
         </div>
@@ -149,13 +133,11 @@ export default function HomePage() {
           alt="Nudler"
           className={`${styles.foodImg} ${styles.noodles}`}
         />
-
-         <img
+        <img
           src={cake}
           alt="cake"
           className={`${styles.foodImg} ${styles.cake}`}
         />
-
         <img
           src={pasta}
           alt="Pasta"
@@ -175,11 +157,7 @@ export default function HomePage() {
 
       {/* LYSE RØDE BAGGRUNDSKORT NEDERST */}
       <div className={styles.bottomCardMask}>
-        <img
-          src={bottomCardBg}
-          alt=""
-          className={styles.bottomCardImg}
-        />
+        <img src={bottomCardBg} alt="" className={styles.bottomCardImg} />
       </div>
     </section>
   );

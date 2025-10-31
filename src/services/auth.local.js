@@ -1,49 +1,82 @@
 // src/services/auth.local.js
+const PROFILE_KEY = "profile";
+const LOGGED_IN_KEY = "auth.loggedIn";
+const DEFAULT_AVATAR = "/assets/illustrations/ill-profil-avatar-man-garlic.svg";
 
-// log brugeren ind (her er det bare localStorage-flag)
-export function loginUser({ email, password }) {
-  // i rigtig verden ville vi tjekke server-side.
-  // lige nu siger vi bare "ok".
-  localStorage.setItem("auth.loggedIn", "true");
+function emitAuthChange() {
+  window.dispatchEvent(new Event("local-auth-changed"));
+}
 
-  if (email) {
-    // hvis der ikke allerede er et navn fra signup, lav fallback
-    const existingName = localStorage.getItem("profile.name");
-    if (!existingName) {
-      const fallbackName = email.split("@")[0];
-      localStorage.setItem("profile.name", fallbackName);
-    }
-    localStorage.setItem("profile.email", email);
+function readProfile() {
+  try {
+    const raw = localStorage.getItem(PROFILE_KEY);
+    if (!raw) return null;
+    const obj = JSON.parse(raw);
+    return obj && typeof obj === "object" ? obj : null;
+  } catch {
+    return null;
   }
+}
 
-  // vi gemmer password KUN for demo (du sletter senere i rigtig app)
-  if (password) {
-    localStorage.setItem("profile.password", password);
-  }
+function writeProfile(profile) {
+  const safe = profile && typeof profile === "object" ? profile : {};
+  localStorage.setItem(PROFILE_KEY, JSON.stringify(safe));
+}
+
+function setLoggedIn(v) {
+  localStorage.setItem(LOGGED_IN_KEY, v ? "true" : "false");
 }
 
 export function signupUser({ name, email, password }) {
-  localStorage.setItem("profile.name", name);
-  localStorage.setItem("profile.email", email);
-  localStorage.setItem("profile.password", password || "");
-
-  // midlertidig default-avatar indtil de vælger en i avatar-step
-  const existingAvatar = localStorage.getItem("profile.avatarSrc");
-  if (!existingAvatar) {
-    localStorage.setItem(
-      "profile.avatarSrc",
-      "/assets/illustrations/ill-profil-avatar-man-garlic.svg"
-    );
-  }
-
-  localStorage.setItem("auth.loggedIn", "true");
+  // i “dummy/local” auth ignorerer vi password-tjek
+  const profile = {
+    id: crypto?.randomUUID?.() ?? String(Date.now()),
+    name: name?.trim() || "Bruger",
+    email: email?.trim() || "ukendt@eksempel.dk",
+    avatarSrc: DEFAULT_AVATAR,
+    onboardingDone: false,
+  };
+  writeProfile(profile);
+  setLoggedIn(true);
+  emitAuthChange();
+  return profile;
 }
 
-export function setAvatar(src) {
-  localStorage.setItem("profile.avatarSrc", src);
+export function loginUser({ email, password }) {
+  // meget simpel: hvis der ikke findes en profil, lav en hurtig en
+  const existing = readProfile();
+  const profile = existing ?? {
+    id: crypto?.randomUUID?.() ?? String(Date.now()),
+    name: "Bruger",
+    email: email?.trim() || "ukendt@eksempel.dk",
+    avatarSrc: DEFAULT_AVATAR,
+    onboardingDone: false,
+  };
+  writeProfile(profile);
+  setLoggedIn(true);
+  emitAuthChange();
+  return profile;
+}
+
+export function setAvatar(
+  src,
+  { activateSession = false, finishOnboarding = false } = {}
+) {
+  const current = readProfile() ?? {};
+const next = {
+...current,
+avatarSrc: src || DEFAULT_AVATAR, onboardingDone: finishOnboarding ? true : (current.onboardingDone ?? false),
+};
+  writeProfile(next);
+  if (activateSession) setLoggedIn(true);
+  emitAuthChange();
+  return next;
 }
 
 export function logoutUser() {
-  // vi logger bare ud – vi sletter IKKE profildata så hjem stadig kan vise navn
-  localStorage.setItem("auth.loggedIn", "false");
+  setLoggedIn(false);
+  // vi kan vælge at beholde profil-data (så man kan se avatar/navn på login side),
+  // men du kan også rydde helt op ved at afkommentere næste linje:
+  // localStorage.removeItem(PROFILE_KEY);
+  emitAuthChange();
 }

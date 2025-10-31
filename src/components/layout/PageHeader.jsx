@@ -10,28 +10,28 @@ export default function PageHeader() {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
 
-  // hent valgt avatar fra localStorage
-  const chosen =
-    typeof window !== "undefined"
-      ? localStorage.getItem("profile.avatarSrc")
-      : null;
-
+  // hent valgt avatar fra samlet profile-objekt
+  let chosen = null;
+  if (typeof window !== "undefined") {
+    try {
+      const raw = localStorage.getItem("profile");
+      chosen = raw ? JSON.parse(raw)?.avatarSrc ?? null : null;
+    } catch {
+      chosen = null;
+    }
+  }
   const avatarToShow = chosen || defaultProfileIcon;
 
-  // søg og hop til /search?q=...
   function runSearch() {
     const term = searchValue.trim();
     if (term !== "") {
       navigate(`/search?q=${encodeURIComponent(term)}`);
-      setSearchValue(""); // valgfrit
+      setSearchValue("");
     }
   }
 
-  // når brugeren trykker Enter i søgefeltet
   function handleKeyDown(e) {
-    if (e.key === "Enter") {
-      runSearch();
-    }
+    if (e.key === "Enter") runSearch();
   }
 
   return (
@@ -48,8 +48,6 @@ export default function PageHeader() {
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyDown={handleKeyDown}
           />
-
-          {/* klikbart ikon-knap */}
           <button
             type="button"
             className={styles.searchButton}
