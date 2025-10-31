@@ -16,7 +16,6 @@ export default function WelcomeIntroPage() {
       .then(setAnimationData);
   }, []);
 
-  // vis knapper efter animation er færdig (ca. 3 sek)
   // vis knapper efter animation er færdig (5.6 sek)
   useEffect(() => {
     const t = setTimeout(() => setShowButtons(true), 5600);
