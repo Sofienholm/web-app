@@ -1,14 +1,16 @@
 .page {
   min-height: 100vh;
   background: #FFF9CB;
-  padding: 16px;
+  padding: 16px 16px 120px;
   box-sizing: border-box;
   font-family: var(--font-poppins);
   color: #2A5945;
   position: relative;
+
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* ny række med knap + tekst */
 .headerRow {
   display: flex;
   align-items: center;
@@ -17,7 +19,6 @@
   margin-bottom: 16px;
 }
 
-/* bubble tilbage-knap placering */
 .backButtonFixed {
   position: relative;
   left: -16px;
@@ -26,7 +27,6 @@
   flex-shrink: 0;
 }
 
-/* tekst ved siden af knap */
 .headerTextBlock {
   display: flex;
   flex-direction: column;
@@ -38,6 +38,8 @@
   font-size: 0.8rem;
   font-weight: 500;
   opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .headingInlineValue {
@@ -45,14 +47,6 @@
   font-weight: 600;
   color: #2A5945;
   word-break: break-word;
-}
-
-/* tom state */
-.empty {
-  margin-top: 16px;
-  text-align: center;
-  opacity: 0.6;
-  font-size: 0.9rem;
 }
 
 .list {
@@ -133,6 +127,3 @@
   max-width: 220px;
   opacity: 0.1;
 }
-
-
-
