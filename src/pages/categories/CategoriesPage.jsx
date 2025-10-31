@@ -14,6 +14,7 @@ const CATEGORIES = [
   { slug: "Mors Køkken",      icon: "/assets/categori/ic-category-moms-kitchen.svg" },
   { slug: "Budget",    icon: "/assets/categori/ic-category-budget.svg" },
   { slug: "Morgenmad", icon: "/assets/categori/ic-category-morgenmad.svg" },
+  { slug: "plus", icon: "/assets/categori/ic-category-plus.svg" },
 ];
 
 export default function CategoriesPage() {
