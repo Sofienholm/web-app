@@ -1,41 +1,34 @@
-import { useState, useEffect } from "react";
+// src/hooks/useLocalAuth.js
+import { useEffect, useState } from "react";
 
-export function useLocalAuth() {
-  // helper der læser current bruger-data fra localStorage
-  function readUser() {
-    const name = localStorage.getItem("profile.name") || "";
-    const email = localStorage.getItem("profile.email") || "";
-    const avatarSrc = localStorage.getItem("profile.avatarSrc") || "";
-    const loggedIn = localStorage.getItem("auth.loggedIn") === "true";
+function useLocalAuth() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    // hvis der basically ikke er nogen bruger, returnér null
-    if (!loggedIn && !name && !email) {
+  function read() {
+    try {
+      const raw = localStorage.getItem("profile");
+      return raw ? JSON.parse(raw) : null;
+    } catch {
       return null;
     }
-
-    return { name, email, avatarSrc };
   }
 
-  // state der holder den aktuelle bruger
-  const [user, setUser] = useState(() => readUser());
-
-  // lyt efter ændringer i localStorage så UI kan opdatere live
   useEffect(() => {
-    function handleStorageChange() {
-      setUser(readUser());
+    setUser(read());
+    setLoading(false);
+
+    function onStorage(e) {
+      if (e.key === "profile") {
+        setUser(read());
+      }
     }
-
-    // denne event fyrer når localStorage ændres (f.eks. efter signup/login)
-    window.addEventListener("storage", handleStorageChange);
-
-    // edge case: hvis vi selv lige har skrevet til localStorage i samme tab,
-    // kan vi manuelt kalde handleStorageChange() bagefter login/signup hvis vi vil.
-    // (men vi lader det være manuelt for nu)
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
   }, []);
 
-  return user;
+  return { user, loading };
 }
+
+export default useLocalAuth; // default export
+export { useLocalAuth }; // named export også

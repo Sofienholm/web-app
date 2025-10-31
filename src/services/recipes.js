@@ -1,31 +1,9 @@
-import { db } from "../app/firebase";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  updateDoc,
-  deleteDoc,
-} from "firebase/firestore";
+// src/services/recipes.js
+import * as fs from "./recipes.firestore";
 
-export async function createRecipe(userId, recipe) {
-  const ref = collection(db, "users", userId, "recipes");
-  const docRef = await addDoc(ref, { ...recipe, createdAt: new Date() });
-  return docRef.id;
-}
+// Dine hooks kan importere sådan her:
+// import { api as recipes } from "../services/recipes";
+export const api = fs;
 
-export async function getRecipesByUser(userId) {
-  const ref = collection(db, "users", userId, "recipes");
-  const snapshot = await getDocs(ref);
-  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-}
-
-export async function updateRecipe(userId, recipeId, data) {
-  const ref = doc(db, "users", userId, "recipes", recipeId);
-  await updateDoc(ref, data);
-}
-
-export async function deleteRecipe(userId, recipeId) {
-  const ref = doc(db, "users", userId, "recipes", recipeId);
-  await deleteDoc(ref);
-}
+// (valgfrit) hvis andre steder importerede funktionerne direkte:
+export * from "./recipes.firestore";

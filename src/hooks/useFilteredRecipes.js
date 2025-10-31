@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { listRecipes } from "../services/recipes.local.js";
+import { api as recipes } from "../services/recipes";
 import filterAndSortRecipes from "../utils/filterAndSortRecipes.js";
 
 const DEFAULT_USER = "demo-user";
