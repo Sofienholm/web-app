@@ -1,4 +1,4 @@
-/* Ingredients sheet */
+/* overlay */
 .overlay {
   position: fixed;
   inset: 0;
@@ -8,6 +8,7 @@
   z-index: 500;
 }
 
+/* sheet */
 .sheet {
   width: 100%;
   max-width: 600px;
@@ -18,88 +19,74 @@
   animation: slide 0.25s ease;
   display: flex;
   flex-direction: column;
-
-  /* ⬇️  VIGTIGT: tillad, at .panelScroll kan styre scroll selv */
   overflow: visible;
+  position: relative;
 }
-
 
 @keyframes slide {
-  from { transform: translateX(100%); }
-  to   { transform: translateX(0); }
-}
-.sheetHead {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.ingList {
-  display: grid;
-}
-.ingRow {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 8px 10px;
-  border-radius: 10px;
-}
-.ingForm {
-  display: grid;
-  grid-template-columns: 1fr 1fr 2fr auto;
-}
-.select {
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 0;
-}
-.primary {
-  padding: 14px;
-  border: 0;
-  border-radius: 12px;
-  background: var(--morkegroen);
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-}
-.ghost {
-  background: none;
-  border: 0;
-  color: inherit;
-  cursor: pointer;
-}
-/* Header */
-.sheetTopRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-  flex-direction: column;
-}
-.sheetTitle {
-  font-size: 2.9rem;
-  color: var(--beige);
-  letter-spacing: 1px;
-  margin: 5rem 0 2rem;
-  font-family: var(--font-brushup);
-}
-.closeIconBtn {
-  background: none;
-  border: 0;
-  color: #fff;
-  font-size: 28px;
-  cursor: pointer;
-  rotate: 45deg;
-  position: fixed;
-  right: 2rem;
-  top: 2rem;
-}
-.closeIconBtn img {
-  width: 100%;
-  height: 48px;
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
-/* LISTE (PILL-STIL) — uændret */
+/* HEADER */
+.sheetTopRow {
+  display: flex;
+  justify-content: center; /* titel i midten */
+  align-items: center;
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* centrér titlen */
+.sheetTitle {
+  font-size: 2.3rem;
+  color: var(--beige);
+  font-family: var(--font-brushup);
+  margin: 0;
+  text-align: center;
+}
+
+/* LUK-KNAP I HØJRE HJØRNE */
+.closeIconBtn {
+  position: absolute;
+  right: 1.6rem;
+  top: 0.4rem;
+  background: none;
+  border: none;
+  rotate: 45deg; /* vi bruger + ikon som kryds */
+  cursor: pointer;
+  transition: transform 120ms ease;
+  z-index: 10;
+}
+
+.closeIconBtn img {
+  width: 32px;
+  height: 32px;
+  filter: brightness(0) saturate(100%)
+    invert(94%) sepia(9%) saturate(368%)
+    hue-rotate(9deg) brightness(97%) contrast(95%);
+}
+
+.closeIconBtn:hover {
+  transform: scale(1.08) rotate(45deg);
+}
+
+/* SCROLL */
+.panelScroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+
+/* liste */
 .ingListPills {
   display: grid;
   gap: 16px;
@@ -114,7 +101,7 @@
   flex-direction: row;
 }
 
-/* Generisk pill */
+/* pills */
 .pill {
   height: 48px;
   border-radius: 999px;
@@ -132,7 +119,7 @@
   background: rgba(0, 0, 0, 0.15);
 }
 
-/* Venstre (mængde) */
+/* mængde */
 .pillAmount {
   background: #5cab7a;
   color: #e9ebd5;
@@ -148,10 +135,17 @@
   -webkit-appearance: none;
   margin: 0;
 }
-.pillAmount { appearance: textfield; }
+.pillAmount {
+  appearance: textfield;
+}
 
-/* Enhed-select */
-.pillSelect { position: relative; display: flex; flex-direction: column; align-items: stretch; }
+/* enhed */
+.pillSelect {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
 .pillSelectBtn {
   background: #5cab7a;
   color: #e9ebd5;
@@ -159,7 +153,6 @@
   border-radius: 999px;
   height: 38px;
   font-family: var(--font-poppins);
-  text-align: left;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -180,7 +173,10 @@
   z-index: 100;
   animation: fadeIn 0.15s ease;
 }
-@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 .dropdown li {
   padding: 6px 14px;
   list-style: none;
@@ -190,11 +186,15 @@
   text-align: center;
   font-family: var(--font-poppins);
 }
-.dropdown li:hover { background: #4f8162; }
+.dropdown li:hover {
+  background: #4f8162;
+}
 
-/* Navn */
-.pillName { background: #efecc7; color: #2b4b3f; }
-.pillPlus { font-size: 22px; opacity: 0.9; }
+/* navn */
+.pillName {
+  background: #efecc7;
+  color: #2b4b3f;
+}
 .pillNameField {
   border: 0;
   background: transparent;
@@ -205,35 +205,41 @@
   padding: 0;
 }
 
-/* Skraldespand */
+/* skrald */
 .trashBtn {
   background: none;
   border: 0;
   display: grid;
   place-items: center;
-  border-radius: 8px;
-  background: transparent;
   cursor: pointer;
 }
 .trashBtn img {
   width: 20px;
   height: 20px;
-  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(100%) contrast(80%);
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg)
+    brightness(100%) contrast(80%);
 }
 
-/* Stor plus */
-.bigPlusWrap { display: grid; place-items: center; margin-top: 28px; }
-.bigPlusBtn  { font-size: 64px; line-height: 1; background: none; border: 0; color: #efecc7; cursor: pointer; }
-
-/* ===== NYT: scroll-container til indhold (ændrer IKKE look) ===== */
-/* Læg bare disse linjer ind i din eksisterende .panelScroll */
-.panelScroll {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  touch-action: pan-y;
+/* plus */
+.bigPlusWrap {
+  display: grid;
+  place-items: center;
+  margin-top: 28px;
 }
-
-
+.bigPlusBtn {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.addIcon {
+  width: 46px;
+  height: 46px;
+  filter: brightness(0) saturate(100%)
+    invert(94%) sepia(9%) saturate(368%)
+    hue-rotate(9deg) brightness(97%) contrast(95%);
+  rotate: 0deg;
+  transition: transform 0.15s ease;
+}
+.bigPlusBtn:hover .addIcon {
+  transform: scale(1.1);
+}

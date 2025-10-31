@@ -101,6 +101,7 @@ margin: 0;
   width: 100%;
   height: auto;
   margin-left: 12px;
+  margin-bottom: -60px;
 }
 .illustration {
   position: absolute;

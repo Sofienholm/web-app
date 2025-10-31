@@ -1,11 +1,15 @@
 .page {
   min-height: 100vh;
   background: #FFF9CB;
-  padding: 16px;
+  padding: 16px 16px 120px; /* ekstra bund til nav */
   box-sizing: border-box;
   font-family: var(--font-poppins);
   color: #2A5945;
   position: relative;
+
+  /* tving scroll på selve siden */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* header row = knap + tekst */
@@ -47,14 +51,6 @@
   font-weight: 600;
   color: #2A5945;
   word-break: break-word;
-}
-
-/* no results */
-.empty {
-  margin-top: 16px;
-  text-align: center;
-  opacity: 0.6;
-  font-size: 0.9rem;
 }
 
 /* list layout */
@@ -136,6 +132,3 @@
   max-width: 220px;
   opacity: 0.1;
 }
-
-
-

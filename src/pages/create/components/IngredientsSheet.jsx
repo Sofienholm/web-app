@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import styles from "./Ingredients.module.css";
 import trashIcon from "/assets/icon/ic-delete-symbol.svg";
 import closeIcon from "/assets/icon/ic-add-symbol.svg";
+import addIcon from "/assets/icon/ic-add-symbol.svg"; // nyt: bruges til plus-knap
 
 export default function IngredientsSheet({
   open,
@@ -13,7 +14,7 @@ export default function IngredientsSheet({
 
   const panelRef = useRef(null);
 
-  // Lås baggrundsscroll når sheet er åbent (ændrer ikke UI)
+  // Lås baggrundsscroll når sheet er åbent
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     const prevTouch = document.body.style.touchAction;
@@ -47,24 +48,22 @@ export default function IngredientsSheet({
       <div className={styles.sheet} onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className={styles.sheetTopRow}>
+          <h2 className={styles.sheetTitle}>INGREDIENSER</h2>
           <button
             type="button"
             className={styles.closeIconBtn}
             onClick={onClose}
             aria-label="Luk"
           >
-            <img src={closeIcon} alt="" />
+            <img src={closeIcon} alt="Luk" />
           </button>
-          <h2 className={styles.sheetTitle}>INGREDIENSER</h2>
         </div>
 
-        {/* SCROLL-område (NY WRAPPER) */}
+        {/* SCROLL-område */}
         <div ref={panelRef} className={styles.panelScroll}>
-          {/* Din eksisterende liste i PILL-stil */}
           <ul className={styles.ingListPills}>
             {ingredients.map((it, i) => (
               <li key={i} className={styles.ingRowPills}>
-                {/* Mængde + enhed */}
                 <div className={styles.pillGroup}>
                   <input
                     className={`${styles.pill} ${styles.pillAmount}`}
@@ -103,7 +102,6 @@ export default function IngredientsSheet({
                   </div>
                 </div>
 
-                {/* Navn */}
                 <div className={`${styles.pill} ${styles.pillName}`}>
                   <input
                     className={styles.pillNameField}
@@ -116,7 +114,6 @@ export default function IngredientsSheet({
                   />
                 </div>
 
-                {/* Slet */}
                 <button
                   type="button"
                   className={styles.trashBtn}
@@ -124,13 +121,13 @@ export default function IngredientsSheet({
                   onClick={() => remove(i)}
                   title="Slet"
                 >
-                  <img src={trashIcon} alt="" />
+                  <img src={trashIcon} alt="Slet" />
                 </button>
               </li>
             ))}
           </ul>
 
-          {/* Din eksisterende “stor plus” kan ligge her og vil scrolle med */}
+          {/* Tilføj ny ingrediens */}
           <div className={styles.bigPlusWrap}>
             <button
               type="button"
@@ -139,7 +136,7 @@ export default function IngredientsSheet({
               aria-label="Tilføj ingrediens"
               title="Tilføj ingrediens"
             >
-              <span className={styles.pillPlus}>+</span>
+              <img src={addIcon} alt="Tilføj" className={styles.addIcon} />
             </button>
           </div>
         </div>

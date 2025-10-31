@@ -11,6 +11,9 @@ const ALL_TAGS = [
   "Asiatisk",
   "Pasta",
   "Mexicansk",
+  "Morgenmad",
+  "Favorit",
+  "Mors Køkken",
 ];
 
 export default function BasicsSection({

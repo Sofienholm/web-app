@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router";
 import useRecipesByTag from "../../hooks/useRecipesByTag.js";
 import styles from "./CategoryResultPage.module.css";
-import backIcon from "/assets/icon/ic-back-symbol.svg"; // Vite path fix
+import backIcon from "/assets/icon/ic-back-symbol.svg";
 
 export default function CategoryResultPage() {
   const navigate = useNavigate();
@@ -21,9 +21,7 @@ export default function CategoryResultPage() {
       <div className={styles.headerRow}>
         <button
           type="button"
-          className={`bubbleButton bubbleGreen bubbleLeft ${
-            styles.backButtonFixed || ""
-          }`}
+          className={`bubbleButton bubbleGreen bubbleLeft ${styles.backButtonFixed || ""}`}
           onClick={() => navigate(-1)}
           aria-label="Tilbage"
         >
@@ -54,32 +52,22 @@ export default function CategoryResultPage() {
                 onClick={() => navigate(`/recipe/${r.id}`)}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) =>
-                  e.key === "Enter" && navigate(`/recipe/${r.id}`)
-                }
+                onKeyDown={(e) => e.key === "Enter" && navigate(`/recipe/${r.id}`)}
               >
                 <div className={styles.cardImgWrap}>
                   {r.image ? (
-                    <img
-                      src={r.image}
-                      alt={r.title}
-                      className={styles.cardImg}
-                    />
+                    <img src={r.image} alt={r.title} className={styles.cardImg} />
                   ) : (
                     <div className={styles.cardImgPlaceholder}>🍽</div>
                   )}
                 </div>
 
                 <div className={styles.cardBody}>
-                  <div className={styles.cardTitle}>
-                    {r.title || "Uden titel"}
-                  </div>
+                  <div className={styles.cardTitle}>{r.title || "Uden titel"}</div>
                   <div className={styles.cardMeta}>
                     {r.timeMin || "Ukendt tid"}
                     {r.servings ? ` · ${r.servings} pers.` : ""}
-                    {r.tags?.length
-                      ? ` · ${r.tags.slice(0, 2).join(", ")}`
-                      : ""}
+                    {r.tags?.length ? ` · ${r.tags.slice(0, 2).join(", ")}` : ""}
                   </div>
                 </div>
               </div>
