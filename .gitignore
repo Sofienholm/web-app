@@ -1,4 +1,6 @@
+# ----------------------
 # Logs
+# ----------------------
 logs
 *.log
 npm-debug.log*
@@ -7,20 +9,63 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# ----------------------
+# Runtime / cache
+# ----------------------
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# ----------------------
+# Node / Build
+# ----------------------
 node_modules
 dist
 dist-ssr
-*.local
+coverage
+.eslintcache
 
-# Editor directories and files
+# Vite (cache ligger typisk i node_modules/.vite)
+
+# ----------------------
+# Env (Vite)
+# ----------------------
+.env
+.env.local
+.env.*.local
+!.env.example       # behold en skabelon i repoet (hvis du har en)
+
+# ----------------------
+# Firebase (lokalt)
+# ----------------------
+.firebase
+firebase-debug.log
+
+# ----------------------
+# Hosting/Deploy tooling (valgfrit)
+# ----------------------
+.vercel
+.netlify
+
+# ----------------------
+# OS / Editor junk
+# ----------------------
+.DS_Store
+Thumbs.db
+
+# VSCode (tillad extensions.json)
 .vscode/*
 !.vscode/extensions.json
+
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
+# ----------------------
+# Projekt-specifikt
+# ----------------------
 .obsidian
