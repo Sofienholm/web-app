@@ -1,9 +1,10 @@
+// services/recipes.local.js
 // simple localStorage-CRUD til opskrifter
 const KEY = "recipes";
 
-// 🔸 lav et stabilt id-generator fallback
+// 🔸 stabil id-generator
 function makeId() {
-  if (window.crypto && window.crypto.randomUUID) {
+  if (typeof window !== "undefined" && window.crypto?.randomUUID) {
     return window.crypto.randomUUID();
   }
   // fallback: timestamp + random suffix
@@ -25,14 +26,14 @@ export async function createRecipe(data) {
   const doc = {
     id,
     createdAt: Date.now(),
-    ownerId: data?.ownerId || "demo-user", // klar til auth senere
-    tags: Array.isArray(data?.tags) ? data.tags : [], // fx ["asiatisk", "dessert"]
+    ownerId: data?.ownerId || "demo-user",
+    tags: Array.isArray(data?.tags) ? data.tags : [],
     ...data,
   };
 
-  const list = readAll(); // læs eksisterende opskrifter
-  list.push(doc); // tilføj den nye
-  writeAll(list); // gem i localStorage
+  const list = readAll();
+  list.push(doc);
+  writeAll(list);
   return id;
 }
 
@@ -41,7 +42,7 @@ export async function getRecipe(id) {
   return readAll().find((r) => r.id === id) || null;
 }
 
-// 🔹 READ (alle opskrifter)
+// 🔹 READ (alle)
 export async function listRecipes({ ownerId } = {}) {
   let all = readAll().sort((a, b) => b.createdAt - a.createdAt);
   if (ownerId) {
@@ -56,11 +57,10 @@ export async function listRecipesByTag(tag, { ownerId } = {}) {
   if (ownerId) {
     all = all.filter((r) => r.ownerId === ownerId);
   }
-
   return all.filter((r) => Array.isArray(r.tags) && r.tags.includes(tag));
 }
 
-// 🔹 SEARCH (simpel tekstsøgning på titel, beskrivelse, ingredienser, tags)
+// 🔹 SEARCH
 export async function searchRecipes(query, { ownerId } = {}) {
   const term = query.trim().toLowerCase();
   if (!term) return [];
@@ -73,15 +73,12 @@ export async function searchRecipes(query, { ownerId } = {}) {
   return all.filter((r) => {
     const titleHit = r.title?.toLowerCase().includes(term);
     const descHit = r.description?.toLowerCase().includes(term);
-
     const ingHit = Array.isArray(r.ingredients)
       ? r.ingredients.some((ing) => ing?.name?.toLowerCase().includes(term))
       : false;
-
     const tagHit = Array.isArray(r.tags)
       ? r.tags.some((tag) => tag?.toLowerCase().includes(term))
       : false;
-
     return titleHit || descHit || ingHit || tagHit;
   });
 }
@@ -102,17 +99,16 @@ export async function updateRecipe(id, patch) {
   return true;
 }
 
-// 🔹 DELETE
+// 🔹 DELETE ✅
 export async function deleteRecipe(id) {
   const next = readAll().filter((r) => r.id !== id);
   writeAll(next);
   return true;
 }
+
 // --- SEED EN STANDARD OPSKRIFT ---
 (function seedExample() {
   const list = JSON.parse(localStorage.getItem("recipes") || "[]");
-
-  // kun hvis der ikke findes nogen opskrifter i forvejen
   if (list.length === 0) {
     const example = {
       id: "seed-1",

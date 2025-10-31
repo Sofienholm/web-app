@@ -174,4 +174,27 @@
   right: 0;
   z-index: 10;
 }
+/* CreatePage.module.css */
+
+/* eksisterende knapper */
+
+/* 🔸 ny "Slet"-knap lidt længere nede under fluebenet */
+.deleteButtonFixed {
+  position: fixed;
+  top: 110px; /* rykket længere ned fra toppen */
+  right: 0;
+  z-index: 10;
+}
+
+/* rød version af bobleknappen */
+.bubbleRed {
+  background: #fb6255;
+  color: #fff;
+}
+
+/* eventuelt gør ikonet lidt lysere */
+.bubbleRed .bubbleIcon {
+  filter: brightness(0) saturate(100%) invert(98%) sepia(3%) saturate(141%)
+    hue-rotate(303deg) brightness(110%) contrast(97%);
+}
 
