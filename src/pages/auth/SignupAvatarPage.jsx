@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styles from "./SignupAvatarPage.module.css";
 import { setAvatar } from "../../services/auth.local.js";
-
 import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
 
 const AVATARS = [
@@ -10,16 +9,14 @@ const AVATARS = [
   "/assets/illustrations/ill-profil-avatar-chef.svg",
   "/assets/illustrations/ill-profil-avatar-mom-cooking.svg",
   "/assets/illustrations/ill-profil-avatar-woman-pokadots.svg",
-   "/assets/illustrations/ill-profil-avatar-man-garlic.svg",
+  "/assets/illustrations/ill-profil-avatar-man-garlic.svg",
   "/assets/illustrations/ill-profil-avatar-man-burger.svg",
 ];
 
 export default function SignupAvatarPage() {
   const navigate = useNavigate();
 
-  // hent tidligere gemt avatar hvis der er en
   const stored = localStorage.getItem("profile.avatarSrc");
-
   const fallbackIndex = AVATARS.indexOf(
     "/assets/illustrations/ill-profil-avatar-man-garlic.svg"
   );
@@ -30,10 +27,7 @@ export default function SignupAvatarPage() {
       : fallbackIndex
     : fallbackIndex;
 
-  // hvilket kort er i fokus lige nu (det store preview)
   const [currentIndex, setCurrentIndex] = useState(startIndex);
-
-  // hvilken avatar er markeret som “valgt”
   const [selectedIndex, setSelectedIndex] = useState(
     stored ? AVATARS.indexOf(stored) : -1
   );
@@ -49,22 +43,20 @@ export default function SignupAvatarPage() {
     setCurrentIndex((i) => (i - 1 + AVATARS.length) % AVATARS.length);
   }
 
-  // når man trykker "Vælg"
   function handleSelect() {
     setAvatar(current);
     setSelectedIndex(currentIndex);
   }
 
-  // når man trykker "Afslut" / "Opret"
   function handleFinish() {
     setAvatar(current);
-    navigate("/");
+    // ⬇️ færdig → direkte til Home
+    navigate("/home", { replace: true });
   }
 
   return (
     <main className={styles.screen}>
       <div className={styles.shell}>
-        {/* Tilbage-knap */}
         <button
           type="button"
           className={`bubbleButton bubbleRed bubbleLeft ${styles.backBubble}`}
@@ -74,7 +66,6 @@ export default function SignupAvatarPage() {
           <img src={backIcon} alt="" className="bubbleIcon" />
         </button>
 
-        {/* Titel og intro */}
         <header className={styles.headBlock}>
           <h1 className={styles.appTitle}>MIN KOGEBOG</h1>
           <p className={styles.sub}>
@@ -83,9 +74,7 @@ export default function SignupAvatarPage() {
           </p>
         </header>
 
-        {/* Avatar vælger sektion */}
         <section className={styles.carousel}>
-          {/* TOP: lille horisontal række med alle avatars */}
           <div className={styles.thumbStripWrapper}>
             <div className={styles.thumbStrip}>
               {AVATARS.map((src, i) => {
@@ -100,19 +89,13 @@ export default function SignupAvatarPage() {
                     onClick={() => setCurrentIndex(i)}
                     aria-label={`Vælg avatar ${i + 1}`}
                   >
-                    <img
-                      src={src}
-                      alt=""
-                      className={styles.thumbImg}
-                      aria-hidden="true"
-                    />
+                    <img src={src} alt="" className={styles.thumbImg} />
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* MIDTEN: stort preview af den valgte */}
           <div
             className={`${styles.previewCard} ${
               isSelected ? styles.previewCardActive : ""
@@ -125,9 +108,7 @@ export default function SignupAvatarPage() {
             />
           </div>
 
-          {/* UNDER: pil ←  Vælg  → */}
           <div className={styles.chooseRow}>
-            {/* venstre pil */}
             <button
               type="button"
               onClick={handlePrev}
@@ -137,7 +118,6 @@ export default function SignupAvatarPage() {
               <img src={backIcon} alt="" className="bubbleIcon" />
             </button>
 
-            {/* vælg-knap */}
             <button
               type="button"
               onClick={handleSelect}
@@ -148,7 +128,6 @@ export default function SignupAvatarPage() {
               Vælg
             </button>
 
-            {/* højre pil, samme ikon men vendt */}
             <button
               type="button"
               onClick={handleNext}
@@ -163,7 +142,6 @@ export default function SignupAvatarPage() {
             </button>
           </div>
 
-          {/* Afslut-knap lige efter vælg */}
           <div className={styles.afslutRow}>
             <button
               type="button"

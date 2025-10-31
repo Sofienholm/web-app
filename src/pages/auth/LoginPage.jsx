@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import styles from "./LoginPage.module.css";
 import { loginUser } from "../../services/auth.local.js";
@@ -27,7 +28,7 @@ export default function LoginPage() {
   function handleSubmit(e) {
     e.preventDefault();
     loginUser({ email, password: pw });
-    navigate("/");
+    navigate("/home", { replace: true });
   }
 
   return (

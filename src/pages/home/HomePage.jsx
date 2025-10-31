@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./HomePage.module.css";
-import { useLocalAuth } from "../../hooks/useLocalAuth.js";
+import useLocalAuth from "../../hooks/useLocalAuth.js";
 
 // Svævende mad-illustrationer (uden kagen)
 import noodles from "../../../public/assets/home/ill-home-food-nudles-pink.svg";
