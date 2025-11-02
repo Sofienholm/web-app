@@ -1,10 +1,12 @@
-// src/pages/auth/RequireAuth.jsx
-import { Navigate } from "react-router";
-import useLocalAuth from "../../hooks/useLocalAuth";
+import { Navigate, Outlet } from "react-router";
+import { useAuth } from "../../providers/AuthProvider.jsx";
 
 export default function RequireAuth({ children }) {
-  const { user, loading } = useLocalAuth?.() ?? { user: null, loading: false };
-  if (loading) return null; // evt. spinner
-  const isAuthed = !!user;
-  return isAuthed ? children : <Navigate to="/login" replace />;
+  const { user, loading } = useAuth();
+
+  if (loading) return null; // evt. lille spinner
+  if (!user) return <Navigate to="/login" replace />;
+
+  // Understøt både wrapper-pattern og nested routes
+  return children ?? <Outlet />;
 }

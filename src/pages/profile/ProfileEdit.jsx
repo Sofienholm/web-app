@@ -1,47 +1,46 @@
-import React, { useState } from "react";
+// src/pages/profile/ProfileEdit.jsx
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../providers/AuthProvider.jsx";
+import {
+  onProfileSnapshot,
+  upsertUserProfile,
+} from "../../services/profile.js";
 import styles from "./ProfileEdit.module.css";
 
-// services
-import { setAvatar } from "../../services/auth.local.js";
-
-// illustrationer
 import profileIllustration from "../../../public/assets/illustrations/ill-profil-avatar-man-garlic.svg";
 import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
 
+const AVATARS = [
+  "/assets/illustrations/ill-profil-avatar-woman-eating.svg",
+  "/assets/illustrations/ill-profil-avatar-chef.svg",
+  "/assets/illustrations/ill-profil-avatar-mom-cooking.svg",
+  "/assets/illustrations/ill-profil-avatar-woman-pokadots.svg",
+  "/assets/illustrations/ill-profil-avatar-man-burger.svg",
+  "/assets/illustrations/ill-profil-avatar-man-garlic.svg",
+];
+
 export default function ProfileEdit() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const [selected, setSelected] = useState(null);
 
-  // læs avatar fra samlet profile-objekt
-  let stored = null;
-  try {
-    const raw =
-      typeof window !== "undefined" ? localStorage.getItem("profile") : null;
-    stored = raw ? JSON.parse(raw)?.avatarSrc ?? null : null;
-  } catch {
-    stored = null;
-  }
+  // hent aktuel avatar
+  useEffect(() => {
+    if (!user?.uid) return;
+    const unsub = onProfileSnapshot(user.uid, (p) =>
+      setSelected(p?.avatarUrl || null)
+    );
+    return unsub;
+  }, [user?.uid]);
 
-  const [selected, setSelected] = useState(stored);
-
-  // BYT filnavne til dine rigtige filer i /public/assets/illustrations/avatars/
-  const avatars = [
-    "/assets/illustrations/ill-profil-avatar-woman-eating.svg",
-    "/assets/illustrations/ill-profil-avatar-chef.svg",
-    "/assets/illustrations/ill-profil-avatar-mom-cooking.svg",
-    "/assets/illustrations/ill-profil-avatar-woman-pokadots.svg",
-    "/assets/illustrations/ill-profil-avatar-man-burger.svg",
-    "/assets/illustrations/ill-profil-avatar-man-garlic.svg",
-  ];
-
-  function handlePick(src) {
+  async function handlePick(src) {
     setSelected(src);
-    setAvatar(src); // opdaterer profile + udsender "local-auth-changed"
+    if (user?.uid) await upsertUserProfile(user.uid, { avatarUrl: src });
   }
 
   return (
     <div className={styles.page}>
-      {/* 🔸 Tilbage-knap */}
       <div className={styles.topButtons}>
         <button
           type="button"
@@ -55,22 +54,20 @@ export default function ProfileEdit() {
         </button>
       </div>
 
-      {/* 🔸 Profilkort – viser valgt eller default */}
       <div className={styles.illustrationCard}>
         <img
-          src={selected || stored || profileIllustration}
+          src={selected || profileIllustration}
           alt="Profilillustration"
           className={styles.illustrationImg}
         />
       </div>
 
-      {/* 🔸 6 valgmuligheder */}
       <div className={styles.avatarGrid}>
-        {avatars.map((src, i) => {
-          const active = (selected || stored) === src;
+        {AVATARS.map((src, i) => {
+          const active = selected === src;
           return (
             <button
-              key={i}
+              key={src}
               type="button"
               className={`${styles.avatarBtn} ${
                 active ? styles.avatarBtnActive : ""

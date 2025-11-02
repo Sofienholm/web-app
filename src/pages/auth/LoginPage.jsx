@@ -1,14 +1,15 @@
-import React from "react";
-import { useState, useEffect } from "react";
+// src/pages/auth/LoginPage.jsx
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import styles from "./LoginPage.module.css";
-import { loginUser } from "../../services/auth.local.js";
 import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // --- mobil keyboard / viewport fix ---
   useEffect(() => {
@@ -25,10 +26,52 @@ export default function LoginPage() {
     };
   }, []);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    loginUser({ email, password: pw });
-    navigate("/home", { replace: true });
+    setLoading(true);
+    const auth = getAuth();
+
+    try {
+      // hvis der kører en anonym session, så luk den ned først
+      if (auth.currentUser?.isAnonymous) {
+        await signOut(auth);
+        console.log("🔸 anonym bruger logget ud");
+      }
+
+      // log ind med email + password
+      const res = await signInWithEmailAndPassword(
+        auth,
+        email.trim(),
+        pw.trim()
+      );
+      console.log("✅ Login success:", res.user);
+
+      // success -> videre
+      navigate("/home", { replace: true });
+      console.log("➡️ navigating to /home");
+      setTimeout(() => navigate("/home", { replace: true }), 1500);
+    } catch (error) {
+      console.error("Fejl ved login:", error.code, error.message);
+      switch (error.code) {
+        case "auth/invalid-credential":
+        case "auth/wrong-password":
+          alert("Forkert email eller adgangskode.");
+          break;
+        case "auth/user-not-found":
+          alert("Ingen bruger med denne email.");
+          break;
+        case "auth/too-many-requests":
+          alert("For mange forsøg. Prøv igen om lidt.");
+          break;
+        case "auth/network-request-failed":
+          alert("Netværksfejl. Tjek din forbindelse.");
+          break;
+        default:
+          alert(`Login fejlede: ${error.message}`);
+      }
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -48,7 +91,7 @@ export default function LoginPage() {
 
         <header className={styles.headBlock}>
           <h1 className={styles.appTitle}>MIN KOGEBOG</h1>
-          <div className={styles.subline}>Log in på din profil</div>
+          <div className={styles.subline}>Log ind på din profil</div>
         </header>
 
         <section className={styles.card}>
@@ -84,8 +127,12 @@ export default function LoginPage() {
             </button>
 
             <div className={styles.btnRow}>
-              <button type="submit" className={styles.ctaBtn}>
-                LOG IN
+              <button
+                type="submit"
+                className={styles.ctaBtn}
+                disabled={loading}
+              >
+                {loading ? "Logger ind..." : "LOG IN"}
               </button>
             </div>
           </form>

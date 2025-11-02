@@ -1,35 +1,37 @@
-import React, { useState } from "react";
+// src/components/layout/PageHeader.jsx
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../providers/AuthProvider.jsx";
+import { onProfileSnapshot } from "../../services/profile.js";
 import styles from "./PageHeader.module.css";
 
-// Ikoner fra public/
 import searchIcon from "../../../public/assets/icon/ic-search-symbol.svg";
 import defaultProfileIcon from "../../../public/assets/illustrations/ill-profil-avatar-man-garlic.svg";
 
 export default function PageHeader() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [searchValue, setSearchValue] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState(defaultProfileIcon);
 
-  // hent valgt avatar fra samlet profile-objekt
-  let chosen = null;
-  if (typeof window !== "undefined") {
-    try {
-      const raw = localStorage.getItem("profile");
-      chosen = raw ? JSON.parse(raw)?.avatarSrc ?? null : null;
-    } catch {
-      chosen = null;
+  useEffect(() => {
+    if (!user?.uid) {
+      setAvatarUrl(defaultProfileIcon);
+      return;
     }
-  }
-  const avatarToShow = chosen || defaultProfileIcon;
+    const unsub = onProfileSnapshot(user.uid, (profile) => {
+      setAvatarUrl(profile?.avatarUrl || defaultProfileIcon);
+    });
+    return unsub;
+  }, [user?.uid]);
 
   function runSearch() {
     const term = searchValue.trim();
-    if (term !== "") {
+    if (term) {
       navigate(`/search?q=${encodeURIComponent(term)}`);
       setSearchValue("");
     }
   }
-
   function handleKeyDown(e) {
     if (e.key === "Enter") runSearch();
   }
@@ -37,7 +39,6 @@ export default function PageHeader() {
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
-        {/* søgefelt */}
         <div className={styles.searchWrap}>
           <input
             id="recipe-search"
@@ -58,7 +59,6 @@ export default function PageHeader() {
           </button>
         </div>
 
-        {/* profil-knap der navigerer til /profile */}
         <button
           type="button"
           className={`bubbleButton bubbleGreen bubbleRight ${
@@ -67,7 +67,7 @@ export default function PageHeader() {
           onClick={() => navigate("/profile")}
           aria-label="Gå til profil"
         >
-          <img src={avatarToShow} alt="" className="bubbleIconLg" />
+          <img src={avatarUrl} alt="Profil" className="bubbleIconLg" />
         </button>
       </div>
     </header>
