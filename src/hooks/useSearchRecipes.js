@@ -1,27 +1,35 @@
 import { useEffect, useState } from "react";
-import { searchRecipes } from "../services/recipes.local.js";
+import { searchRecipes } from "../services/recipes.firestore"; // ← Firestore-service
 
 const DEFAULT_USER = "demo-user";
 
-export default function useSearchRecipes(query, userId = DEFAULT_USER) {
+export default function useSearchRecipes(queryText, userId = DEFAULT_USER) {
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    if (!query || query.trim() === "") {
+    const q = (queryText || "").trim();
+    if (!q) {
       setResults([]);
       return;
     }
 
     let alive = true;
 
-    searchRecipes(query, { ownerId: userId }).then((found) => {
-      if (alive) setResults(found);
-    });
+    (async () => {
+      try {
+        // Firestore → hent brugerens opskrifter og filtrér på title/description/tags
+        const found = await searchRecipes(userId, q);
+        if (alive) setResults(found);
+      } catch (err) {
+        console.error("useSearchRecipes → Firestore fejl:", err);
+        if (alive) setResults([]);
+      }
+    })();
 
     return () => {
       alive = false;
     };
-  }, [query, userId]);
+  }, [queryText, userId]);
 
   return results;
 }
