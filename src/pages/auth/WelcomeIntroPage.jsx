@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import Lottie from "lottie-react";

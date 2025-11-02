@@ -55,14 +55,7 @@ export default function App() {
               </OnlyGuests>
             }
           />
-          <Route
-            path="/signup/avatar"
-            element={
-              <OnlyGuests>
-                <SignupAvatarPage />
-              </OnlyGuests>
-            }
-          />
+          <Route path="/signup/avatar" element={<SignupAvatarPage />} />
 
           {/* Disse kan være public eller protected – vælg efter behov.
              Hvis de skal være låste, flyt dem ned i RequireAuth-blokken. */}

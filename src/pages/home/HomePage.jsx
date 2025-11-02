@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { getAuth } from "firebase/auth";
 import styles from "./HomePage.module.css";
-import useLocalAuth from "../../hooks/useLocalAuth.js";
 
 // Svævende mad-illustrationer (uden kagen)
 import noodles from "../../../public/assets/home/ill-home-food-nudles-pink.svg";
@@ -13,39 +13,36 @@ import veggie from "../../../public/assets/home/ill-home-food-veggie-pink.svg";
 import bottomCardBg from "../../../public/assets/illustrations/illu-homekort.svg";
 
 export default function HomePage() {
-  // ⬇️ vigtig ændring: få user ud af hook-objektet
-  const { user } = useLocalAuth();
+  const auth = getAuth();
+  const user = auth.currentUser;
 
+  // brugerens navn eller fallback
   const firstName =
-    user?.name?.split(" ")[0] || user?.email?.split("@")[0] || "ven";
+    user?.displayName?.split(" ")[0] || user?.email?.split("@")[0] || "ven";
 
-  // måle-span (usynlig) og styling-states
   const measureRef = useRef(null);
   const [nameFontSize, setNameFontSize] = useState(64);
   const [nameLineHeight, setNameLineHeight] = useState(0.9);
 
+  // dynamisk font-tilpasning
   useEffect(() => {
     const measurer = measureRef.current;
     if (!measurer || !firstName) return;
 
-    // målbare konstanter
-    const TARGET_WIDTH = 260; // px: den visuelle kolonne vi vil matche
-    const MIN_SIZE = 24; // mindste font-size vi accepterer
-    const MAX_SIZE = 110; // største font-size vi accepterer
-    const STEP = 1; // hvor fint vi tuner
+    const TARGET_WIDTH = 260;
+    const MIN_SIZE = 24;
+    const MAX_SIZE = 110;
+    const STEP = 1;
 
-    // helper der måler given size
     const widthAt = (sizePx) => {
       measurer.style.fontSize = sizePx + "px";
       measurer.textContent = firstName;
       return measurer.offsetWidth;
     };
 
-    // 1) baseline
     let testSize = 64;
     let currentWidth = widthAt(testSize);
 
-    // 2) skalér op hvis for smalt
     if (currentWidth < TARGET_WIDTH) {
       while (testSize < MAX_SIZE) {
         const next = testSize + STEP;
@@ -56,16 +53,11 @@ export default function HomePage() {
       }
     }
 
-    // 3) skalér ned hvis for bredt
     if (currentWidth > TARGET_WIDTH) {
       while (testSize > MIN_SIZE) {
         const next = testSize - STEP;
         const nextWidth = widthAt(next);
-        if (nextWidth <= TARGET_WIDTH) {
-          testSize = next;
-          currentWidth = nextWidth;
-          break;
-        }
+        if (nextWidth <= TARGET_WIDTH) break;
         testSize = next;
         currentWidth = nextWidth;
       }
@@ -73,7 +65,6 @@ export default function HomePage() {
 
     setNameFontSize(testSize);
 
-    // line-height mapping
     const span = MAX_SIZE - MIN_SIZE;
     const pct = span === 0 ? 0 : (testSize - MIN_SIZE) / span;
     const lhMax = 1.25;

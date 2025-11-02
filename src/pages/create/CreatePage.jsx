@@ -23,7 +23,7 @@ async function handleSave(data) {
         <button
           type="button"
           className={`bubbleButton bubbleGreen bubbleLeft ${styles.backButtonFixed}`}
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/home")}
         >
           <img src={backIcon} alt="Tilbage" className="bubbleIcon" />
         </button>
