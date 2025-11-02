@@ -4,6 +4,7 @@ import App from "./app/App.jsx";
 import { BrowserRouter } from "react-router";
 import "./styles/gobal.css"; 
 import "./styles/button.css";
+import "./app/authInit.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>

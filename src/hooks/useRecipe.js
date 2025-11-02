@@ -1,15 +1,30 @@
 import { useEffect, useState } from "react";
-// import { doc, getDoc } from "firebase/firestore";
-// import { db } from "../app/firebase";
-// import { useAuthUser } from "./useAuthUser";
+import { getRecipeById } from "../services/recipes.firestore";
 
 export function useRecipe(id) {
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("recipes")) || [];
-    const found = data.find((r) => r.id === id);
-    setRecipe(found);
+    let alive = true;
+    if (!id) {
+      setRecipe(null);
+      return;
+    }
+
+    (async () => {
+      try {
+        const data = await getRecipeById(id);
+        if (alive) setRecipe(data ?? null);
+      } catch (err) {
+        console.error("useRecipe → Firestore fejl:", err);
+        if (alive) setRecipe(null);
+      }
+    })();
+
+    return () => {
+      // undgå state updates hvis komponenten unmounter midt i async-kald
+      alive = false;
+    };
   }, [id]);
 
   return recipe;

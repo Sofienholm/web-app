@@ -3,17 +3,20 @@ import RecipeForm from "./components/RecipeForm.jsx";
 import styles from "./CreatePage.module.css";
 import backIcon from "/assets/icon/ic-back-symbol.svg"; // Vite: brug /assets/...
 import Flueben from "/assets/icon/ic-flueben-symbol.svg";
-import { createRecipe } from "../../services/recipes.local.js";
+import { createRecipe } from "../../services/recipes.firestore.js";
+import { auth } from "../../app/firebase";
+
 
 
 export default function CreatePage() {
   const navigate = useNavigate();
 
+
 async function handleSave(data) {
-  const id = await createRecipe(data);
+  const uid = auth.currentUser?.uid || "anon";
+  const { id } = await createRecipe({ ...data, ownerId: uid });
   navigate(`/recipe/${id}`);
 }
-
   return (
     <section>
       <div className={styles.topButtons}>

@@ -1,4 +1,3 @@
-// src/app/App.jsx
 import { Routes, Route, Navigate } from "react-router";
 import { AuthProvider } from "../providers/AuthProvider.jsx";
 
@@ -13,7 +12,7 @@ import CategoryResultPage from "../pages/categories/CategoryResultPage.jsx";
 import FilteredResultPage from "../pages/categories/FilteredResultPage.jsx";
 import SearchPage from "../pages/search/SearchPage.jsx";
 
-// Pages (Fullscreen layout - OFFENTLIG)
+// Pages (Fullscreen layout)
 import CreatePage from "../pages/create/CreatePage.jsx";
 import ProfilePage from "../pages/profile/ProfilePage.jsx";
 import ProfileEdit from "../pages/profile/ProfileEdit.jsx";
@@ -34,20 +33,48 @@ export default function App() {
   return (
     <AuthProvider>
       <Routes>
-        {/* 🔓 Offentlige ruter + startside */}
+        {/* 🔓 Offentlige ruter (fullscreen) */}
         <Route element={<FullscreenLayout />}>
-<Route path="/" element={<OnlyGuests><WelcomeIntroPage /></OnlyGuests>} />
-<Route path="/login" element={<OnlyGuests><LoginPage /></OnlyGuests>} />
-<Route path="/signup" element={<OnlyGuests><SignupPage /></OnlyGuests>} />
-<Route path="/signup/avatar" element={<OnlyGuests><SignupAvatarPage /></OnlyGuests>} />
-          {/* hvis disse skal være offentlige, behold dem her — ellers flyt dem ned i det beskyttede afsnit */}
+          {/* Forside/Splash skal være PUBLIC, ikke OnlyGuests */}
+          <Route path="/" element={<WelcomeIntroPage />} />
+
+          {/* Kun gæster må se login/signup */}
+          <Route
+            path="/login"
+            element={
+              <OnlyGuests>
+                <LoginPage />
+              </OnlyGuests>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <OnlyGuests>
+                <SignupPage />
+              </OnlyGuests>
+            }
+          />
+          <Route
+            path="/signup/avatar"
+            element={
+              <OnlyGuests>
+                <SignupAvatarPage />
+              </OnlyGuests>
+            }
+          />
+
+          {/* Disse kan være public eller protected – vælg efter behov.
+             Hvis de skal være låste, flyt dem ned i RequireAuth-blokken. */}
+          <Route path="/recipe/:id" element={<RecipeDetailPage />} />
+          <Route path="/recipe/:id/done" element={<RecipeDonePage />} />
+
+          {/* Hvis Create/Edit/Profile skal kræve login, flyt dem ned */}
           <Route path="/create" element={<CreatePage />} />
+          <Route path="/create/link" element={<ImportFromUrlPage />} />
+          <Route path="/edit/:id" element={<EditRecipePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/edit" element={<ProfileEdit />} />
-          <Route path="/recipe/:id" element={<RecipeDetailPage />} />
-          <Route path="/edit/:id" element={<EditRecipePage />} />
-          <Route path="/create/link" element={<ImportFromUrlPage />} />
-          <Route path="/recipe/:id/done" element={<RecipeDonePage />} />
         </Route>
 
         {/* 🔐 Beskyttede ruter (kræver login) */}

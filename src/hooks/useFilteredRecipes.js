@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { api as recipes } from "../services/recipes";
+import { listRecipes } from "../services/recipes.firestore"; // ← Firestore-service
 import filterAndSortRecipes from "../utils/filterAndSortRecipes.js";
 
 const DEFAULT_USER = "demo-user";
@@ -10,19 +10,20 @@ export default function useFilteredRecipes(filters, userId = DEFAULT_USER) {
   useEffect(() => {
     let alive = true;
 
-    async function run() {
-      // hent alle opskrifter for brugeren
-      const all = await listRecipes({ ownerId: userId });
+    (async () => {
+      try {
+        // 1) Hent alle opskrifter for den givne bruger (Firestore)
+        const all = await listRecipes({ ownerId: userId });
 
-      // filtrér og sorter
-      const processed = filterAndSortRecipes(all, filters);
+        // 2) Filtrér og sorter med din eksisterende util
+        const processed = filterAndSortRecipes(all, filters);
 
-      if (alive) {
-        setOut(processed);
+        if (alive) setOut(processed);
+      } catch (err) {
+        console.error("useFilteredRecipes → Firestore fejl:", err);
+        if (alive) setOut([]);
       }
-    }
-
-    run();
+    })();
 
     return () => {
       alive = false;
