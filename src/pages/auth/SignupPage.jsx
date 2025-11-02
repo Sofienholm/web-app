@@ -1,42 +1,69 @@
+// src/pages/auth/SignupPage.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../../app/firebase";
 import styles from "./SignupPage.module.css";
-import { signupUser } from "../../services/auth.local.js";
-
 import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
 
 export default function SignupPage() {
   const navigate = useNavigate();
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [pwAgain, setPwAgain] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    // simpelt tjek
     if (pw.trim() !== pwAgain.trim()) {
       alert("Adgangskoderne er ikke ens 🙈");
       return;
     }
 
-    // gem midlertidigt i localStorage (ligesom vi gjorde tidligere)
-    signupUser({
-      name: name.trim(),
-      email: email.trim(),
-      password: pw.trim(),
-    });
+    setLoading(true);
+try {
+  const auth = getAuth();
 
-    // videre til avatar-step
-    navigate("/signup/avatar");
+  // 1️⃣ Opret bruger i Firebase Authentication
+  const userCredential = await createUserWithEmailAndPassword(auth, email.trim(), pw.trim());
+  const user = userCredential.user;
+
+  // 2️⃣ (Sikrer korrekt auth-context før updateProfile)
+  await auth.updateCurrentUser(user);
+  await updateProfile(auth.currentUser, { displayName: name.trim() });
+
+  // 3️⃣ Gem ekstra data i Firestore
+  await setDoc(
+    doc(db, "users", user.uid),
+    {
+      displayName: name.trim(),
+      email: email.trim(),
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    },
+    { merge: true }
+  );
+
+  navigate("/signup/avatar");
+} catch (error) {
+  console.error("Fejl ved oprettelse:", error.code, error.message);
+  alert(`Der opstod en fejl under oprettelsen:\n${error.message}`);
+
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <main className={styles.screen}>
       <div className={styles.shell}>
-        {/* top row: tilbage + tekstblok */}
         <div className={styles.topRow}>
           <button
             type="button"
@@ -53,10 +80,8 @@ export default function SignupPage() {
           </div>
         </div>
 
-        {/* det røde kort m. baggrundsgrafik */}
         <section className={styles.card}>
           <form className={styles.form} onSubmit={handleSubmit}>
-            {/* Navn */}
             <label className={styles.label}>
               <span className={styles.labelText}>Navn</span>
               <input
@@ -68,7 +93,6 @@ export default function SignupPage() {
               />
             </label>
 
-            {/* Mail */}
             <label className={styles.label}>
               <span className={styles.labelText}>Mail</span>
               <input
@@ -80,7 +104,6 @@ export default function SignupPage() {
               />
             </label>
 
-            {/* Kode */}
             <label className={styles.label}>
               <span className={styles.labelText}>Adgangskode</span>
               <input
@@ -92,7 +115,6 @@ export default function SignupPage() {
               />
             </label>
 
-            {/* Kode igen */}
             <label className={styles.label}>
               <span className={styles.labelText}>Adgangskode igen</span>
               <input
@@ -105,8 +127,12 @@ export default function SignupPage() {
             </label>
 
             <div className={styles.btnRow}>
-              <button type="submit" className={styles.ctaBtn}>
-                VIDERE
+              <button
+                type="submit"
+                className={styles.ctaBtn}
+                disabled={loading}
+              >
+                {loading ? "Opretter..." : "VIDERE"}
               </button>
             </div>
           </form>

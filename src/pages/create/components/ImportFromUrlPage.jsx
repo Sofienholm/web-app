@@ -1,17 +1,19 @@
+// src/pages/create/components/ImportFromUrlPage.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { createRecipe } from "../../../services/recipes.local.js";
+import { createRecipe } from "../../../services/recipes.firestore.js";
+import { getAuth } from "firebase/auth";
 import styles from "./ImportFromUrlPage.module.css";
 
-// baggrundsillustration
 import bgImage from "/assets/home/illu-link.svg";
-import backIcon from "/assets/icon/ic-back-symbol.svg"; // ← grøn bobleknap ikon
+import backIcon from "/assets/icon/ic-back-symbol.svg";
 
 export default function ImportFromUrlPage() {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const auth = getAuth();
 
   async function handleImport() {
     if (!url.trim()) return;
@@ -54,9 +56,10 @@ export default function ImportFromUrlPage() {
           ? data.steps.map((s) => s.trim())
           : data.analyzedInstructions?.[0]?.steps?.map((s) => s.step.trim()) ||
             [],
+        ownerId: auth.currentUser?.uid || "anon",
       };
 
-      const id = await createRecipe(recipe);
+      const { id } = await createRecipe(recipe);
       navigate(`/recipe/${id}`);
     } catch (err) {
       console.error("❌ Import fejl:", err);
@@ -68,7 +71,6 @@ export default function ImportFromUrlPage() {
 
   return (
     <div className={styles.page}>
-      {/* 🔙 Grøn tilbageknap */}
       <button
         type="button"
         className={`bubbleButton bubbleGreen bubbleLeft ${styles.backButton}`}
@@ -78,7 +80,6 @@ export default function ImportFromUrlPage() {
         <img src={backIcon} alt="" className="bubbleIcon" />
       </button>
 
-      {/* 🎨 Baggrundsbillede */}
       <img src={bgImage} alt="" className={styles.bgImage} />
 
       <h1 className={styles.title}>Importer opskrift</h1>

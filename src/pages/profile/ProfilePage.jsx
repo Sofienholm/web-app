@@ -1,8 +1,10 @@
-import React from "react";
+// src/pages/profile/ProfilePage.jsx
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { getAuth, signOut } from "firebase/auth";
+import { onProfileSnapshot } from "../../services/profile.js";
+import { useAuth } from "../../providers/AuthProvider.jsx";
 import styles from "./ProfilePage.module.css";
-import { logoutUser } from "../../services/auth.local.js";
-import useLocalAuth from "../../hooks/useLocalAuth.js";
 
 // components
 import ProfileInfo from "./components/ProfileInfo";
@@ -15,15 +17,23 @@ import profileDefault from "../../../public/assets/illustrations/ill-profil-avat
 
 export default function ProfilePage() {
   const navigate = useNavigate();
-  const { user } = useLocalAuth(); // <- samlet profil fra local auth
+  const { user } = useAuth(); // <- den ægte Firebase-bruger
+  const [profile, setProfile] = useState(null);
 
-  const avatarSrc = user?.avatarSrc || profileDefault;
-  const name = user?.name || "Testbruger";
-  const email = user?.email || "test@eksempel.dk";
+  useEffect(() => {
+    if (!user?.uid) return;
+    const unsub = onProfileSnapshot(user.uid, (data) => setProfile(data));
+    return unsub;
+  }, [user?.uid]);
 
-  function handleLogout() {
-    logoutUser();
-    navigate("/login", { replace: true }); // <- korrekt efter logout
+  const avatarSrc = profile?.avatarUrl || profileDefault;
+  const name = profile?.displayName || user?.displayName || "Bruger";
+  const email = user?.email || "ukendt@mail.dk";
+
+  async function handleLogout() {
+    const auth = getAuth();
+    await signOut(auth);
+    navigate("/login", { replace: true });
   }
 
   return (
@@ -32,8 +42,8 @@ export default function ProfilePage() {
       <div className={styles.topButtons}>
         <button
           type="button"
-          className={`bubbleButton bubbleRed bubbleLeft`}
-          onClick={() => navigate("/")}
+          className="bubbleButton bubbleRed bubbleLeft"
+          onClick={() => navigate("/home")}
           aria-label="Tilbage"
         >
           <img src={backIcon} alt="Tilbage" className="bubbleIcon" />
@@ -41,7 +51,7 @@ export default function ProfilePage() {
 
         <button
           type="button"
-          className={`bubbleButton bubbleRed bubbleRight`}
+          className="bubbleButton bubbleRed bubbleRight"
           onClick={() => navigate("/profile/edit")}
           aria-label="Rediger profil"
         >
@@ -49,7 +59,7 @@ export default function ProfilePage() {
         </button>
       </div>
 
-      {/* 🔸 Profilbillede og info */}
+      {/* 🔸 Profilkort */}
       <ProfileInfo name={name} email={email} illustrationSrc={avatarSrc} />
 
       {/* 🔸 Action-knapper */}
