@@ -1,5 +1,4 @@
 // src/pages/auth/AuthIntroPage.jsx
-import React from "react";
 import { useNavigate } from "react-router";
 import styles from "./AuthIntroPage.module.css";
 

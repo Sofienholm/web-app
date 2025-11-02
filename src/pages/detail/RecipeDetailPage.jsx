@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { useRecipe } from "../../hooks/useRecipe.js";
 
 // detail-visninger (read-only)
@@ -17,11 +17,14 @@ import editIcon from "/assets/icon/ic-edit-symbol.svg";
 
 
 export default function RecipeDetailPage() {
-
-  
   const { id } = useParams();
   const navigate = useNavigate();
   const recipe = useRecipe(id);
+  const location = useLocation();
+
+  // find ud af hvor man kom fra (eller fald tilbage til home)
+  const from = location.state?.from || "/home";
+
 
   // styrer åbning/lukning af ingrediens-sheet
   const [showIngredients, setShowIngredients] = useState(false);
@@ -34,7 +37,7 @@ export default function RecipeDetailPage() {
       <button
         type="button"
         className={`bubbleButton bubbleGreen bubbleLeft ${styles.backButtonFixed}`}
-        onClick={() => navigate(-1)}
+        onClick={() => navigate(from, { replace: true })}
         aria-label="Tilbage"
       >
         <img src={backIcon} alt="Tilbage" className="bubbleIcon" />
@@ -44,7 +47,7 @@ export default function RecipeDetailPage() {
       <button
         type="button"
         className={`bubbleButton bubbleGreen bubbleRight ${styles.editButtonFixed}`}
-        onClick={() => navigate(`/edit/${id}`)}
+        onClick={() => navigate(`/edit/${id}`, { state: { from: location.state?.from } })}
         aria-label="Rediger opskrift"
       >
         <img src={editIcon} alt="Rediger" className="bubbleIcon" />

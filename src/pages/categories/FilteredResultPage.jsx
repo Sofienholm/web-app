@@ -1,4 +1,3 @@
-import React from "react";
 import { useLocation, useNavigate } from "react-router";
 import useFilteredRecipes from "../../hooks/useFilteredRecipes.js";
 import styles from "./FilteredResultPage.module.css";
@@ -16,7 +15,9 @@ export default function FilteredResultPage() {
 
   const bits = [];
   if (time)
-    bits.push(time === "<30" ? "<30 MIN" : time === "60-90" ? "60–90 MIN" : ">90 MIN");
+    bits.push(
+      time === "<30" ? "<30 MIN" : time === "60-90" ? "60–90 MIN" : ">90 MIN"
+    );
   if (tags.length) bits.push(tags.join(", "));
   if (sort === "az") bits.push("A–Z");
   if (sort === "recent") bits.push("Seneste");
@@ -30,7 +31,9 @@ export default function FilteredResultPage() {
       <div className={styles.headerRow}>
         <button
           type="button"
-          className={`bubbleButton bubbleGreen bubbleLeft ${styles.backButtonFixed || ""}`}
+          className={`bubbleButton bubbleGreen bubbleLeft ${
+            styles.backButtonFixed || ""
+          }`}
           onClick={() => navigate(-1)}
           aria-label="Tilbage"
         >
@@ -60,22 +63,32 @@ export default function FilteredResultPage() {
                 onClick={() => navigate(`/recipe/${r.id}`)}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => e.key === "Enter" && navigate(`/recipe/${r.id}`)}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && navigate(`/recipe/${r.id}`)
+                }
               >
                 <div className={styles.cardImgWrap}>
                   {r.image ? (
-                    <img src={r.image} alt={r.title} className={styles.cardImg} />
+                    <img
+                      src={r.image}
+                      alt={r.title}
+                      className={styles.cardImg}
+                    />
                   ) : (
                     <div className={styles.cardImgPlaceholder}>🍽</div>
                   )}
                 </div>
 
                 <div className={styles.cardBody}>
-                  <div className={styles.cardTitle}>{r.title || "Uden titel"}</div>
+                  <div className={styles.cardTitle}>
+                    {r.title || "Uden titel"}
+                  </div>
                   <div className={styles.cardMeta}>
                     {r.timeMin || "Ukendt tid"}
                     {r.servings ? ` · ${r.servings} pers.` : ""}
-                    {r.tags?.length ? " · " + r.tags.slice(0, 2).join(", ") : ""}
+                    {r.tags?.length
+                      ? " · " + r.tags.slice(0, 2).join(", ")
+                      : ""}
                   </div>
                 </div>
               </div>

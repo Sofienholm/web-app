@@ -1,4 +1,3 @@
-import React from "react";
 import { useLocation, useNavigate } from "react-router";
 import useSearchRecipes from "../../hooks/useSearchRecipes.js";
 import styles from "./SearchPage.module.css";

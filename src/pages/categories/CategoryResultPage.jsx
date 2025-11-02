@@ -1,4 +1,3 @@
-import React from "react";
 import { useLocation, useNavigate } from "react-router";
 import useRecipesByTag from "../../hooks/useRecipesByTag.js";
 import styles from "./CategoryResultPage.module.css";

@@ -1,5 +1,5 @@
 // src/pages/auth/LoginPage.jsx
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import styles from "./LoginPage.module.css";
