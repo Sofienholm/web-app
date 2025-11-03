@@ -10,7 +10,7 @@ export default function WelcomeIntroPage() {
 
   // hent animationen fra public
   useEffect(() => {
-    fetch("/data/splash-screen.json")
+    fetch("../../assets/splash-screen.json")
       .then((res) => res.json())
       .then(setAnimationData);
   }, []);
