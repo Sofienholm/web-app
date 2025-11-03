@@ -1,34 +1,37 @@
+// -- IMPORTS --
 import React, { useState, useEffect } from "react";
 import styles from "./FilterSheet.module.css";
 import closeBtn from "/assets/icon/ic-add-symbol.svg";
 
+// -- COMPONENT: FilterSheet --
 export default function FilterSheet({ initialFilters, onClose, onApply }) {
-  const [localFilters, setLocalFilters] = useState(initialFilters);
-  const [isVisible, setIsVisible] = useState(false);
+  // -- STATE: lokale filtre + visning --
+  const [localFilters, setLocalFilters] = useState(initialFilters); // lokalt arbejdskopi af filtre
+  const [isVisible, setIsVisible] = useState(false); // styrer slide-in/out
 
-  // sheet slider op lige efter mount
+  // -- EFFECT: sheet slider op lige efter mount --
   useEffect(() => {
-    const t = setTimeout(() => setIsVisible(true), 0);
+    const t = setTimeout(() => setIsVisible(true), 0); // trig overgang i næste tick
     return () => clearTimeout(t);
   }, []);
 
-  // luk animation (slide ned + fade overlay)
+  // -- HANDLER: luk (slide ned + fade overlay) --
   function handleClose() {
-    setIsVisible(false);
+    setIsVisible(false); // start exit-animation
     setTimeout(() => {
-      onClose();
+      onClose(); // informer parent når animation er færdig
     }, 250); // matcher CSS transition speed
   }
 
-  // klik på baggrunden = luk
+  // -- HANDLER: klik på baggrunden = luk --
   function handleOverlayClick(e) {
     if (e.target === e.currentTarget) {
       handleClose();
     }
   }
 
-  // toggle sort (så A–Z / SENESTE kan vælges FRA og TIL,
-  // og ingen er aktiv fra start hvis initialFilters.sort === null)
+  // -- HANDLER: toggle sort (A–Z / SENESTE) --
+  // klik igen på aktiv = fjern, så ingen er valgt hvis initialFilters.sort === null
   function selectSort(value) {
     setLocalFilters((f) => ({
       ...f,
@@ -36,14 +39,14 @@ export default function FilterSheet({ initialFilters, onClose, onApply }) {
     }));
   }
 
-  // toggle tidsfilter (samme logik: klik igen = fjern)
+  // -- HANDLER: toggle tidsfilter --
   function selectTime(value) {
     setLocalFilters((f) =>
       f.time === value ? { ...f, time: null } : { ...f, time: value }
     );
   }
 
-  // toggle tag
+  // -- HANDLER: toggle tag --
   function toggleTag(tag) {
     setLocalFilters((f) => {
       const hasIt = f.tags.includes(tag);
@@ -54,12 +57,12 @@ export default function FilterSheet({ initialFilters, onClose, onApply }) {
     });
   }
 
-  // "TILFØJ" -> send valgene tilbage til parent
+  // -- HANDLER: "TILFØJ" -> send valgene tilbage til parent --
   function handleApply() {
-    onApply(localFilters);
+    onApply(localFilters); // giv de valgte filtre tilbage
   }
 
-  // de tags der kan vælges
+  // -- KONSTANT: tilgængelige tags (vælg fra denne liste) --
   const ALL_TAGS = [
     "Budget",
     "Hurtigt & nemt",
@@ -72,40 +75,31 @@ export default function FilterSheet({ initialFilters, onClose, onApply }) {
     "Mexicansk",
   ];
 
+  // -- RENDER --
   return (
     <div
-      className={`${styles.overlay} ${
-        isVisible ? styles.overlayVisible : ""
-      }`}
-      onClick={handleOverlayClick}
+      className={`${styles.overlay} ${isVisible ? styles.overlayVisible : ""}`}
+      onClick={handleOverlayClick} // klik på overlay lukker
       role="dialog"
       aria-modal="true"
     >
-      <div
-        className={`${styles.sheet} ${
-          isVisible ? styles.sheetVisible : ""
-        }`}
-      >
-        {/* HEADER */}
+      <div className={`${styles.sheet} ${isVisible ? styles.sheetVisible : ""}`}>
+        {/* -- HEADER -- */}
         <header className={styles.sheetHeader}>
           <h1 className={styles.title}>FILTER</h1>
 
           <button
             type="button"
             className={styles.closeBtn}
-            onClick={handleClose}
+            onClick={handleClose} // luk via knap
             aria-label="Luk"
           >
             {/* plus-ikonet roteret 45°, stylet i .closeIcon */}
-            <img
-              src={closeBtn}
-              alt=""
-              className={styles.closeIcon}
-            />
+            <img src={closeBtn} alt="" className={styles.closeIcon} />
           </button>
         </header>
 
-        {/* SORTERING (A–Z / SENESTE) */}
+        {/* -- SORTERING (A–Z / SENESTE) -- */}
         <section className={styles.sortRowWrapper}>
           <div className={styles.sortRow}>
             <button
@@ -130,7 +124,7 @@ export default function FilterSheet({ initialFilters, onClose, onApply }) {
           </div>
         </section>
 
-        {/* TID */}
+        {/* -- TID -- */}
         <section className={styles.sectionBlock}>
           <div className={styles.sectionLabel}>TID</div>
           <div className={styles.timeRow}>
@@ -166,7 +160,7 @@ export default function FilterSheet({ initialFilters, onClose, onApply }) {
           </div>
         </section>
 
-        {/* TAGS */}
+        {/* -- TAGS -- */}
         <section className={styles.sectionBlock}>
           <div className={styles.sectionLabel}>TAGS</div>
           <div className={styles.tagsWrap}>
@@ -176,7 +170,7 @@ export default function FilterSheet({ initialFilters, onClose, onApply }) {
                 <button
                   key={tag}
                   type="button"
-                  onClick={() => toggleTag(tag)}
+                  onClick={() => toggleTag(tag)} // til/fra vælg tag
                   className={`${styles.tagPill} ${
                     active ? styles.tagPillActive : ""
                   }`}
@@ -188,12 +182,12 @@ export default function FilterSheet({ initialFilters, onClose, onApply }) {
           </div>
         </section>
 
-        {/* CTA KNAP */}
+        {/* -- CTA KNAP -- */}
         <footer className={styles.footerArea}>
           <button
             type="button"
             className={styles.applyBtn}
-            onClick={handleApply}
+            onClick={handleApply} // anvend valgte filtre
           >
             TILFØJ
           </button>

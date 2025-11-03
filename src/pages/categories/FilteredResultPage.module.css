@@ -1,3 +1,4 @@
+/* -- PAGE WRAPPER -- */
 .page {
   min-height: 100vh;
   background: #FFF9CB;
@@ -11,6 +12,7 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/* -- HEADER (KNAP + TEKST) -- */
 .headerRow {
   display: flex;
   align-items: center;
@@ -27,6 +29,7 @@
   flex-shrink: 0;
 }
 
+/* -- HEADER TEKSTBLOK -- */
 .headerTextBlock {
   display: flex;
   flex-direction: column;
@@ -49,6 +52,7 @@
   word-break: break-word;
 }
 
+/* -- LISTE / KORT -- */
 .list {
   list-style: none;
   padding: 0;
@@ -116,6 +120,7 @@
   line-height: 1.3;
 }
 
+/* -- EMPTY STATE ILLUSTRATION -- */
 .illustrationWrap {
   display: flex;
   justify-content: center;

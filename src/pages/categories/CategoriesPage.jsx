@@ -1,8 +1,11 @@
+// -- IMPORTS --
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styles from "./CategoriesPage.module.css";
 import FilterSheet from "./FilterSheet.jsx";
 import useUnlockScroll from "../../hooks/useUnlockScroll";
+
+// -- ASSET IMPORTS --
 import filterIcon from "/assets/icon/ic-filter-symbol.svg";
 import asiatisk from "../../../public/assets/categori/ic-category-asiatisk.svg";
 import favorit from "../../../public/assets/categori/ic-category-favorit.svg";
@@ -15,6 +18,7 @@ import budget from "../../../public/assets/categori/ic-category-budget.svg";
 import morgenmad from "../../../public/assets/categori/ic-category-morgenmad.svg";
 import plus from "../../../public/assets/categori/ic-category-plus.svg";
 
+// -- CONSTANTS: CATEGORIES --
 const CATEGORIES = [
   { slug: "Asiatisk", icon: asiatisk },
   { slug: "Favorit", icon: favorit },
@@ -28,30 +32,33 @@ const CATEGORIES = [
   { slug: "plus", icon: plus },
 ];
 
+// -- COMPONENT: CategoriesPage --
 export default function CategoriesPage() {
-  useUnlockScroll();
+  useUnlockScroll(); // lås evt. body-scroll op når siden vises
+
   const navigate = useNavigate();
 
-  // venstre / højre kolonne (forskudt)
+  // -- DERIVED DATA: venstre / højre kolonne (forskudt)
   const left = CATEGORIES.filter((_, i) => i % 2 === 0);
   const right = CATEGORIES.filter((_, i) => i % 2 === 1);
 
-  // gå til simpel kategori-resultatside (direkte på ét tag)
+  // -- NAVIGATION: gå til simpel kategori-resultatside
   const goTo = (slug) => {
+    // hent slug og gå til resultatsiden via query param
     navigate(`/categories/result?cat=${encodeURIComponent(slug)}`);
   };
 
-  // filter sheet state
+  // -- STATE: filter sheet åben/lukket --
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  // globale filtre (kan bruges hvis du vil vise "aktive filtre" i UI senere)
+  // -- STATE: globale filtre (til evt. visning af aktive filtre senere) --
   const [filters, setFilters] = useState({
-    sort: null, // <-- var "recent", nu null så ingen er valgt fra start
+    sort: null, // var "recent" – nu null så ingen valgt fra start
     time: null, // "<30" | "60-90" | ">90" | null
-    tags: [], // ["Pasta","Vegetar",...]
+    tags: [], // fx ["Pasta","Vegetar"]
   });
 
-  // kaldes når man trykker "TILFØJ" i sheet'et
+  // -- HANDLER: kaldt når man trykker "TILFØJ" i sheet'et --
   function applyFilters(newFilters) {
     setFilters(newFilters);
     setIsFilterOpen(false);
@@ -69,17 +76,19 @@ export default function CategoriesPage() {
       params.set("tags", newFilters.tags.join(",")); // "Pasta,Vegetar"
     }
 
+    // navigér til filtreret liste med valgte kriterier
     navigate(`/categories/filter?${params.toString()}`);
   }
 
+  // -- RENDER --
   return (
     <div className={styles.page}>
-      {/* filter-knap */}
+      {/* -- FILTER-KNAP (øverst højre) -- */}
       <button
         type="button"
         className={styles.filterBtn}
         aria-label="Filtrér"
-        onClick={() => setIsFilterOpen(true)}
+        onClick={() => setIsFilterOpen(true)} // åbn sheet
       >
         <img
           src={filterIcon}
@@ -89,14 +98,14 @@ export default function CategoriesPage() {
         />
       </button>
 
-      {/* forskudt to-kolonne grid */}
+      {/* -- GRID: forskudt to-kolonne layout -- */}
       <div className={styles.columns}>
         <div className={styles.col}>
           {left.map((cat) => (
             <button
               key={cat.slug}
               className={styles.card}
-              onClick={() => goTo(cat.slug)}
+              onClick={() => goTo(cat.slug)} // gå til kategori
             >
               <img src={cat.icon} alt="" className={styles.cardImg} />
             </button>
@@ -108,7 +117,7 @@ export default function CategoriesPage() {
             <button
               key={cat.slug}
               className={styles.card}
-              onClick={() => goTo(cat.slug)}
+              onClick={() => goTo(cat.slug)} // gå til kategori
             >
               <img src={cat.icon} alt="" className={styles.cardImg} />
             </button>
@@ -116,12 +125,12 @@ export default function CategoriesPage() {
         </div>
       </div>
 
-      {/* filter overlay sheet */}
+      {/* -- FILTER OVERLAY SHEET -- */}
       {isFilterOpen && (
         <FilterSheet
-          initialFilters={filters}
-          onClose={() => setIsFilterOpen(false)}
-          onApply={applyFilters}
+          initialFilters={filters} // giv nuværende filtre videre til sheet
+          onClose={() => setIsFilterOpen(false)} // luk uden at anvende
+          onApply={applyFilters} // anvend valgte filtre
         />
       )}
     </div>
