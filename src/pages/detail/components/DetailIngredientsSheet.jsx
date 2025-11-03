@@ -7,13 +7,17 @@ import closeIcon from "/assets/icon/ic-add-symbol.svg";
 export default function DetailIngredientsSheet({ open, onClose, ingredients }) {
   const panelRef = useRef(null); // ← hooks BEFORE any return
 
+  // Lås baggrundsscroll når sheet er åbent
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
+    const prevTouch = document.body.style.touchAction;
     const prevOverscroll = document.body.style.overscrollBehavior;
     document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
     document.body.style.overscrollBehavior = "none";
     return () => {
       document.body.style.overflow = prevOverflow;
+      document.body.style.touchAction = prevTouch;
       document.body.style.overscrollBehavior = prevOverscroll;
     };
   }, []);
