@@ -31,7 +31,7 @@ export default function RecipeDonePage() {
   }
 
   function handleFinish() {
-    navigate("/");
+    navigate("/home");
   }
 
   return (
