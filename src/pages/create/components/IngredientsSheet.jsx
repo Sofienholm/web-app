@@ -88,7 +88,7 @@ export default function IngredientsSheet({
 
                     {it.open && (
                       <ul className={styles.dropdown} role="listbox">
-                        {["tsk.", "spk.", "g", "kg", "ml", "dl"].map((unit) => (
+                        {["stk.", "tsk.", "spk.", "g", "kg", "ml", "dl"].map((unit) => (
                           <li
                             key={unit}
                             role="option"
