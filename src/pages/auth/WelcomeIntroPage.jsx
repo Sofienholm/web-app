@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import Lottie from "lottie-react";
 import styles from "./WelcomeIntroPage.module.css";
+import splashAnimation from "../../assets/splash-screen.json";
 
 export default function WelcomeIntroPage() {
   const navigate = useNavigate();
@@ -9,11 +10,9 @@ export default function WelcomeIntroPage() {
   const [showButtons, setShowButtons] = useState(false);
 
   // hent animationen fra public
-  useEffect(() => {
-    fetch("../../assets/splash-screen.json")
-      .then((res) => res.json())
-      .then(setAnimationData);
-  }, []);
+ useEffect(() => {
+   setAnimationData(splashAnimation);
+ }, []);
 
   // vis knapper efter animation er færdig (5.6 sek)
   useEffect(() => {
@@ -27,7 +26,7 @@ export default function WelcomeIntroPage() {
       <div className={styles.splashContainer}>
         {animationData && (
           <Lottie
-            animationData={animationData}
+            animationData={splashAnimation}
             loop={false}
             autoplay
             className={styles.splashAnimation}
