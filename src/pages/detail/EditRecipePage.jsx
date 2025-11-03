@@ -17,13 +17,7 @@ export default function EditRecipePage() {
   const navigate = useNavigate();
   const recipe = useRecipe(id);
 
-  if (!recipe)
-    return (
-      <div>
-        <p>Indlæser...</p>
-        <img src={backIcon} alt="" />
-      </div>
-    );
+  if (!recipe) return <p>Indlæser...</p>;
 
   async function handleUpdate(data) {
     try {
