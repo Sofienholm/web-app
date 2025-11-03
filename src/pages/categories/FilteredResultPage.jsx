@@ -1,22 +1,28 @@
+// -- IMPORTS --
 import { useLocation, useNavigate } from "react-router";
 import useFilteredRecipes from "../../hooks/useFilteredRecipes.js";
 import styles from "./FilteredResultPage.module.css";
 import backIcon from "/assets/icon/ic-back-symbol.svg";
-import noRusult from "/assets/illustrations/illu-404.svg";
+import noRusult from "/assets/illustrations/illu-404.svg"; // beholdt navnet uændret
 import { getAuth } from "firebase/auth";
 
+// -- COMPONENT: FilteredResultPage --
 export default function FilteredResultPage() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  // -- AUTH: aktuelt bruger-ID fra Firebase --
   const auth = getAuth();
   const userId = auth.currentUser?.uid;
 
+  // -- URL PARAMS: læs filtre fra querystring --
   const params = new URLSearchParams(location.search);
-  const sort = params.get("sort") || "";
-  const time = params.get("time") || "";
-  const tagsParam = params.get("tags") || "";
-  const tags = tagsParam ? tagsParam.split(",") : [];
+  const sort = params.get("sort") || ""; // "az" | "recent" | ""
+  const time = params.get("time") || ""; // "<30" | "60-90" | ">90" | ""
+  const tagsParam = params.get("tags") || ""; // "Pasta,Vegetar"
+  const tags = tagsParam ? tagsParam.split(",") : []; // array af tags
 
+  // -- UI: byg læsbar oversigt over aktive filtre --
   const bits = [];
   if (time)
     bits.push(
@@ -27,19 +33,23 @@ export default function FilteredResultPage() {
   if (sort === "recent") bits.push("Seneste");
   const summary = bits.length > 0 ? bits.join(" · ") : "Filtrerede opskrifter";
 
+  // -- FILTER OBJEKT (til hook) --
   const filters = { sort, time, tags };
 
+  // -- DATA: hent filtrerede opskrifter for bruger --
   const results = useFilteredRecipes(filters, userId);
 
+  // -- RENDER --
   return (
     <div className={styles.page}>
+      {/* -- HEADER: tilbage-knap + filter-sammendrag -- */}
       <div className={styles.headerRow}>
         <button
           type="button"
           className={`bubbleButton bubbleGreen bubbleLeft ${
             styles.backButtonFixed || ""
           }`}
-          onClick={() => navigate(-1)}
+          onClick={() => navigate(-1)} // gå én side tilbage
           aria-label="Tilbage"
         >
           <img src={backIcon} alt="Tilbage" className="bubbleIcon" />
@@ -51,7 +61,9 @@ export default function FilteredResultPage() {
         </div>
       </div>
 
+      {/* -- RESULTATER: tomt-state vs. liste -- */}
       {results.length === 0 ? (
+        // -- TOMT STATE: ingen træffere --
         <div className={styles.illustrationWrap}>
           <img
             src={noRusult}
@@ -60,16 +72,17 @@ export default function FilteredResultPage() {
           />
         </div>
       ) : (
+        // -- LISTE: kort pr. opskrift --
         <ul className={styles.list}>
           {results.map((r) => (
             <li key={r.id} className={styles.item}>
               <div
                 className={styles.card}
-                onClick={() => navigate(`/recipe/${r.id}`)}
+                onClick={() => navigate(`/recipe/${r.id}`)} // gå til opskrift
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) =>
-                  e.key === "Enter" && navigate(`/recipe/${r.id}`)
+                  e.key === "Enter" && navigate(`/recipe/${r.id}`) // keyboard support
                 }
               >
                 <div className={styles.cardImgWrap}>
@@ -92,7 +105,7 @@ export default function FilteredResultPage() {
                     {r.timeMin || "Ukendt tid"}
                     {r.servings ? ` · ${r.servings} pers.` : ""}
                     {r.tags?.length
-                      ? " · " + r.tags.slice(0, 2).join(", ")
+                      ? " · " + r.tags.slice(0, 2).join(", ") // vis 1-2 tags
                       : ""}
                   </div>
                 </div>

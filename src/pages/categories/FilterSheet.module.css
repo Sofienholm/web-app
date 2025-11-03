@@ -1,4 +1,4 @@
-/* ====== OVERLAY ====== */
+/* -- OVERLAY -- */
 .overlay {
   position: fixed;
   inset: 0;
@@ -14,7 +14,7 @@
   background: rgba(0,0,0,0.4);
 }
 
-/* ====== SHEET ====== */
+/* -- SHEET -- */
 .sheet {
   width: 100%;
   max-width: 480px;
@@ -40,7 +40,7 @@
   transform: translateY(0%);
 }
 
-/* ====== HEADER ====== */
+/* -- HEADER -- */
 .sheetHeader {
   position: relative;
   margin-bottom: 16px;
@@ -78,7 +78,7 @@
   transform-origin: center;
 }
 
-/* ====== SORT (A–Z / SENESTE) ====== */
+/* -- SORTERING (A–Z / SENESTE) -- */
 .sortRowWrapper {
   display: flex;
   justify-content: center;
@@ -114,7 +114,7 @@
   border: 1px solid rgba(255,249,203,0.4);
 }
 
-/* ====== SEKTIONSBLOK ====== */
+/* -- SEKTIONSBLOK -- */
 .sectionBlock {
   text-align: center;
   margin-bottom: 20px;
@@ -131,7 +131,7 @@
   margin-bottom: 10px;
 }
 
-/* ====== TID CHIPS ====== */
+/* -- TID CHIPS -- */
 .timeRow {
   display: flex;
   flex-wrap: wrap;
@@ -156,13 +156,12 @@
 }
 
 .timeChipActive {
- background: #2A5945;
- border: 1px solid #FFF9CB;
+  background: #2A5945;
+  border: 1px solid #FFF9CB;
   color: #FFF9CB;
-
 }
 
-/* ====== TAGS ====== */
+/* -- TAGS -- */
 .tagsWrap {
   display: flex;
   flex-wrap: wrap;
@@ -186,17 +185,16 @@
   text-align: center;
 }
 
-/* 🔹 KUN ændret denne: brush-border på aktivt tag */
+/* 🔹 aktivt tag med penselramme */
 .tagPillActive {
-  /* 🔽 tilføjet penselramme */
-  border: 10px solid transparent;
+  border: 10px solid transparent;                 /* bevar eksisterende penselramme-setup */
   border-image: url("/assets/brush-border-green.png") 20 round;
   border-image-slice: 100;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   padding: 0;
 }
 
-/* ====== CTA KNAP ====== */
+/* -- CTA KNAP -- */
 .footerArea {
   display: flex;
   justify-content: center;
@@ -226,10 +224,9 @@
   transform: translateY(1px);
 }
 
-/* ====== RESPONSIV ====== */
+/* -- RESPONSIV -- */
 @media (min-width: 480px) {
   .sheet {
     margin-bottom: 24px;
   }
 }
-

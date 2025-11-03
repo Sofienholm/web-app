@@ -1,3 +1,4 @@
+/* -- PAGE WRAPPER / LAYOUT ROOT -- */
 .page {
   --gap: 20px;
   --card: 160px; /* kort-størrelse */
@@ -15,6 +16,7 @@
   overflow-x: hidden;
 }
 
+/* -- FILTER BUTTON (TOP RIGHT) -- */
 /* 🔸 Filter-knap (øverst højre) */
 .filterBtn {
   position: sticky;
@@ -49,6 +51,7 @@
     hue-rotate(17deg) brightness(105%) contrast(96%);
 }
 
+/* -- COLUMNS GRID (STAGGERED) -- */
 /* 🔸 CENTRERET kolonne-layout */
 .columns {
   display: flex;
@@ -69,6 +72,7 @@
   padding-top: calc(var(--card) / 2 + var(--gap) / 2);
 }
 
+/* -- CATEGORY CARDS -- */
 /* 🔸 Kort – kun illustration, ingen baggrund eller tekst */
 .card {
   width: var(--card);
@@ -97,6 +101,7 @@
   pointer-events: none;
 }
 
+/* -- RESPONSIVE ADJUSTMENTS -- */
 /* 🔸 Responsivt – mindre på smalle skærme */
 @media (max-width: 380px) {
   .page {
