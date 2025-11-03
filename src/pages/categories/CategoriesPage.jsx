@@ -6,6 +6,7 @@ import useUnlockScroll from "../../hooks/useUnlockScroll";
 import asiatisk from "../../../public/assets/categori/ic-category-asiatisk.svg";
 import favorit from "../../../public/assets/categori/ic-category-favorit.svg";
 
+
 const CATEGORIES = [
   { slug: "Asiatisk", icon: asiatisk },
   { slug: "Favorit", icon: favorit },

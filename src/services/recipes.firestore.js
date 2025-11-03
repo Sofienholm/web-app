@@ -57,8 +57,9 @@ export async function createRecipe(data) {
     createdAt: now,
     updatedAt: now,
   });
-  return { id: ref.id };
+  return { id: ref.id }; // ✅ så det matcher destructuring i CreatePage
 }
+
 
 /**
  * Opdater felter på en eksisterende opskrift.
