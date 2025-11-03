@@ -1,17 +1,22 @@
-// Viser billedet + titel + beskrivelse + tid + portioner + tags (read-only)
-// Matcher layout fra CreatePage, men uden inputs.
-import { useEffect, useRef, useState } from "react"; // <-- tilføj useRef her
+// -- DETAIL BASICS SECTION --
+// Viser billedet, titel, beskrivelse, tid, portioner og tags (read-only).
+// Matcher layoutet fra CreatePage, men uden inputs.
+
+import { useEffect, useRef, useState } from "react";
 import styles from "../RecipeDetailPage.module.css";
 import garlicIcon from "/assets/icon/ic-ingredient-symbol.svg";
 import useAutoFitText from "../../../hooks/useAutoFitText";
 
+// -- KOMPONENT --
 export default function DetailBasicsSection({ recipe, onOpenIngredients }) {
   if (!recipe) return null;
 
-  const [showDescPopup, setShowDescPopup] = useState(false);
-  const titleRef = useRef(null);
+  // -- STATE --
+  const [showDescPopup, setShowDescPopup] = useState(false); // styrer beskrivelses-popup
+  const titleRef = useRef(null); // reference til titel for auto-resize
 
-  // Lås baggrundsscroll når popup er åben
+  // -- LOCK BODY SCROLL --
+  // Forhindrer at baggrunden scroller, mens beskrivelses-popuppen er åben
   useEffect(() => {
     document.body.style.overflow = showDescPopup ? "hidden" : "";
     return () => {
@@ -19,7 +24,8 @@ export default function DetailBasicsSection({ recipe, onOpenIngredients }) {
     };
   }, [showDescPopup]);
 
-  // Auto-fit titlen når den ændrer sig
+  // -- AUTO-FIT TITEL --
+  // Justerer titelstørrelse automatisk, afhængigt af længden
   useAutoFitText(titleRef, [recipe?.title], {
     max: 1.8,
     min: 1.0,
@@ -27,11 +33,13 @@ export default function DetailBasicsSection({ recipe, onOpenIngredients }) {
     unit: "rem",
   });
 
+  // Udpakning af opskriftsdata
   const { image, title, description, timeMin, servings, tags } = recipe;
 
+  // -- RENDER OUTPUT --
   return (
     <section>
-      {/* Billede */}
+      {/* -- BILLEDE -- */}
       <div className={styles.imageBox}>
         {image ? (
           <img className={styles.image} src={image} alt={title || ""} />
@@ -40,7 +48,7 @@ export default function DetailBasicsSection({ recipe, onOpenIngredients }) {
         )}
       </div>
 
-      {/* Ingredienser-knap */}
+      {/* -- INGREDIENS-KNAP -- */}
       <button
         type="button"
         className={`bubbleButton bubbleGreen bubbleRight ${styles.ingredientsButtonPos}`}
@@ -50,16 +58,17 @@ export default function DetailBasicsSection({ recipe, onOpenIngredients }) {
         <img src={garlicIcon} alt="Ingredienser" className="bubbleIcon" />
       </button>
 
-      {/* Titel (auto-fit) */}
+      {/* -- TITEL (AUTO-FIT) -- */}
       <div className={styles.label}>
         <div ref={titleRef} className={styles.title} aria-label="Titel">
           {title || "Uden titel"}
         </div>
       </div>
 
-      {/* Beskrivelse (klik for popup) */}
+      {/* -- BESKRIVELSE (MED POPUP) -- */}
       {description && (
         <>
+          {/* Kort beskrivelse på siden */}
           <div className={styles.label}>
             <div
               className={styles.textarea}
@@ -70,6 +79,7 @@ export default function DetailBasicsSection({ recipe, onOpenIngredients }) {
             </div>
           </div>
 
+          {/* Popup med fuld beskrivelse */}
           {showDescPopup && (
             <div
               className={styles.overlay}
@@ -94,7 +104,7 @@ export default function DetailBasicsSection({ recipe, onOpenIngredients }) {
         </>
       )}
 
-      {/* Tid + Portioner */}
+      {/* -- TID + PORTIONER -- */}
       <div className={styles.row}>
         <div className={`${styles.number} ${styles.col}`} aria-label="Tid">
           {timeMin || "Ukendt tid"}
@@ -107,7 +117,7 @@ export default function DetailBasicsSection({ recipe, onOpenIngredients }) {
         </div>
       </div>
 
-      {/* Tags */}
+      {/* -- TAGS -- */}
       {Array.isArray(tags) && tags.length > 0 && (
         <>
           <h2 className={styles.tagsTitle}>TAGS</h2>

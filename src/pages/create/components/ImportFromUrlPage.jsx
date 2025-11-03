@@ -1,4 +1,4 @@
-// src/pages/create/components/ImportFromUrlPage.jsx
+// -- IMPORTS --
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { createRecipe } from "../../../services/recipes.firestore.js";
@@ -8,19 +8,26 @@ import styles from "./ImportFromUrlPage.module.css";
 import bgImage from "/assets/home/illu-link.svg";
 import backIcon from "/assets/icon/ic-back-symbol.svg";
 
+// -- IMPORT FROM URL PAGE --
+// Gør det muligt at importere en opskrift fra et eksternt link via Cloud Function.
+// Bruger Firestore til at gemme opskriften og navigerer derefter til detaljer-siden.
 export default function ImportFromUrlPage() {
-  const [url, setUrl] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  // -- STATE --
+  const [url, setUrl] = useState(""); // URL som brugeren indtaster
+  const [loading, setLoading] = useState(false); // viser spinnertekst under import
+  const [error, setError] = useState(""); // fejlbesked ved mislykket import
   const navigate = useNavigate();
   const auth = getAuth();
 
+  // -- HANDLE IMPORT --
+  // Sender URL’en til en Firebase Cloud Function, parser data, gemmer opskriften i Firestore
   async function handleImport() {
-    if (!url.trim()) return;
+    if (!url.trim()) return; // gør intet hvis feltet er tomt
     setLoading(true);
     setError("");
 
     try {
+      // Kald til Cloud Function med URL som parameter
       const res = await fetch(
         `https://us-central1-minkogebog-9a065.cloudfunctions.net/importRecipeFromUrl?url=${encodeURIComponent(
           url
@@ -28,8 +35,10 @@ export default function ImportFromUrlPage() {
       );
       const data = await res.json();
 
+      // Fejlhåndtering hvis funktionen returnerer fejl
       if (!res.ok || data.error) throw new Error(data.error || "Import fejl");
 
+      // Mapper og formaterer opskriftsdata før den gemmes i Firestore
       const recipe = {
         title: data.title || "Uden titel",
         description: (
@@ -59,6 +68,7 @@ export default function ImportFromUrlPage() {
         ownerId: auth.currentUser?.uid || "anon",
       };
 
+      // Gemmer opskriften i Firestore og navigerer til dens detaljeside
       const { id } = await createRecipe(recipe);
       navigate(`/recipe/${id}`);
     } catch (err) {
@@ -69,8 +79,10 @@ export default function ImportFromUrlPage() {
     }
   }
 
+  // -- RENDER OUTPUT --
   return (
     <div className={styles.page}>
+      {/* Tilbage-knap */}
       <button
         type="button"
         className={`bubbleButton bubbleGreen bubbleLeft ${styles.backButton}`}
@@ -80,10 +92,13 @@ export default function ImportFromUrlPage() {
         <img src={backIcon} alt="" className="bubbleIcon" />
       </button>
 
+      {/* Baggrundsillustration */}
       <img src={bgImage} alt="" className={styles.bgImage} />
 
+      {/* Titel */}
       <h1 className={styles.title}>Importer opskrift</h1>
 
+      {/* Formular til URL-input og import-knap */}
       <div className={styles.form}>
         <input
           className={styles.input}
@@ -101,6 +116,7 @@ export default function ImportFromUrlPage() {
         </button>
       </div>
 
+      {/* Fejlbesked */}
       {error && <p className={styles.error}>{error}</p>}
     </div>
   );

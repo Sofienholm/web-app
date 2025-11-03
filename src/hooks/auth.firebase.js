@@ -1,4 +1,4 @@
-// src/services/auth.firebase.js
+// -- IMPORTS --
 import { auth } from "../app/firebase";
 import {
   createUserWithEmailAndPassword,
@@ -9,31 +9,42 @@ import {
 } from "firebase/auth";
 import { upsertUserProfile } from "./users.firestore";
 
-/** Signup */
+// -- SIGNUP --
+// Opretter ny bruger i Firebase Auth og gemmer/opfører profil i Firestore
 export async function signup({ email, password, displayName, avatarUrl = "" }) {
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
+
+  // tilføj displayName hvis det er angivet
   if (displayName) await updateProfile(user, { displayName });
+
+  // sørg for at profil-data gemmes i Firestore
   await upsertUserProfile(user.uid, {
     displayName: displayName ?? "",
     avatarUrl,
   });
+
   return user;
 }
 
-/** Login */
+// -- LOGIN --
+// Logger eksisterende bruger ind og opretter profil hvis den mangler
 export async function login({ email, password }) {
   const { user } = await signInWithEmailAndPassword(auth, email, password);
-  // sikr at profil findes
+
+  // sikrer at brugerprofil findes i Firestore
   await upsertUserProfile(user.uid, { displayName: user.displayName ?? "" });
+
   return user;
 }
 
-/** Logout */
+// -- LOGOUT --
+// Logger brugeren ud af Firebase
 export function logout() {
   return signOut(auth);
 }
 
-/** Lyt til auth state */
+// -- AUTH STATE LYTTER --
+// Kalder callback hver gang login-status ændres (login/logout)
 export function subscribeAuth(cb) {
   return onAuthStateChanged(auth, cb);
 }
