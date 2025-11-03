@@ -35,7 +35,7 @@ export default function EditRecipePage() {
 
     try {
       await deleteRecipe(id);
-      navigate("/"); // Tilbage til forsiden efter sletning
+      navigate("/home"); // Tilbage til forsiden efter sletning
     } catch (error) {
       console.error("Fejl ved sletning:", error);
       alert("Der opstod en fejl ved sletning af opskriften.");
