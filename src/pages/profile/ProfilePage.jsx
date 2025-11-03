@@ -1,4 +1,4 @@
-// src/pages/profile/ProfilePage.jsx
+// -- IMPORTS --
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { getAuth, signOut } from "firebase/auth";
@@ -6,18 +6,18 @@ import { onProfileSnapshot } from "../../services/profile.js";
 import { useAuth } from "../../providers/AuthProvider.jsx";
 import styles from "./ProfilePage.module.css";
 
-// components
+// -- COMPONENTS --
 import ProfileInfo from "./components/ProfileInfo";
 import ActionList from "./components/ActionList";
 
-// illustrationer
+// -- ASSETS --
 import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
 import editIcon from "../../../public/assets/icon/ic-edit-symbol.svg";
 import profileDefault from "../../../public/assets/illustrations/ill-profil-avatar-man-garlic.svg";
 
 export default function ProfilePage() {
   const navigate = useNavigate();
-  const { user } = useAuth(); // <- den ægte Firebase-bruger
+  const { user } = useAuth();
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function ProfilePage() {
 
   return (
     <div className={styles.page}>
-      {/* 🔸 Topknapper */}
+      {/* -- TOPKNAPPER -- */}
       <div className={styles.topButtons}>
         <button
           type="button"
@@ -59,10 +59,10 @@ export default function ProfilePage() {
         </button>
       </div>
 
-      {/* 🔸 Profilkort */}
+      {/* -- PROFILINFO -- */}
       <ProfileInfo name={name} email={email} illustrationSrc={avatarSrc} />
 
-      {/* 🔸 Action-knapper */}
+      {/* -- HANDLINGSKNAPPER -- */}
       <ActionList
         items={[
           {
@@ -83,7 +83,7 @@ export default function ProfilePage() {
         ]}
       />
 
-      {/* 🔸 Log af-knap */}
+      {/* -- LOG UD KNAP -- */}
       <button type="button" className={styles.logoutBtn} onClick={handleLogout}>
         Log af
       </button>

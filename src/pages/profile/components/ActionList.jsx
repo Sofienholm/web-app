@@ -1,7 +1,13 @@
 import styles from "../ProfilePage.module.css";
 
 /**
- * items: Array<{ label: string, onClick: () => void, className?: "settingsBtn"|"notificationsBtn"|"helpBtn" }>
+ * Viser en liste af knapper med forskellige handlinger på profilsiden.
+ * 
+ * Props:
+ * - items: array af { label, onClick, className? }
+ *   - label: teksten på knappen
+ *   - onClick: funktion, der kaldes ved klik
+ *   - className: valgfri ekstra klasse (fx "helpBtn")
  */
 export default function ActionList({ items = [] }) {
   return (
@@ -10,9 +16,13 @@ export default function ActionList({ items = [] }) {
         <button
           key={idx}
           type="button"
-          className={`${styles.actionBtn} ${it.className ? styles[it.className] : ""}`}
+          // tilføj evt. ekstra klasse hvis specificeret
+          className={`${styles.actionBtn} ${
+            it.className ? styles[it.className] : ""
+          }`}
           onClick={it.onClick}
         >
+          {/* tekst på knappen */}
           <span className={styles.actionLabel}>{it.label}</span>
         </button>
       ))}

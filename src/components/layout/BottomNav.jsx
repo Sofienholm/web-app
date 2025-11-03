@@ -1,8 +1,9 @@
+// -- IMPORTS --
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import styles from "./BottomNav.module.css";
 
-// 🔹 Ikoner
+// -- ASSETS (ikoner) --
 import homeIcon from "../../../public/assets/icon/ic-home-symbol-nav.svg";
 import plusIcon from "../../../public/assets/icon/illu-add-symbol-beige.svg";
 import catIcon from "../../../public/assets/icon/ic-category-symbol-nav.svg";
@@ -10,12 +11,13 @@ import linkIcon from "../../../public/assets/icon/ic-link-add.svg";
 import imageIcon from "../../../public/assets/icon/ic-pic-add.svg";
 import manualIcon from "../../../public/assets/icon/ic-manuelt-add.svg";
 
+// -- COMPONENT: BottomNav --
 export default function BottomNav() {
-  // om plus-menuen er åben
+  // -- STATE: om plus-menuen er åben --
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  // luk med ESC og klik udenfor
+  // -- EFFECT: luk med ESC og klik udenfor --
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && setOpen(false);
 
@@ -35,15 +37,16 @@ export default function BottomNav() {
     };
   }, [open]);
 
+  // -- RENDER --
   return (
     <>
-      {/* 🔸 SLØR-BAGGRUND når plus er åben */}
+      {/* -- SLØR-BAGGRUND når plus er åben -- */}
       <div
         className={`${styles.overlay} ${open ? styles.showOverlay : ""}`}
         onClick={() => setOpen(false)}
       ></div>
 
-      {/* 🔹 Selve navbaren */}
+      {/* -- SELVE NAVBAREN -- */}
       <nav
         className={`${styles.nav} ${open ? styles.open : ""}`}
         aria-label="Bundnavigation"
@@ -67,7 +70,7 @@ export default function BottomNav() {
           className={styles.fab}
           aria-expanded={open}
           aria-label={open ? "Luk" : "Åbn tilføj-menu"}
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => setOpen((v) => !v)} // toggle menu
         >
           {/* Plus-ikon (default) */}
           <img src={plusIcon} alt="" className={styles.fabIcon} />
@@ -87,7 +90,7 @@ export default function BottomNav() {
             aria-label="Importer opskrift via link"
             onClick={() => {
               setOpen(false);
-              navigate("/create/link");
+              navigate("/create/link"); // gå til link-import
             }}
           >
             <img src={linkIcon} alt="Importer opskrift" />
@@ -97,7 +100,7 @@ export default function BottomNav() {
           <button
             className={styles.dialBtn}
             style={{ "--x": "-82px", "--y": "-70px" }}
-            onClick={() => setOpen(false)}
+            onClick={() => setOpen(false)} // placeholder handling
           >
             <img src={imageIcon} alt="" />
           </button>
@@ -108,7 +111,7 @@ export default function BottomNav() {
             style={{ "--x": "82px", "--y": "-70px" }}
             onClick={() => {
               setOpen(false);
-              navigate("/create");
+              navigate("/create"); // gå til manuel oprettelse
             }}
           >
             <img src={manualIcon} alt="" />

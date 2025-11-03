@@ -1,3 +1,4 @@
+/* -- NAV WRAPPER -- */
 .nav {
   position: fixed;
   left: 0;
@@ -19,6 +20,7 @@
   background-color: var(--nav-beige);
 }
 
+/* -- NAV ITEMS -- */
 .item {
   display: grid;
   place-items: center;
@@ -35,7 +37,7 @@
     saturate(1021%) hue-rotate(97deg) brightness(93%) contrast(94%);
 }
 
-/* FAB (plusknap) */
+/* -- FAB (plusknap) -- */
 .fab {
   position: absolute;
   left: 51%;
@@ -63,6 +65,7 @@
   transition: opacity 0.12s ease;
 }
 
+/* “X”-ikon (roteret plus) */
 .x {
   position: absolute;
   font-size: 52px;
@@ -84,7 +87,7 @@
   transform: scale(1);
 }
 
-/* DIAL-knapper */
+/* -- SPEED DIAL -- */
 .dial {
   position: absolute;
   left: 40%;
@@ -131,7 +134,7 @@
   transform: translate(var(--x), var(--y)) scale(1);
 }
 
-/* ---------- BLUR-OVERLAY ---------- */
+/* -- BLUR-OVERLAY (baggrund ved åben dial) -- */
 .overlay {
   position: fixed;
   inset: 0;
@@ -151,4 +154,3 @@
   opacity: 1;
   pointer-events: auto;
 }
-
