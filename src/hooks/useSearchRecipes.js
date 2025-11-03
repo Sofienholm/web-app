@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { searchRecipes } from "../services/recipes.firestore"; // ← Firestore-service
+import { searchRecipes } from "../services/recipes.firestore";
+import { getAuth } from "firebase/auth";
 
-const DEFAULT_USER = "demo-user";
 
-export default function useSearchRecipes(queryText, userId = DEFAULT_USER) {
+export default function useSearchRecipes(queryText) {
   const [results, setResults] = useState([]);
+  const auth = getAuth();
+  const userId = auth.currentUser?.uid || null;
 
   useEffect(() => {
     const q = (queryText || "").trim();
@@ -17,11 +19,9 @@ export default function useSearchRecipes(queryText, userId = DEFAULT_USER) {
 
     (async () => {
       try {
-        // Firestore → hent brugerens opskrifter og filtrér på title/description/tags
         const found = await searchRecipes(userId, q);
         if (alive) setResults(found);
       } catch (err) {
-        console.error("useSearchRecipes → Firestore fejl:", err);
         if (alive) setResults([]);
       }
     })();

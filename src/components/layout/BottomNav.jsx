@@ -49,7 +49,7 @@ export default function BottomNav() {
         aria-label="Bundnavigation"
       >
         {/* Venstre ikon: Home */}
-        <NavLink to="/" className={styles.item} aria-label="Home">
+        <NavLink to="/home" className={styles.item} aria-label="Home">
           <img src={homeIcon} alt="" className={styles.icon} />
         </NavLink>
 

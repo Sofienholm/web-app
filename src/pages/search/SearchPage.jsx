@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from "react-router";
+import { getAuth } from "firebase/auth";
 import useSearchRecipes from "../../hooks/useSearchRecipes.js";
 import styles from "./SearchPage.module.css";
 import backIcon from "/assets/icon/ic-back-symbol.svg";
@@ -6,11 +7,14 @@ import backIcon from "/assets/icon/ic-back-symbol.svg";
 export default function SearchPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const auth = getAuth();
+const userId = auth.currentUser?.uid; // ← rigtige Firebase bruger-ID
+
 
   const params = new URLSearchParams(location.search);
   const q = params.get("q") || "";
 
-  const results = useSearchRecipes(q);
+const results = useSearchRecipes(q, userId);
 
   return (
     <div className={styles.page}>

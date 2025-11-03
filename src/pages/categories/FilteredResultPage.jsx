@@ -2,10 +2,13 @@ import { useLocation, useNavigate } from "react-router";
 import useFilteredRecipes from "../../hooks/useFilteredRecipes.js";
 import styles from "./FilteredResultPage.module.css";
 import backIcon from "/assets/icon/ic-back-symbol.svg";
+import { getAuth } from "firebase/auth";
 
 export default function FilteredResultPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const auth = getAuth();
+  const userId = auth.currentUser?.uid;
 
   const params = new URLSearchParams(location.search);
   const sort = params.get("sort") || "";
@@ -24,7 +27,8 @@ export default function FilteredResultPage() {
   const summary = bits.length > 0 ? bits.join(" · ") : "Filtrerede opskrifter";
 
   const filters = { sort, time, tags };
-  const results = useFilteredRecipes(filters);
+
+  const results = useFilteredRecipes(filters, userId);
 
   return (
     <div className={styles.page}>

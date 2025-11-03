@@ -18,7 +18,9 @@ export default function HomePage() {
 
   // brugerens navn eller fallback
   const firstName =
-    user?.displayName?.split(" ")[0] || user?.email?.split("@")[0] || "ven";
+    user?.displayName?.split(" ")[0] ||
+    user?.email?.split("@")[0] ||
+    "ven";
 
   const measureRef = useRef(null);
   const [nameFontSize, setNameFontSize] = useState(64);
@@ -119,31 +121,11 @@ export default function HomePage() {
 
       {/* SVÆVENDE MAD-ILLUSTRATIONER */}
       <div className={styles.illustrations}>
-        <img
-          src={noodles}
-          alt="Nudler"
-          className={`${styles.foodImg} ${styles.noodles}`}
-        />
-        <img
-          src={cake}
-          alt="cake"
-          className={`${styles.foodImg} ${styles.cake}`}
-        />
-        <img
-          src={pasta}
-          alt="Pasta"
-          className={`${styles.foodImg} ${styles.pasta}`}
-        />
-        <img
-          src={meat}
-          alt="Kød"
-          className={`${styles.foodImg} ${styles.meat}`}
-        />
-        <img
-          src={veggie}
-          alt="Grøntsager"
-          className={`${styles.foodImg} ${styles.veggie}`}
-        />
+        <img src={noodles} alt="Nudler" className={`${styles.foodImg} ${styles.noodles}`} />
+        <img src={cake} alt="cake" className={`${styles.foodImg} ${styles.cake}`} />
+        <img src={pasta} alt="Pasta" className={`${styles.foodImg} ${styles.pasta}`} />
+        <img src={meat} alt="Kød" className={`${styles.foodImg} ${styles.meat}`} />
+        <img src={veggie} alt="Grøntsager" className={`${styles.foodImg} ${styles.veggie}`} />
       </div>
 
       {/* LYSE RØDE BAGGRUNDSKORT NEDERST */}

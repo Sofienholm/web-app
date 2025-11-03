@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { listRecipes } from "../services/recipes.firestore"; // ← Firestore service
-
-const DEFAULT_USER = "demo-user";
+import { listRecipes } from "../services/recipes.firestore";
+import { getAuth } from "firebase/auth";
 
 /**
- * Henter alle opskrifter for `userId` og filtrerer dem på `tagSlug`.
- * Returnerer et array af opskrifter (samme format som i resten af appen).
+ * Henter alle opskrifter for den aktuelle bruger og filtrerer dem på tagSlug.
  */
-export default function useRecipesByTag(tagSlug, userId = DEFAULT_USER) {
+export default function useRecipesByTag(tagSlug) {
   const [recipes, setRecipes] = useState([]);
+  const auth = getAuth();
+  const userId = auth.currentUser?.uid || null;
 
   useEffect(() => {
     if (!tagSlug) {
@@ -20,10 +20,11 @@ export default function useRecipesByTag(tagSlug, userId = DEFAULT_USER) {
 
     (async () => {
       try {
-        // 1) Hent alle opskrifter for brugeren fra Firestore
-        const all = await listRecipes({ ownerId: userId });
+        // hent kun brugerens opskrifter
+        const all = userId
+          ? await listRecipes({ ownerId: userId })
+          : await listRecipes();
 
-        // 2) Filtrér på tag (kræver at r.tags er en array af strings)
         const filtered = all.filter(
           (r) => Array.isArray(r.tags) && r.tags.includes(tagSlug)
         );

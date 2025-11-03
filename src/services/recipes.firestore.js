@@ -1,4 +1,3 @@
-
 import {
   collection,
   doc,
@@ -99,6 +98,7 @@ export async function searchRecipes(ownerId, term) {
   if (!q) return listRecipes({ ownerId });
 
   const rows = await listRecipes({ ownerId });
+
   return rows.filter((r) => {
     const hay = [
       r.title,
