@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router";
 import useRecipesByTag from "../../hooks/useRecipesByTag.js";
 import styles from "./CategoryResultPage.module.css";
 import backIcon from "/assets/icon/ic-back-symbol.svg";
+import noRusult from "/assets/illustrations/illu-404.svg"
 import { getAuth } from "firebase/auth";
 
 export default function CategoryResultPage() {
@@ -42,7 +43,7 @@ export default function CategoryResultPage() {
       {recipes.length === 0 ? (
         <div className={styles.illustrationWrap}>
           <img
-            src="/assets/illustrations/illu-404.svg"
+            src={noRusult}
             alt="Ingen opskrifter fundet i denne kategori"
             className={styles.illustration}
           />
