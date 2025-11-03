@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import styles from "./CategoriesPage.module.css";
 import FilterSheet from "./FilterSheet.jsx";
 import useUnlockScroll from "../../hooks/useUnlockScroll";
+import filterIcon from "/assets/icon/ic-filter-symbol.svg";
 import asiatisk from "../../../public/assets/categori/ic-category-asiatisk.svg";
 import favorit from "../../../public/assets/categori/ic-category-favorit.svg";
 import pasta from "../../../public/assets/categori/ic-category-pasta.svg";
@@ -81,7 +82,7 @@ export default function CategoriesPage() {
         onClick={() => setIsFilterOpen(true)}
       >
         <img
-          src="/assets/icon/ic-filter-symbol.svg"
+          src={filterIcon}
           alt=""
           className={styles.filterIcon}
           aria-hidden="true"

@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router";
 import useFilteredRecipes from "../../hooks/useFilteredRecipes.js";
 import styles from "./FilteredResultPage.module.css";
 import backIcon from "/assets/icon/ic-back-symbol.svg";
+import noRusult from "/assets/illustrations/illu-404.svg";
 import { getAuth } from "firebase/auth";
 
 export default function FilteredResultPage() {
@@ -53,7 +54,7 @@ export default function FilteredResultPage() {
       {results.length === 0 ? (
         <div className={styles.illustrationWrap}>
           <img
-            src="/assets/illustrations/illu-404.svg"
+            src={noRusult}
             alt="Ingen opskrifter matcher dine filtre"
             className={styles.illustration}
           />

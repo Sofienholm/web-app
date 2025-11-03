@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./FilterSheet.module.css";
+import closeBtn from "/assets/icon/ic-add-symbol.svg";
 
 export default function FilterSheet({ initialFilters, onClose, onApply }) {
   const [localFilters, setLocalFilters] = useState(initialFilters);
@@ -97,7 +98,7 @@ export default function FilterSheet({ initialFilters, onClose, onApply }) {
           >
             {/* plus-ikonet roteret 45°, stylet i .closeIcon */}
             <img
-              src="/assets/icon/ic-add-symbol.svg"
+              src={closeBtn}
               alt=""
               className={styles.closeIcon}
             />
