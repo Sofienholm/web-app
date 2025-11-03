@@ -33,7 +33,7 @@ export default function ProfilePage() {
   async function handleLogout() {
     const auth = getAuth();
     await signOut(auth);
-    navigate("/login", { replace: true });
+    navigate("/", { replace: true });
   }
 
   return (
