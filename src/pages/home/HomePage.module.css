@@ -1,9 +1,10 @@
-/* lås scroll kun for forsiden */
+/* -- LÅS SCROLL KUN FOR FORSIDEN -- */
 body {
   background-color: var(--beige);
   overflow: hidden;
 }
 
+/* -- ROOT / WRAPPER -- */
 .home {
   position: relative;
   min-height: 100vh;
@@ -124,10 +125,12 @@ body {
   top: 7%;
   right: 15%;
 }
+
 .meat {
-   top: 28%;
+  top: 28%;
   left: 40%;
 }
+
 .veggie {
   top: 50%;
   left: 75%;

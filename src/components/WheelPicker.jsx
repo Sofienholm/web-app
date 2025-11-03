@@ -1,6 +1,8 @@
+// -- IMPORTS --
 import { useState, useRef, useEffect } from "react";
 import styles from "./WheelPicker.module.css";
 
+// -- COMPONENT: WheelPicker --
 export default function WheelPicker({
   label = "",
   valuesLeft = [],
@@ -9,13 +11,16 @@ export default function WheelPicker({
   onClose,
   open,
 }) {
+  // -- REFS --
   const leftRef = useRef(null);
   const rightRef = useRef(null);
-  const [leftVal, setLeftVal] = useState(valuesLeft[0]);
-  const [rightVal, setRightVal] = useState(valuesRight ? valuesRight[0] : null);
-  const ITEM_HEIGHT = 48;
 
-  // 🔒 Lås scroll bagved (desktop + mobil)
+  // -- STATE --
+  const [leftVal, setLeftVal] = useState(valuesLeft[0]); // valgt venstre værdi
+  const [rightVal, setRightVal] = useState(valuesRight ? valuesRight[0] : null); // valgt højre værdi
+  const ITEM_HEIGHT = 48; // højde pr. listeelement
+
+  // -- EFFECT: lås scroll bagved (desktop + mobil) --
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -33,27 +38,28 @@ export default function WheelPicker({
     };
   }, [open]);
 
-  // Når åbnet → scroll til valgt værdi
+  // -- EFFECT: når åbnet → scroll til valgt værdi --
   useEffect(() => {
     if (!open) return;
-    scrollToSelected(leftRef, valuesLeft, leftVal);
-    if (valuesRight) scrollToSelected(rightRef, valuesRight, rightVal);
+    scrollToSelected(leftRef, valuesLeft, leftVal); // centrer venstre valgt
+    if (valuesRight) scrollToSelected(rightRef, valuesRight, rightVal); // centrer højre valgt
   }, [open]);
 
-function scrollToSelected(ref, values, val) {
-  if (!ref.current) return;
-  const idx = values.indexOf(val);
-  ref.current.scrollTo({
-    top: idx * ITEM_HEIGHT, // fjern +2
-    behavior: "auto",
-  });
-}
+  // -- UTIL: scroll containeren så valgt værdi er i center --
+  function scrollToSelected(ref, values, val) {
+    if (!ref.current) return;
+    const idx = values.indexOf(val);
+    ref.current.scrollTo({
+      top: idx * ITEM_HEIGHT, // fjern +2
+      behavior: "auto",
+    });
+  }
 
-
+  // -- HANDLER: opdater valgt værdi baseret på scrollposition --
   function handleScroll(ref, values, setVal, currentVal) {
     if (!ref.current) return;
     // vi starter faktisk 2 "items" nede pga. padding
-const index = Math.round(ref.current.scrollTop / ITEM_HEIGHT);
+    const index = Math.round(ref.current.scrollTop / ITEM_HEIGHT);
 
     const newVal = values[index];
     if (newVal !== undefined && newVal !== currentVal) {
@@ -61,13 +67,14 @@ const index = Math.round(ref.current.scrollTop / ITEM_HEIGHT);
     }
   }
 
+  // -- HANDLER: bekræft valg --
   function handleConfirm() {
     if (valuesRight) onConfirm(leftVal, rightVal);
     else onConfirm(leftVal);
-    onClose();
+    onClose(); // luk efter bekræft
   }
 
-  // Tilføjer tomme elementer før/efter så yderste værdier kan centreres
+  // -- RENDER HELPERS: tilføj tomme elementer før/efter så yderste værdier kan centreres --
   function renderWheel(values) {
     return (
       <>
@@ -82,15 +89,17 @@ const index = Math.round(ref.current.scrollTop / ITEM_HEIGHT);
     );
   }
 
+  // -- EARLY RETURN: kun render når open --
   if (!open) return null;
 
+  // -- RENDER --
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.sheet} onClick={(e) => e.stopPropagation()}>
         <h3 className={styles.title}>{label}</h3>
 
         <div className={styles.wheels}>
-          {/* Venstre hjul */}
+          {/* -- VENSTRE HJUL -- */}
           <div className={styles.venstredel}>
             <div
               className={styles.wheel}
@@ -104,7 +113,7 @@ const index = Math.round(ref.current.scrollTop / ITEM_HEIGHT);
             {valuesRight && <p>T</p>}
           </div>
 
-          {/* Højre hjul */}
+          {/* -- HØJRE HJUL (valgfrit) -- */}
           {valuesRight ? (
             <div className={styles.hojredel}>
               <div
@@ -124,10 +133,11 @@ const index = Math.round(ref.current.scrollTop / ITEM_HEIGHT);
             </div>
           )}
 
-          {/* Midtermarkering */}
+          {/* -- MIDTERMARKERING -- */}
           <div className={styles.selectionBox} />
         </div>
 
+        {/* -- CTA -- */}
         <button className={styles.confirmBtn} onClick={handleConfirm}>
           OK
         </button>

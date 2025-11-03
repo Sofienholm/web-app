@@ -1,3 +1,4 @@
+/* -- OVERLAY -- */
 .overlay {
   position: fixed;
   inset: 0;
@@ -10,6 +11,7 @@
   touch-action: none;
 }
 
+/* -- SHEET -- */
 .sheet {
   background: var(--morkegroen);
   border-radius: 16px;
@@ -21,6 +23,7 @@
   align-items: center;
 }
 
+/* -- TITLE -- */
 .title {
   font-size: 22px;
   margin-bottom: 16px;
@@ -28,6 +31,7 @@
   font-family: var(--font-brushup);
 }
 
+/* -- WHEELS LAYOUT -- */
 .wheels {
   position: relative;
   display: flex;
@@ -49,6 +53,7 @@
   font-size: 18px;
 }
 
+/* -- INDIVIDUELT HJUL -- */
 .wheel {
   height: 240px;
   overflow-y: auto;
@@ -73,6 +78,7 @@
   font-family: var(--font-poppins);
 }
 
+/* -- MIDTER MARKERINGSFELT -- */
 /* Beige markeringsfelt i midten */
 .selectionBox {
   position: absolute;
@@ -85,6 +91,7 @@
   pointer-events: none;
 }
 
+/* -- CTA -- */
 .confirmBtn {
   padding: 12px 28px;
   background: #2a5945;

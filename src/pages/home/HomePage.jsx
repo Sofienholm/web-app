@@ -1,32 +1,35 @@
+// -- IMPORTS --
 import { useEffect, useRef, useState } from "react";
 import { getAuth } from "firebase/auth";
 import styles from "./HomePage.module.css";
 
-// Svævende mad-illustrationer (uden kagen)
+// -- ASSETS: Svævende mad-illustrationer (uden kagen) --
 import noodles from "../../../public/assets/home/ill-home-food-nudles-pink.svg";
 import cake from "../../../public/assets/home/ill-home-food-cake-pink.svg";
 import pasta from "../../../public/assets/home/ill-home-food-pasta-pink.svg";
 import meat from "../../../public/assets/home/ill-home-food-meat-pink.svg";
 import veggie from "../../../public/assets/home/ill-home-food-veggie-pink.svg";
 
-// Lyserødt bundkort (manden på bøger etc.)
+// -- ASSETS: Lyserødt bundkort (manden på bøger etc.) --
 import bottomCardBg from "../../../public/assets/illustrations/illu-homekort.svg";
 
+// -- COMPONENT: HomePage --
 export default function HomePage() {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  // brugerens navn eller fallback
+  // -- USERNAME: brugerens fornavn eller fallback --
   const firstName =
     user?.displayName?.split(" ")[0] ||
     user?.email?.split("@")[0] ||
     "ven";
 
+  // -- MÅLING TIL DYNAMISK FONT --
   const measureRef = useRef(null);
   const [nameFontSize, setNameFontSize] = useState(64);
   const [nameLineHeight, setNameLineHeight] = useState(0.9);
 
-  // dynamisk font-tilpasning
+  // -- EFFECT: dynamisk font-tilpasning af navnet --
   useEffect(() => {
     const measurer = measureRef.current;
     if (!measurer || !firstName) return;
@@ -36,6 +39,7 @@ export default function HomePage() {
     const MAX_SIZE = 110;
     const STEP = 1;
 
+    // mål bredde for givent font-size
     const widthAt = (sizePx) => {
       measurer.style.fontSize = sizePx + "px";
       measurer.textContent = firstName;
@@ -45,6 +49,7 @@ export default function HomePage() {
     let testSize = 64;
     let currentWidth = widthAt(testSize);
 
+    // skaler op hvis der er plads
     if (currentWidth < TARGET_WIDTH) {
       while (testSize < MAX_SIZE) {
         const next = testSize + STEP;
@@ -55,6 +60,7 @@ export default function HomePage() {
       }
     }
 
+    // skaler ned hvis for bred
     if (currentWidth > TARGET_WIDTH) {
       while (testSize > MIN_SIZE) {
         const next = testSize - STEP;
@@ -67,6 +73,7 @@ export default function HomePage() {
 
     setNameFontSize(testSize);
 
+    // beregn line-height baseret på font-size
     const span = MAX_SIZE - MIN_SIZE;
     const pct = span === 0 ? 0 : (testSize - MIN_SIZE) / span;
     const lhMax = 1.25;
@@ -76,9 +83,10 @@ export default function HomePage() {
     setNameLineHeight(parseFloat(computedLH.toFixed(2)));
   }, [firstName]);
 
+  // -- RENDER --
   return (
     <section className={styles.home}>
-      {/* skjult måle-node */}
+      {/* -- SKJULT MÅLE-NODE (til tekstbredden) -- */}
       <span
         ref={measureRef}
         style={{
@@ -92,12 +100,12 @@ export default function HomePage() {
         }}
       />
 
-      {/* HERO TEKST */}
+      {/* -- HERO TEKST -- */}
       <div className={styles.hero}>
         <div className={styles.heroTextBox}>
           <div
             className={styles.welcomeLine}
-            style={{ maxWidth: "260px", fontSize: "2.5rem" }}
+            style={{ maxWidth: "260px", fontSize: "2.5rem" }} // fast størrelse på "VELKOMMEN"
           >
             VELKOMMEN
           </div>
@@ -106,8 +114,8 @@ export default function HomePage() {
             className={styles.nameLine}
             style={{
               maxWidth: "260px",
-              fontSize: nameFontSize + "px",
-              lineHeight: nameLineHeight,
+              fontSize: nameFontSize + "px", // dynamisk størrelse
+              lineHeight: nameLineHeight,     // dynamisk line-height
             }}
           >
             {firstName}
@@ -119,7 +127,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* SVÆVENDE MAD-ILLUSTRATIONER */}
+      {/* -- SVÆVENDE MAD-ILLUSTRATIONER -- */}
       <div className={styles.illustrations}>
         <img src={noodles} alt="Nudler" className={`${styles.foodImg} ${styles.noodles}`} />
         <img src={cake} alt="cake" className={`${styles.foodImg} ${styles.cake}`} />
@@ -128,7 +136,7 @@ export default function HomePage() {
         <img src={veggie} alt="Grøntsager" className={`${styles.foodImg} ${styles.veggie}`} />
       </div>
 
-      {/* LYSE RØDE BAGGRUNDSKORT NEDERST */}
+      {/* -- LYSE RØDE BAGGRUNDSKORT NEDERST -- */}
       <div className={styles.bottomCardMask}>
         <img src={bottomCardBg} alt="" className={styles.bottomCardImg} />
       </div>

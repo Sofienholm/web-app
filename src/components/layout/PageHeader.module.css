@@ -1,11 +1,14 @@
-/* Header med variabel for side-padding så vi kan kompensere i searchWrap */
+/* src/components/layout/PageHeader.module.css */
+
+/* -- HEADER WRAPPER --
+   Variabel for side-padding så vi kan kompensere i searchWrap */
 .header {
   --xpad: 16px;                 /* svarer til px-4 i dit header-padding */
   --gap: 30px;                  /* afstand mellem søg og profilknap */
   padding: 16px var(--xpad);    /* py-3 px-4 */
 }
 
-/* wrapper med input + ikonknap */
+/* -- SEARCH WRAP (input + ikonknap) -- */
 .searchWrap {
   position: relative;
   margin-left: calc(-2 * var(--xpad));       /* trækker den ud over venstre kant */
@@ -13,7 +16,7 @@
   max-width: calc(720px + var(--xpad));
 }
 
-/* inputfeltet */
+/* -- INPUTFELT -- */
 .searchInput {
   width: 100%;
   height: 72px;
@@ -35,14 +38,14 @@
   transition: box-shadow 150ms ease, border-color 150ms ease, background-color 150ms ease;
 }
 
-/* placeholder-stil */
+/* -- PLACEHOLDER STIL -- */
 .searchInput::placeholder {
   color: rgba(6, 95, 70, 0.7);
   font-size: 1.1rem;
   font-weight: 500;
 }
 
-/* klikbart ikon (knap) placeret inde i inputtet til højre */
+/* -- SØGEKNAP (IKON INDE I INPUT) -- */
 .searchButton {
   position: absolute;
   right: 25px;
@@ -56,7 +59,7 @@
   cursor: pointer;
 }
 
-/* selve ikon-billedet */
+/* -- SØGE-IKON -- */
 .searchIcon {
   height: 30px;
   width: 30px;
@@ -67,17 +70,18 @@
           hue-rotate(97deg) brightness(93%) contrast(94%);
 }
 
+/* -- REDUCERET ANIMATION -- */
 @media (prefers-reduced-motion: reduce) {
   .searchInput { transition: none; }
 }
 
-/* container for søgefelt + profilknap */
+/* -- CONTAINER FOR SØG + PROFILKNAP -- */
 .inner {
   display: flex;
   align-items: center;
 }
 
-/* profil-knappen (avatar-boblen til højre) */
+/* -- PROFIL-KNAPPENS POSITION (højre) -- */
 .headerProfilePos {
   flex: 1 1 auto;
   height: 72px;
