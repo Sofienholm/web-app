@@ -12,6 +12,7 @@
   flex-direction: column;
   align-items: center; /* 🔸 centrer alt indhold horisontalt */
   overflow-y: auto; /* 🔸 tillad scroll på hele sektionen */
+  overflow-x: hidden;
 }
 
 /* 🔸 Filter-knap (øverst højre) */
