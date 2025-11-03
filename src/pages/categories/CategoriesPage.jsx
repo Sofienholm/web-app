@@ -5,22 +5,26 @@ import FilterSheet from "./FilterSheet.jsx";
 import useUnlockScroll from "../../hooks/useUnlockScroll";
 import asiatisk from "../../../public/assets/categori/ic-category-asiatisk.svg";
 import favorit from "../../../public/assets/categori/ic-category-favorit.svg";
-
+import pasta from "../../../public/assets/categori/ic-category-pasta.svg";
+import hurtig from "../../../public/assets/categori/ic-category-hurtig.svg";
+import mexi from "../../../public/assets/categori/ic-category-mexi.svg";
+import vegie from "../../../public/assets/categori/ic-category-vegie.svg";
+import momsKitchen from "../../../public/assets/categori/ic-category-moms-kitchen.svg";
+import budget from "../../../public/assets/categori/ic-category-budget.svg";
+import morgenmad from "../../../public/assets/categori/ic-category-morgenmad.svg";
+import plus from "../../../public/assets/categori/ic-category-plus.svg";
 
 const CATEGORIES = [
   { slug: "Asiatisk", icon: asiatisk },
   { slug: "Favorit", icon: favorit },
-  { slug: "Pasta", icon: "/assets/categori/ic-category-pasta.svg" },
-  { slug: "Hurtigt & Nemt", icon: "/assets/categori/ic-category-hurtig.svg" },
-  { slug: "Mexicansk", icon: "/assets/categori/ic-category-mexi.svg" },
-  { slug: "Vegetar", icon: "/assets/categori/ic-category-vegie.svg" },
-  {
-    slug: "Mors Køkken",
-    icon: "/assets/categori/ic-category-moms-kitchen.svg",
-  },
-  { slug: "Budget", icon: "/assets/categori/ic-category-budget.svg" },
-  { slug: "Morgenmad", icon: "/assets/categori/ic-category-morgenmad.svg" },
-  { slug: "plus", icon: "/assets/categori/ic-category-plus.svg" },
+  { slug: "Pasta", icon: pasta },
+  { slug: "Hurtigt & Nemt", icon: hurtig },
+  { slug: "Mexicansk", icon: mexi },
+  { slug: "Vegetar", icon: vegie },
+  { slug: "Mors Køkken", icon: momsKitchen },
+  { slug: "Budget", icon: budget },
+  { slug: "Morgenmad", icon: morgenmad },
+  { slug: "plus", icon: plus },
 ];
 
 export default function CategoriesPage() {
