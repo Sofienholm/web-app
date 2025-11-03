@@ -3,9 +3,9 @@ import { useNavigate } from "react-router";
 import styles from "./CategoriesPage.module.css";
 import FilterSheet from "./FilterSheet.jsx";
 import useUnlockScroll from "../../hooks/useUnlockScroll";
-import asiatisk from "../../assets/categori/ic-category-asiatisk.svg";
-import favorit from "../../assets/categori/ic-category-favorit.svg";
-import pasta from "../../assets/categori/ic-category-pasta.svg";
+import asiatisk from "../../../public/assets/categori/ic-category-asiatisk.svg";
+import favorit from "../../../public/assets/categori/ic-category-favorit.svg";
+import pasta from "../../../public/assets/categori/ic-category-pasta.svg";
 
 const CATEGORIES = [
   { slug: "Asiatisk", icon: asiatisk },
