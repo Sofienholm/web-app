@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import Lottie from "lottie-react";
 import styles from "./WelcomeIntroPage.module.css";
-import splashAnimation from "../../../assets/splash-screen.json";
+import splashAnimation from "/public/assets/splash-screen.json";
 
 export default function WelcomeIntroPage() {
   const navigate = useNavigate();
