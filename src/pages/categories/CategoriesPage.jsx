@@ -3,26 +3,32 @@ import { useNavigate } from "react-router";
 import styles from "./CategoriesPage.module.css";
 import FilterSheet from "./FilterSheet.jsx";
 import useUnlockScroll from "../../hooks/useUnlockScroll";
+import asiatisk from "../../assets/categori/ic-category-asiatisk.svg";
+import favorit from "../../assets/categori/ic-category-favorit.svg";
+import pasta from "../../assets/categori/ic-category-pasta.svg";
 
 const CATEGORIES = [
-  { slug: "Asiatisk",  icon: "/assets/categori/ic-category-asiatisk.svg" },
-  { slug: "Favorit",   icon: "/assets/categori/ic-category-favorit.svg" },
-  { slug: "Pasta",     icon: "/assets/categori/ic-category-pasta.svg" },
-  { slug: "Hurtigt & Nemt",   icon: "/assets/categori/ic-category-hurtig.svg" },
+  { slug: "Asiatisk", icon: asiatisk },
+  { slug: "Favorit", icon: favorit },
+  { slug: "Pasta", icon: pasta },
+  { slug: "Hurtigt & Nemt", icon: "/assets/categori/ic-category-hurtig.svg" },
   { slug: "Mexicansk", icon: "/assets/categori/ic-category-mexi.svg" },
-  { slug: "Vegetar",   icon: "/assets/categori/ic-category-vegie.svg" },
-  { slug: "Mors Køkken",      icon: "/assets/categori/ic-category-moms-kitchen.svg" },
-  { slug: "Budget",    icon: "/assets/categori/ic-category-budget.svg" },
+  { slug: "Vegetar", icon: "/assets/categori/ic-category-vegie.svg" },
+  {
+    slug: "Mors Køkken",
+    icon: "/assets/categori/ic-category-moms-kitchen.svg",
+  },
+  { slug: "Budget", icon: "/assets/categori/ic-category-budget.svg" },
   { slug: "Morgenmad", icon: "/assets/categori/ic-category-morgenmad.svg" },
   { slug: "plus", icon: "/assets/categori/ic-category-plus.svg" },
 ];
 
 export default function CategoriesPage() {
-   useUnlockScroll();
+  useUnlockScroll();
   const navigate = useNavigate();
 
   // venstre / højre kolonne (forskudt)
-  const left  = CATEGORIES.filter((_, i) => i % 2 === 0);
+  const left = CATEGORIES.filter((_, i) => i % 2 === 0);
   const right = CATEGORIES.filter((_, i) => i % 2 === 1);
 
   // gå til simpel kategori-resultatside (direkte på ét tag)
@@ -35,9 +41,9 @@ export default function CategoriesPage() {
 
   // globale filtre (kan bruges hvis du vil vise "aktive filtre" i UI senere)
   const [filters, setFilters] = useState({
-    sort: null,   // <-- var "recent", nu null så ingen er valgt fra start
-    time: null,   // "<30" | "60-90" | ">90" | null
-    tags: [],     // ["Pasta","Vegetar",...]
+    sort: null, // <-- var "recent", nu null så ingen er valgt fra start
+    time: null, // "<30" | "60-90" | ">90" | null
+    tags: [], // ["Pasta","Vegetar",...]
   });
 
   // kaldes når man trykker "TILFØJ" i sheet'et

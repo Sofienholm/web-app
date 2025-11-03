@@ -76,6 +76,7 @@ export default function SignupAvatarPage() {
   }
 
   return (
+    
     <main className={styles.screen}>
       <div className={styles.shell}>
         <button
