@@ -5,8 +5,7 @@ import backIcon from "/assets/icon/ic-back-symbol.svg";
 import Flueben from "/assets/icon/ic-flueben-symbol.svg";
 import { createRecipe } from "../../services/recipes.firestore.js";
 import { auth } from "../../app/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "../../app/firebase";
+
 
 export default function CreatePage() {
   const navigate = useNavigate();
@@ -19,29 +18,13 @@ export default function CreatePage() {
       return;
     }
 
+    console.log("📦 Gemmer opskrift for:", user.uid);
+    console.log("🧾 Data der sendes til Firestore:", data);
+
     try {
-      let imageUrl = "";
-      // 🔹 Hvis brugeren har valgt et billede (base64), upload det til Storage
-      if (data.image && data.image.startsWith("data:image")) {
-        const blob = await (await fetch(data.image)).blob();
-        const imageRef = ref(storage, `recipes/${user.uid}/${Date.now()}.jpg`);
-
-        // 📸 Tjek størrelse før upload
-        if (blob.size > 5 * 1024 * 1024) {
-          alert("Billedet er for stort (maks 5 MB). Vælg et mindre billede.");
-          return;
-        }
-
-        await uploadBytes(imageRef, blob);
-        imageUrl = await getDownloadURL(imageRef);
-        console.log("✅ Billede uploadet:", imageUrl);
-      }
-
-      // 🔹 Gem opskriften i Firestore
       const { id } = await createRecipe({
         ...data,
-        image: imageUrl || "", // brug Storage-linket i stedet
-        ownerId: user.uid,
+        ownerId: user.uid, // 🔥 vigtigt
       });
 
       console.log("✅ Opskrift oprettet med id:", id);
@@ -51,6 +34,7 @@ export default function CreatePage() {
       alert("Der opstod en fejl ved gemning af opskriften.");
     }
   }
+
   return (
     <section>
       <div className={styles.topButtons}>
