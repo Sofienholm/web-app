@@ -1,24 +1,8 @@
-// DetailIngredientsSheet.jsx
-import { useEffect, useRef } from "react"; // ← braces!
-
 import styles from "../../create/components/Ingredients.module.css";
 import closeIcon from "/assets/icon/ic-add-symbol.svg";
-import useUnlockScroll from "../../../hooks/useUnlockScroll";
-export default function DetailIngredientsSheet({ open, onClose, ingredients }) {
-  const panelRef = useRef(null); // ← hooks BEFORE any return
-  useUnlockScroll();
-  useEffect(() => {
-    const prevOverflow = document.body.style.overflow;
-    const prevOverscroll = document.body.style.overscrollBehavior;
-    document.body.style.overflow = "hidden";
-    document.body.style.overscrollBehavior = "none";
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      document.body.style.overscrollBehavior = prevOverscroll;
-    };
-  }, []);
 
-  if (!open) return null; // ← early return is fine AFTER hooks
+export default function DetailIngredientsSheet({ open, onClose, ingredients }) {
+  if (!open) return null;
 
   const list = Array.isArray(ingredients) ? ingredients : [];
 
@@ -33,50 +17,50 @@ export default function DetailIngredientsSheet({ open, onClose, ingredients }) {
             onClick={onClose}
             aria-label="Luk"
           >
-            <img src={closeIcon} alt="" />
+            <img src={closeIcon} alt="Luk" className="bubbleIcon" />
           </button>
           <h2 className={styles.sheetTitle}>INGREDIENSER</h2>
         </div>
 
-        {/* SCROLL-område */}
-        <div ref={panelRef} className={styles.panelScroll}>
-          <ul className={styles.ingListPills}>
-            {list.map((it, i) => (
-              <li key={i} className={styles.ingRowPills}>
-                <div className={styles.pillGroup}>
-                  <input
-                    className={`${styles.pill} ${styles.pillAmount}`}
-                    type="text"
-                    value={it.amount ?? ""}
-                    readOnly
-                    tabIndex={-1}
-                    aria-label="Mængde"
-                  />
-                  <div className={styles.pillSelect}>
-                    <button
-                      type="button"
-                      className={styles.pillSelectBtn}
-                      style={{ pointerEvents: "none" }}
-                      aria-disabled="true"
-                    >
-                      {it.unit || "Enhed"}
-                    </button>
-                  </div>
-                </div>
+        {/* Liste – samme markup som edit, men inputs er readOnly */}
+        <ul className={styles.ingListPills}>
+          {list.map((it, i) => (
+            <li key={i} className={styles.ingRowPills}>
+              <div className={styles.pillGroup}>
+                {/* Mængde */}
+                <input
+                  className={`${styles.pill} ${styles.pillAmount}`}
+                  type="text"
+                  value={it.amount ?? ""}
+                  readOnly
+                  tabIndex={-1}
+                />
 
-                <div className={`${styles.pill} ${styles.pillName}`}>
-                  <input
-                    className={styles.pillNameField}
-                    value={it.name ?? ""}
-                    readOnly
-                    tabIndex={-1}
-                    aria-label="Ingrediensnavn"
-                  />
+                {/* Enhed */}
+                <div className={styles.pillSelect}>
+                  <button
+                    type="button"
+                    className={styles.pillSelectBtn}
+                    style={{ pointerEvents: "none" }}
+                  >
+                    {it.unit || "Enhed"}
+                    <span className={styles.arrow}></span>
+                  </button>
                 </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+              </div>
+
+              {/* Navn – samme pill men input readOnly */}
+              <div className={`${styles.pill} ${styles.pillName}`}>
+                <input
+                  className={styles.pillNameField}
+                  value={it.name ?? ""}
+                  readOnly
+                  tabIndex={-1}
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
