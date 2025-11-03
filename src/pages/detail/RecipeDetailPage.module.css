@@ -207,7 +207,7 @@
 
 /* Popup-boksen */
 .popup {
-  background: var(--off-white);
+  background: var(--beige);
   color: var(--sort);
   border-radius: 20px;
   padding: 2rem;
@@ -223,12 +223,14 @@
   margin-top: 0;
   margin-bottom: 1rem;
   font-size: 1.4rem;
-  color: var(--morkegroen);
+  font-family: var(--font-poppins);
+  color: var(--brun);
 }
 
 .popupText {
   line-height: 1.6;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  font-family: var(--font-poppins);
   white-space: pre-wrap;
 }
 
@@ -238,8 +240,8 @@
   background: var(--morkegroen);
   color: white;
   border: none;
-  border-radius: 8px;
-  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  padding: 1rem 2rem;
   cursor: pointer;
 }
 
