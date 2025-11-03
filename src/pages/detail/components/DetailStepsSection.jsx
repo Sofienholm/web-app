@@ -1,28 +1,28 @@
-// src/pages/detail/components/DetailStepsSection.jsx
+// -- IMPORTS --
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-
 import styles from "../../create/components/Step.module.css";
-import closeIcon from "/assets/icon/ic-add-symbol.svg"; // roteres i css
+import closeIcon from "/assets/icon/ic-add-symbol.svg"; // roteres i CSS
 
-/**
- * Parallax-agtig "scroll-to-reveal" sektion.
- * Brugeren kan swipe sektionen op fra bunden for at læse fremgangsmåden.
- */
-
+// -- DETAIL STEPS SECTION COMPONENT --
+// Viser fremgangsmåde som en “scroll-to-reveal” sektion,
+// der kan swipes op fra bunden for at læse trinene.
 export default function DetailStepsSection({ steps }) {
+  // -- REFS OG STATE --
   const sectionRef = useRef(null);
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const PEEK = 80;
-  const [offset, setOffset] = useState(PEEK);
+  const PEEK = 80; // procentdel af sektionen, der “titter frem” i lukket tilstand
+  const [offset, setOffset] = useState(PEEK); // hvor meget panelet er trukket op
   const [scrolling, setScrolling] = useState(false);
   const startY = useRef(0);
   const startOffset = useRef(PEEK);
   const panelRef = useRef(null);
   const isTouchInPanel = useRef(false);
 
+  // -- TOUCH-EVENTS: ÅBN/LUK PANEL --
+  // Håndterer “drag to reveal”-bevægelsen via touch på mobil
   useEffect(() => {
     const handleTouchStart = (e) => {
       startY.current = e.touches[0].clientY;
@@ -35,13 +35,13 @@ export default function DetailStepsSection({ steps }) {
     const handleTouchMove = (e) => {
       if (!scrolling) return;
       const y = e.touches[0].clientY;
-      const deltaY = startY.current - y; // + = swipe op
+      const deltaY = startY.current - y; // positiv = swipe op
 
+      // Undgå at scrolle panelindhold og sheet samtidig
       if (offset === 0 && isTouchInPanel.current && panelRef.current) {
         const el = panelRef.current;
         const atTop = el.scrollTop <= 0;
-        const atBottom =
-          el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+        const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
         const draggingDown = deltaY < 0;
         const draggingUp = deltaY > 0;
         const shouldDragSheet =
@@ -49,7 +49,10 @@ export default function DetailStepsSection({ steps }) {
         if (!shouldDragSheet) return;
       }
 
-      const next = Math.max(0, Math.min(PEEK, startOffset.current - deltaY / 4));
+      const next = Math.max(
+        0,
+        Math.min(PEEK, startOffset.current - deltaY / 4)
+      );
       setOffset(next);
       e.preventDefault();
     };
@@ -57,13 +60,20 @@ export default function DetailStepsSection({ steps }) {
     const handleTouchEnd = () => {
       setScrolling(false);
       isTouchInPanel.current = false;
+      // Snap: åben helt eller luk helt, alt efter hvor langt man har trukket
       setOffset((prev) => (prev < PEEK / 2 ? 0 : PEEK));
     };
 
-    document.body.addEventListener("touchstart", handleTouchStart, { passive: false });
-    document.body.addEventListener("touchmove", handleTouchMove, { passive: false });
+    // Event listeners til mobilinteraktion
+    document.body.addEventListener("touchstart", handleTouchStart, {
+      passive: false,
+    });
+    document.body.addEventListener("touchmove", handleTouchMove, {
+      passive: false,
+    });
     document.body.addEventListener("touchend", handleTouchEnd);
 
+    // Ryd op ved unmount
     return () => {
       document.body.removeEventListener("touchstart", handleTouchStart);
       document.body.removeEventListener("touchmove", handleTouchMove);
@@ -71,14 +81,16 @@ export default function DetailStepsSection({ steps }) {
     };
   }, [offset, scrolling]);
 
+  // -- HANDLERS --
   function handleClose() {
-    setOffset(PEEK);
+    setOffset(PEEK); // luk panelet
   }
 
   function handleDone() {
-    navigate(`/recipe/${id}/done`);
+    navigate(`/recipe/${id}/done`); // navigér til “færdig”-siden
   }
 
+  // -- RENDER OUTPUT --
   return (
     <section
       ref={sectionRef}
@@ -91,6 +103,7 @@ export default function DetailStepsSection({ steps }) {
       }}
     >
       <div className={styles.inner}>
+        {/* -- HEADER -- */}
         <div className={styles.stepsHeaderRow}>
           <h2>FREMGANGSMÅDE</h2>
           <button
@@ -103,7 +116,7 @@ export default function DetailStepsSection({ steps }) {
           </button>
         </div>
 
-        {/* Liste med trin */}
+        {/* -- LISTE MED TRIN -- */}
         <div ref={panelRef} className={styles.panelInplace}>
           <ul className={styles.list}>
             {Array.isArray(steps) && steps.length > 0 ? (
@@ -123,13 +136,9 @@ export default function DetailStepsSection({ steps }) {
           </ul>
         </div>
 
-        {/* Færdig-knap */}
+        {/* -- FÆRDIG KNAP -- */}
         <div className={styles.doneWrap}>
-          <button
-            type="button"
-            className={styles.doneBtn}
-            onClick={handleDone}
-          >
+          <button type="button" className={styles.doneBtn} onClick={handleDone}>
             Færdig
           </button>
         </div>

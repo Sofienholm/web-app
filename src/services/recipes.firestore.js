@@ -1,3 +1,4 @@
+// -- IMPORTS --
 import {
   collection,
   doc,
@@ -11,22 +12,21 @@ import {
   orderBy,
   serverTimestamp,
 } from "firebase/firestore";
-import { db } from "../app/firebase"; // behold din init-fil
+import { db } from "../app/firebase"; // Firebase init
 
+// -- REFERENCE --
 // Top-level collection: /recipes
 const recipesCol = collection(db, "recipes");
 
-// Ensartet mapping af dokument-snapshots → plain objekter
+// -- HELPER: MAP SNAPSHOT → OBJEKT --
+// Konverterer dokument-snapshot til almindeligt objekt med id inkluderet
 function mapDoc(d) {
   return { id: d.id, ...d.data() };
 }
 
-/**
- * Hent en liste af opskrifter.
- * @param {{ ownerId?: string }} [opts]
- * Hvis ownerId er sat, får du kun brugerens opskrifter; ellers alle.
- * Sorteret nyeste først (createdAt desc).
- */
+// -- LIST RECIPES --
+// Henter alle opskrifter (eller kun brugerens hvis ownerId er angivet)
+// Sorteret efter senest oprettede (createdAt desc)
 export async function listRecipes({ ownerId } = {}) {
   const constraints = ownerId
     ? [where("ownerId", "==", ownerId), orderBy("createdAt", "desc")]
@@ -36,20 +36,17 @@ export async function listRecipes({ ownerId } = {}) {
   return snap.docs.map(mapDoc);
 }
 
-/**
- * Hent én opskrift pr. id.
- * Returnerer null hvis dokumentet ikke findes.
- */
+// -- GET RECIPE BY ID --
+// Henter én opskrift fra Firestore ud fra id
+// Returnerer null hvis dokumentet ikke findes
 export async function getRecipeById(id) {
   const s = await getDoc(doc(recipesCol, id));
   return s.exists() ? mapDoc(s) : null;
 }
 
-/**
- * Opret en ny opskrift.
- * Forventer et objekt med felter som title, description, timeMin, servings, tags, image, ownerId, ...
- * Returnerer { id } for det nye dokument.
- */
+// -- CREATE RECIPE --
+// Opretter ny opskrift i Firestore med tidsstempler
+// Returnerer et objekt med { id } for det nye dokument
 export async function createRecipe(data) {
   const now = serverTimestamp();
   const ref = await addDoc(recipesCol, {
@@ -57,14 +54,12 @@ export async function createRecipe(data) {
     createdAt: now,
     updatedAt: now,
   });
-  return { id: ref.id }; // ✅ så det matcher destructuring i CreatePage
+  return { id: ref.id };
 }
 
-
-/**
- * Opdater felter på en eksisterende opskrift.
- * patch er et partial-objekt: kun de felter du vil ændre.
- */
+// -- UPDATE RECIPE --
+// Opdaterer eksisterende opskrift ud fra id
+// patch er et objekt med kun de felter, der skal ændres
 export async function updateRecipe(id, patch) {
   await updateDoc(doc(recipesCol, id), {
     ...patch,
@@ -72,28 +67,23 @@ export async function updateRecipe(id, patch) {
   });
 }
 
-/**
- * Slet en opskrift.
- */
+// -- DELETE RECIPE --
+// Sletter opskrift ud fra id
 export async function deleteRecipe(id) {
   await deleteDoc(doc(recipesCol, id));
 }
 
-/* ---------- Valgfrie helpers (brug dem hvis du har brug for dem) ---------- */
-
-/**
- * Hent opskrifter for en given bruger filtreret på et bestemt tag.
- * Filtrerer i JS efter fetch for at undgå ekstra Firestore-indeks (nemmest i første omgang).
- */
+// -- LIST RECIPES BY TAG --
+// Returnerer opskrifter fra en given bruger, som indeholder et bestemt tag
+// (Filtreres i JS for at undgå ekstra Firestore indeks)
 export async function listRecipesByTag(ownerId, tag) {
   const rows = await listRecipes({ ownerId });
   return rows.filter((r) => Array.isArray(r.tags) && r.tags.includes(tag));
 }
 
-/**
- * Simpel klientside-søgning på title/description/tags.
- * Brug evt. sammen med listRecipes({ ownerId }).
- */
+// -- SEARCH RECIPES --
+// Simpel søgning på titel, beskrivelse og tags (klientside)
+// Returnerer opskrifter hvor søgeteksten findes i en af felterne
 export async function searchRecipes(ownerId, term) {
   const q = (term || "").trim().toLowerCase();
   if (!q) return listRecipes({ ownerId });

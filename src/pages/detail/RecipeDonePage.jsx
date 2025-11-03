@@ -1,23 +1,30 @@
+// -- IMPORTS --
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
 import styles from "./RecipeDonePage.module.css";
 
+// -- IKONER & ILLUSTRATIONER --
 import backIcon from "/assets/icon/ic-back-symbol.svg";
 import camPlaceholder from "/assets/illustrations/illu-camera-green.svg";
 import trashIcon from "/assets/icon/ic-delete-symbol.svg";
 import pencilIcon from "/assets/icon/ic-edit-symbol.svg";
 import dinnerIllu from "/assets/illustrations/illu-tablefeast.svg";
 
+// -- RECIPE DONE PAGE --
+// Vises når brugeren har “lavet” retten.
+// Indeholder sektion til foto, tips, noter og afslutningsknap.
 export default function RecipeDonePage() {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id } = useParams(); // id fra opskrift-URL (kan bruges senere)
 
-  const [tips, setTips] = useState(["Top af med ristede pinjekerner"]);
+  // -- STATE --
+  const [tips, setTips] = useState(["Top af med ristede pinjekerner"]); // eksempel-tip
   const [note, setNote] = useState(
     "Skriv dine personlige forbedringer på opskriften til næste gang her!"
   );
 
+  // -- HANDLERS --
   function handleAddPhoto() {
     alert("Tilføj billede - kommer senere 📸");
   }
@@ -31,13 +38,15 @@ export default function RecipeDonePage() {
   }
 
   function handleFinish() {
-    navigate("/home");
+    navigate("/home"); // tilbage til forsiden
   }
 
+  // -- RENDER OUTPUT --
   return (
     <main className={styles.screen}>
       {/* ---------- TOP LYSGUL BLOK ---------- */}
       <header className={styles.topBar}>
+        {/* Tilbage-knap */}
         <button
           type="button"
           className={`bubbleButton bubbleGreen bubbleLeft ${styles.backBubble}`}
@@ -47,6 +56,7 @@ export default function RecipeDonePage() {
           <img src={backIcon} alt="" className="bubbleIcon" />
         </button>
 
+        {/* Kamera / Tilføj billede */}
         <section className={styles.photoSection} onClick={handleAddPhoto}>
           <div className={styles.cameraCard}>
             <img
@@ -61,6 +71,7 @@ export default function RecipeDonePage() {
 
       {/* ---------- BEIGE INDHOLD ---------- */}
       <section className={styles.bodySection}>
+        {/* Tips & tricks */}
         <h2 className={styles.tipsHeader}>TILFØJ TIPS &amp; TRICKS</h2>
 
         {tips.map((tip, i) => (
@@ -77,6 +88,7 @@ export default function RecipeDonePage() {
           </div>
         ))}
 
+        {/* Note-felt */}
         <div className={styles.noteBox}>
           <p className={styles.noteText}>{note}</p>
           <button
@@ -89,6 +101,7 @@ export default function RecipeDonePage() {
           </button>
         </div>
 
+        {/* Illustration nederst */}
         <div className={styles.dinnerWrap}>
           <img
             src={dinnerIllu}
@@ -97,6 +110,7 @@ export default function RecipeDonePage() {
           />
         </div>
 
+        {/* Tekst + afslut-knap */}
         <p className={styles.wellDone}>VELBEKOMMEN &amp; GODT KLARET!</p>
 
         <div className={styles.footerCtaWrap}>

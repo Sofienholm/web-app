@@ -1,13 +1,17 @@
+// -- IMPORTS --
 import { useState } from "react";
 import BasicsSection from "./BasicsSection.jsx";
 import StepsSection from "./StepsSection.jsx";
 import IngredientsSheet from "./IngredientsSheet.jsx";
 import styles from "../CreatePage.module.css";
-import Garlictap from "/assets/icon/ic-ingredient-symbol.svg"; // Vite: brug /assets/...
-import Add from "/assets/icon/ic-add-symbol.svg"; // Vite: brug /assets/...
+import Garlictap from "/assets/icon/ic-ingredient-symbol.svg";
+import Add from "/assets/icon/ic-add-symbol.svg";
 
+// -- RECIPE FORM COMPONENT --
+// Indeholder hele formularen til oprettelse og redigering af opskrifter
 export default function RecipeForm({ onSave, initialData = {} }) {
-  // basics
+  // -- STATE: BASIC FIELDS --
+  // Håndterer de grundlæggende felter i opskriften
   const [image, setImage] = useState(initialData.image || "");
   const [title, setTitle] = useState(initialData.title || "");
   const [description, setDescription] = useState(initialData.description || "");
@@ -19,10 +23,13 @@ export default function RecipeForm({ onSave, initialData = {} }) {
     initialData.ingredients || [{ amount: "", unit: "Enhed", name: "" }]
   );
 
-  // UI toggles
+  // -- STATE: UI TOGGLES --
+  // Viser eller skjuler de interaktive sektioner
   const [showSteps, setShowSteps] = useState(false);
   const [showIngredients, setShowIngredients] = useState(false);
 
+  // -- HANDLE SUBMIT --
+  // Samler al data fra formularen og sender til parent-komponenten
   function handleSubmit(e) {
     e.preventDefault();
     onSave({
@@ -37,9 +44,11 @@ export default function RecipeForm({ onSave, initialData = {} }) {
     });
   }
 
+  // -- RENDER OUTPUT --
   return (
     <form onSubmit={handleSubmit}>
-      {/* 1) BASICS */}
+      {/* -- BASICS SECTION --
+          Indeholder billede, titel, beskrivelse, tid, portioner og tags */}
       <BasicsSection
         image={image}
         setImage={setImage}
@@ -55,7 +64,8 @@ export default function RecipeForm({ onSave, initialData = {} }) {
         setTags={setTags}
       />
 
-      {/* 2) STEPS (lille kasse, toggles inline) */}
+      {/* -- STEPS SECTION --
+          Viser eller skjuler trin-for-trin vejledning (inline toggle) */}
       <StepsSection
         open={showSteps}
         onOpen={() => setShowSteps(true)}
@@ -64,7 +74,8 @@ export default function RecipeForm({ onSave, initialData = {} }) {
         setSteps={setSteps}
       />
 
-      {/* 3) INGREDIENTS (sheet, fullscreen) */}
+      {/* -- INGREDIENTS SECTION --
+          Åbner et fullscreen-sheet med ingredienser */}
       <button
         type="button"
         className={`bubbleButton bubbleGreen bubbleRight ${styles.ingredientsButtonPos}`}
@@ -74,6 +85,7 @@ export default function RecipeForm({ onSave, initialData = {} }) {
         <img src={Garlictap} alt="ingredienser" className="bubbleIcon" />
       </button>
 
+      {/* Ingrediens-sheet (slide-in fra højre) */}
       <IngredientsSheet
         open={showIngredients}
         onClose={() => setShowIngredients(false)}

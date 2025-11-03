@@ -1,9 +1,10 @@
+/* -- SIDE LAYOUT -- */
 .body {
   min-height: 100dvh;
   background: var(--beige);
 }
 
-/* Top-knapper */
+/* -- TOP-KNAPPER (TILBAGE & REDIGER) -- */
 .backButtonFixed {
   position: fixed;
   top: 12px;
@@ -17,7 +18,7 @@
   z-index: 10;
 }
 
-/* Hero-billede */
+/* -- HERO-BILLEDE -- */
 .imageBox {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -33,8 +34,7 @@
   object-position: center center;
 }
 
-/* Titel + beskrivelse */
-
+/* -- TEKST OG FELTER -- */
 .camera {
   width: 14rem;
   opacity: 0.9;
@@ -77,15 +77,28 @@
   color: #853714;
 }
 
+/* -- BESKRIVELSE -- */
 .textarea {
   min-height: 4rem;
   resize: vertical;
   margin-left: 2rem;
   margin-bottom: 0.5rem;
   color: var(--brun);
-  font-family: var( --font-poppins);
+  font-family: var(--font-poppins);
   max-width: 60%;
 }
+.textarea {
+  cursor: pointer;
+  overflow: hidden;
+  max-height: 8rem; /* samme højde som CreatePage */
+  text-overflow: ellipsis;
+  transition: background 0.2s;
+}
+.textarea:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* -- TID & PORTIONER -- */
 .row {
   display: flex;
   gap: 0.5rem;
@@ -96,17 +109,14 @@
   margin-bottom: 0.5rem;
 }
 .number {
-  
   text-align: center;
-
 }
-
 .col {
   flex: 1;
   min-width: 8rem;
 }
 
-/* Tags */
+/* -- TAGS -- */
 .tagsTitle {
   font-family: var(--font-brushup);
   font-size: 2.2rem;
@@ -148,9 +158,7 @@
   border-image-slice: 80;
 }
 
-
-
-/* Redigér-knap */
+/* -- REDIGER-KNAP (BUNDEN) -- */
 .editBtn {
   position: fixed;
   bottom: 24px;
@@ -175,6 +183,8 @@
   background: #2a5945;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+/* -- INGREDIENS-KNAP (HVIDLØG) -- */
 .ingredientsButtonPos {
   position: fixed;
   bottom: 28.5rem;
@@ -182,20 +192,7 @@
   z-index: 10;
 }
 
-/* Klikbart beskrivelsesfelt */
-.textarea {
-  cursor: pointer;
-  overflow: hidden;
-  max-height: 8rem; /* samme højde som CreatePage */
-  text-overflow: ellipsis;
-  transition: background 0.2s;
-}
-
-.textarea:hover {
-  background: rgba(0, 0, 0, 0.05);
-}
-
-/* Popup-overlay baggrund */
+/* -- POPUP (BESKRIVELSE) -- */
 .overlay {
   position: fixed;
   inset: 0;
@@ -205,8 +202,6 @@
   justify-content: center;
   z-index: 999;
 }
-
-/* Popup-boksen */
 .popup {
   background: var(--beige);
   color: var(--sort);
@@ -219,7 +214,6 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   text-align: left;
 }
-
 .popupTitle {
   margin-top: 0;
   margin-bottom: 1rem;
@@ -227,7 +221,6 @@
   font-family: var(--font-poppins);
   color: var(--brun);
 }
-
 .popupText {
   line-height: 1.6;
   font-size: 0.9rem;
@@ -235,7 +228,7 @@
   white-space: pre-wrap;
 }
 
-/* Luk-knap */
+/* Luk-knap i popup */
 .closeBtn {
   margin-top: 1.5rem;
   background: var(--morkegroen);
@@ -245,7 +238,6 @@
   padding: 1rem 2rem;
   cursor: pointer;
 }
-
 .closeBtn:hover {
   opacity: 0.9;
 }

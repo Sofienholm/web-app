@@ -1,4 +1,5 @@
-/* overlay */
+/* -- OVERLAY -- */
+/* Baggrund der dækker hele skærmen bag ingrediens-sheetet */
 .overlay {
   position: fixed;
   inset: 0;
@@ -8,7 +9,8 @@
   z-index: 500;
 }
 
-/* sheet */
+/* -- SHEET -- */
+/* Selve panelet der glider ind fra højre side */
 .sheet {
   width: 100%;
   max-width: 600px;
@@ -32,7 +34,8 @@
   }
 }
 
-/* HEADER */
+/* -- HEADER -- */
+/* Topsektionen med titel og luk-knap */
 .sheetTopRow {
   display: flex;
   justify-content: center; /* titel i midten */
@@ -41,8 +44,6 @@
   margin-top: 1rem;
   margin-bottom: 2rem;
 }
-
-/* centrér titlen */
 .sheetTitle {
   font-size: 2.3rem;
   color: var(--beige);
@@ -51,19 +52,18 @@
   text-align: center;
 }
 
-/* LUK-KNAP I HØJRE HJØRNE */
+/* Luk-knap placeret i højre hjørne */
 .closeIconBtn {
   position: absolute;
   right: 1.6rem;
   top: 0.4rem;
   background: none;
   border: none;
-  rotate: 45deg; /* vi bruger + ikon som kryds */
+  rotate: 45deg; /* + ikon bruges som kryds */
   cursor: pointer;
   transition: transform 120ms ease;
   z-index: 10;
 }
-
 .closeIconBtn img {
   width: 32px;
   height: 32px;
@@ -71,12 +71,12 @@
     invert(94%) sepia(9%) saturate(368%)
     hue-rotate(9deg) brightness(97%) contrast(95%);
 }
-
 .closeIconBtn:hover {
   transform: scale(1.08) rotate(45deg);
 }
 
-/* SCROLL */
+/* -- SCROLL-OMRÅDE -- */
+/* Det indre område som scroller, når der er mange ingredienser */
 .panelScroll {
   flex: 1 1 auto;
   min-height: 0;
@@ -86,7 +86,8 @@
   touch-action: pan-y;
 }
 
-/* liste */
+/* -- LISTE -- */
+/* Wrapper og layout for ingrediens-rækker */
 .ingListPills {
   display: grid;
   gap: 16px;
@@ -101,7 +102,7 @@
   flex-direction: row;
 }
 
-/* pills */
+/* -- PILLS (GENEREL STYLING) -- */
 .pill {
   height: 48px;
   border-radius: 999px;
@@ -119,7 +120,7 @@
   background: rgba(0, 0, 0, 0.15);
 }
 
-/* mængde */
+/* -- MÆNGDEFELT -- */
 .pillAmount {
   background: #5cab7a;
   color: #e9ebd5;
@@ -139,7 +140,7 @@
   appearance: textfield;
 }
 
-/* enhed */
+/* -- ENHEDSFELT (DROPDOWN) -- */
 .pillSelect {
   position: relative;
   display: flex;
@@ -190,7 +191,7 @@
   background: #4f8162;
 }
 
-/* navn */
+/* -- NAVNFELT -- */
 .pillName {
   background: #efecc7;
   color: #2b4b3f;
@@ -205,7 +206,7 @@
   padding: 0;
 }
 
-/* skrald */
+/* -- SLET-KNAP (SKRALDESPAND) -- */
 .trashBtn {
   background: none;
   border: 0;
@@ -220,7 +221,7 @@
     brightness(100%) contrast(80%);
 }
 
-/* plus */
+/* -- PLUS-KNAP TIL NY INGREDIENS -- */
 .bigPlusWrap {
   display: grid;
   place-items: center;

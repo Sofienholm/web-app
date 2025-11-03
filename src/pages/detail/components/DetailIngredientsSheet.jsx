@@ -1,15 +1,22 @@
+// -- IMPORTS --
 import styles from "../../create/components/Ingredients.module.css";
 import closeIcon from "/assets/icon/ic-add-symbol.svg";
 
+// -- DETAIL INGREDIENTS SHEET COMPONENT --
+// Viser en read-only version af ingredienslisten som et overlay på detaljesiden.
+// Brugeren kan læse ingredienser, men ikke redigere dem.
 export default function DetailIngredientsSheet({ open, onClose, ingredients }) {
+  // Luk komponenten helt, hvis den ikke er aktiv
   if (!open) return null;
 
+  // Sikrer, at der altid arbejdes med et array (og ikke null/undefined)
   const list = Array.isArray(ingredients) ? ingredients : [];
 
+  // -- RENDER OUTPUT --
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.sheet} onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
+        {/* -- HEADER -- */}
         <div className={styles.sheetTopRow}>
           <button
             type="button"
@@ -22,12 +29,12 @@ export default function DetailIngredientsSheet({ open, onClose, ingredients }) {
           <h2 className={styles.sheetTitle}>INGREDIENSER</h2>
         </div>
 
-        {/* Liste – samme markup som edit, men inputs er readOnly */}
+        {/* -- LISTE AF INGREDIENSER (READ-ONLY) -- */}
         <ul className={styles.ingListPills}>
           {list.map((it, i) => (
             <li key={i} className={styles.ingRowPills}>
               <div className={styles.pillGroup}>
-                {/* Mængde */}
+                {/* Mængdefelt (kun læsbar) */}
                 <input
                   className={`${styles.pill} ${styles.pillAmount}`}
                   type="text"
@@ -36,7 +43,7 @@ export default function DetailIngredientsSheet({ open, onClose, ingredients }) {
                   tabIndex={-1}
                 />
 
-                {/* Enhed */}
+                {/* Enhedsfelt (kun læsbar) */}
                 <div className={styles.pillSelect}>
                   <button
                     type="button"
@@ -49,7 +56,7 @@ export default function DetailIngredientsSheet({ open, onClose, ingredients }) {
                 </div>
               </div>
 
-              {/* Navn – samme pill men input readOnly */}
+              {/* Navn på ingrediens (kun læsbar) */}
               <div className={`${styles.pill} ${styles.pillName}`}>
                 <input
                   className={styles.pillNameField}

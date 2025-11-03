@@ -1,3 +1,5 @@
+/* -- PAGE LAYOUT -- */
+/* Hele siden – centreret indhold og lyserød baggrund */
 .page {
   position: relative;
   min-height: 100vh;
@@ -12,7 +14,8 @@
   overflow: hidden;
 }
 
-/* 🔙 Tilbageknap (placering, bruger bubbleButton-styling) */
+/* -- TILBAGE-KNAP -- */
+/* Placering af bubbleButton-stil */
 .backButton {
   position: absolute;
   top: 16px;
@@ -20,7 +23,7 @@
   z-index: 5;
 }
 
-/* stort baggrundsbillede */
+/* -- BAGGRUNDSBILLEDE -- */
 .bgImage {
   position: absolute;
   inset: 0;
@@ -30,13 +33,13 @@
   opacity: 0.9;
   z-index: 1;
 
-  /* 🎨 Gør SVG'en ca. 10 % mørkere end #F6A9B2 */
+  /* Gør SVG'en ca. 10 % mørkere end #F6A9B2 */
   filter: brightness(0) saturate(100%)
     invert(88%) sepia(9%) saturate(950%)
     hue-rotate(325deg) brightness(78%) contrast(96%);
 }
 
-/* ---------- TEKST ---------- */
+/* -- TITEL -- */
 .title {
   font-family: var(--font-brushup);
   font-size: 2.6rem;
@@ -46,12 +49,12 @@
   text-align: center;
   z-index: 2;
 
-  /* 🟢 rykket lidt ned og til højre */
+  /* Rykket lidt ned og til højre */
   margin-top: 150px;
   margin-left: 10px;
 }
 
-/* ---------- FORM ---------- */
+/* -- FORMULAR -- */
 .form {
   display: flex;
   flex-direction: column;
@@ -60,7 +63,7 @@
   z-index: 2;
 }
 
-/* Input – mørkegrøn baggrund og lyserød tekst */
+/* Input-felt med mørkegrøn baggrund og lyserød tekst */
 .input {
   height: 54px;
   border-radius: 14px;
@@ -73,38 +76,34 @@
   outline: none;
   text-align: center;
 }
-
 .input::placeholder {
   color: #F6A9B2;
   opacity: 0.9;
 }
-
 .input:focus {
   box-shadow: 0 0 0 3px rgba(42, 89, 69, 0.25);
 }
 
-/* Knap – kun tekst i mørkegrøn */
+/* -- IMPORT-KNAP -- */
 .button {
   height: 50px;
   background: transparent;
   border: none;
-  color:  #FFF9CB;
+  color: #FFF9CB;
   font-family: var(--font-brushup);
   font-size: 2.6rem;
   cursor: pointer;
   transition: opacity 0.15s ease;
 }
-
 .button:active {
   opacity: 0.7;
 }
-
 .button:disabled {
   opacity: 0.5;
   cursor: default;
 }
 
-/* Fejltekst */
+/* -- FEJLTEKST -- */
 .error {
   margin-top: 8px;
   color: #2A5945;
@@ -114,6 +113,7 @@
   z-index: 2;
 }
 
+/* -- RESPONSIV JUSTERING -- */
 @media (max-width: 420px) {
   .title {
     font-size: 2.2rem;
