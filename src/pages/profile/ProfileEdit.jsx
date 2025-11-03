@@ -12,12 +12,12 @@ import profileIllustration from "../../../public/assets/illustrations/ill-profil
 import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
 
 const AVATARS = [
-  "public/assets/illustrations/ill-profil-avatar-woman-eating.svg",
-  "public/assets/illustrations/ill-profil-avatar-chef.svg",
-  "public/assets/illustrations/ill-profil-avatar-mom-cooking.svg",
-  "public/assets/illustrations/ill-profil-avatar-woman-pokadots.svg",
-  "public/assets/illustrations/ill-profil-avatar-man-burger.svg",
-  "public/assets/illustrations/ill-profil-avatar-man-garlic.svg",
+  "../../../public/assets/illustrations/ill-profil-avatar-woman-eating.svg",
+  "../../../public/assets/illustrations/ill-profil-avatar-chef.svg",
+  "../../../public/assets/illustrations/ill-profil-avatar-mom-cooking.svg",
+  "../../../public/assets/illustrations/ill-profil-avatar-woman-pokadots.svg",
+  "../../../public/assets/illustrations/ill-profil-avatar-man-burger.svg",
+  "../../../public/assets/illustrations/ill-profil-avatar-man-garlic.svg",
 ];
 
 export default function ProfileEdit() {
