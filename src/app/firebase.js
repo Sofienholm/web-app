@@ -6,16 +6,12 @@ import { getStorage } from "firebase/storage";
 // (valgfrit) import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  // Kun hvis du vil bruge analytics nu:
-  ...(import.meta.env.VITE_FIREBASE_MEASUREMENT_ID && {
-    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
-  }),
+  apiKey: "AIzaSyDb7gf5zzRoiZ8_Nl4yjqShoVwHttnijeo", // indsæt fra Firebase Console
+  authDomain: "minkogebog-9a065.firebaseapp.com",
+  projectId: "minkogebog-9a065",
+  storageBucket: "minkogebog-9a065.appspot.com",
+  messagingSenderId: "478821179479",
+  appId: "1:478821179479:web:392badc58b22f4c1574312",
 };
 
 const app = initializeApp(firebaseConfig);
