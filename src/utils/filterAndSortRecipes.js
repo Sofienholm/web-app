@@ -10,7 +10,7 @@ export default function filterAndSortRecipes(recipes, filters) {
     if (!time) return true; // ingen tidsfilter
     if (Number.isNaN(mins)) return false; // opskrift uden tid ryger ud når der er tidsfilter
 
-    if (time === "<30")   return mins < 30;
+    if (time === ">30")   return mins > 30;
     if (time === "60-90") return mins >= 60 && mins <= 90;
     if (time === ">90")   return mins > 90;
 
