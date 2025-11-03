@@ -141,21 +141,21 @@ export default function FilterSheet({ initialFilters, onClose, onApply }) {
             <button
               type="button"
               className={`${styles.timeChip} ${
-                localFilters.time === "60-90" ? styles.timeChipActive : ""
+                localFilters.time === "30-90" ? styles.timeChipActive : ""
               }`}
-              onClick={() => selectTime("60-90")}
+              onClick={() => selectTime("30-90")}
             >
-              60–90 MIN
+              30–90 MIN
             </button>
 
             <button
               type="button"
               className={`${styles.timeChip} ${
-                localFilters.time === "<90" ? styles.timeChipActive : ""
+                localFilters.time === "90<" ? styles.timeChipActive : ""
               }`}
-              onClick={() => selectTime("<90")}
+              onClick={() => selectTime("90<")}
             >
-              {"<90 MIN"}
+              {"90 MIN<"}
             </button>
           </div>
         </section>
