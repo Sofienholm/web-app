@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react"; // ← braces!
 
 import styles from "../../create/components/Ingredients.module.css";
 import closeIcon from "/assets/icon/ic-add-symbol.svg";
-import useUnlockScroll from "../../hooks/useUnlockScroll";
+import useUnlockScroll from "../../../hooks/useUnlockScroll";
 export default function DetailIngredientsSheet({ open, onClose, ingredients }) {
   const panelRef = useRef(null); // ← hooks BEFORE any return
   useUnlockScroll();
