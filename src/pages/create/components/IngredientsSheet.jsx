@@ -1,20 +1,26 @@
+// -- IMPORTS --
 import { useEffect, useRef } from "react";
 import styles from "./Ingredients.module.css";
 import trashIcon from "/assets/icon/ic-delete-symbol.svg";
 import closeIcon from "/assets/icon/ic-add-symbol.svg";
 import addIcon from "/assets/icon/ic-add-symbol.svg"; // nyt: bruges til plus-knap
 
+// -- INGREDIENTS SHEET COMPONENT --
+// Viser et fullscreen overlay hvor brugeren kan tilføje, redigere og fjerne ingredienser.
 export default function IngredientsSheet({
   open,
   onClose,
   ingredients,
   setIngredients,
 }) {
+  // Luk komponenten helt hvis den ikke er aktiv
   if (!open) return null;
 
   const panelRef = useRef(null);
 
-  // Lås baggrundsscroll når sheet er åbent
+  // -- LOCK BODY SCROLL --
+  // Låser baggrundsscroll mens ingrediens-sheetet er åbent,
+  // og gendanner body-stil når komponenten lukkes igen.
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     const prevTouch = document.body.style.touchAction;
@@ -29,24 +35,29 @@ export default function IngredientsSheet({
     };
   }, []);
 
+  // -- HANDLERS --
+  // Opdaterer én ingrediens med nye data (fx mængde, enhed, navn)
   function update(i, patch) {
     const next = [...ingredients];
     next[i] = { ...next[i], ...patch };
     setIngredients(next);
   }
 
+  // Tilføjer en tom ingrediens-række nederst
   function addEmpty() {
     setIngredients([...ingredients, { amount: "", unit: "Enhed", name: "" }]);
   }
 
+  // Fjerner en ingrediens ud fra dens index
   function remove(i) {
     setIngredients(ingredients.filter((_, idx) => idx !== i));
   }
 
+  // -- RENDER OUTPUT --
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.sheet} onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
+        {/* -- HEADER -- */}
         <div className={styles.sheetTopRow}>
           <h2 className={styles.sheetTitle}>INGREDIENSER</h2>
           <button
@@ -59,12 +70,14 @@ export default function IngredientsSheet({
           </button>
         </div>
 
-        {/* SCROLL-område */}
+        {/* -- SCROLL-OMRÅDE MED INGREDIENSER -- */}
         <div ref={panelRef} className={styles.panelScroll}>
           <ul className={styles.ingListPills}>
             {ingredients.map((it, i) => (
               <li key={i} className={styles.ingRowPills}>
+                {/* -- MÆNGDE OG ENHED -- */}
                 <div className={styles.pillGroup}>
+                  {/* Mængdeinput */}
                   <input
                     className={`${styles.pill} ${styles.pillAmount}`}
                     type="number"
@@ -75,6 +88,7 @@ export default function IngredientsSheet({
                     aria-label="Mængde"
                   />
 
+                  {/* Enhed – dropdown med valg */}
                   <div className={styles.pillSelect}>
                     <button
                       type="button"
@@ -88,20 +102,23 @@ export default function IngredientsSheet({
 
                     {it.open && (
                       <ul className={styles.dropdown} role="listbox">
-                        {["stk.", "tsk.", "spk.", "g", "kg", "ml", "dl"].map((unit) => (
-                          <li
-                            key={unit}
-                            role="option"
-                            onClick={() => update(i, { unit, open: false })}
-                          >
-                            {unit}
-                          </li>
-                        ))}
+                        {["stk.", "tsk.", "spk.", "g", "kg", "ml", "dl"].map(
+                          (unit) => (
+                            <li
+                              key={unit}
+                              role="option"
+                              onClick={() => update(i, { unit, open: false })}
+                            >
+                              {unit}
+                            </li>
+                          )
+                        )}
                       </ul>
                     )}
                   </div>
                 </div>
 
+                {/* -- INGREDIENSNAVN -- */}
                 <div className={`${styles.pill} ${styles.pillName}`}>
                   <input
                     className={styles.pillNameField}
@@ -114,6 +131,7 @@ export default function IngredientsSheet({
                   />
                 </div>
 
+                {/* -- SLET-KNAP -- */}
                 <button
                   type="button"
                   className={styles.trashBtn}
@@ -127,7 +145,7 @@ export default function IngredientsSheet({
             ))}
           </ul>
 
-          {/* Tilføj ny ingrediens */}
+          {/* -- TILFØJ NY INGREDIENS -- */}
           <div className={styles.bigPlusWrap}>
             <button
               type="button"

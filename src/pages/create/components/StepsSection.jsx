@@ -1,3 +1,4 @@
+// -- IMPORTS --
 import { useEffect, useRef, useState } from "react";
 import styles from "./Step.module.css";
 import Add from "/assets/icon/ic-add-symbol.svg";
@@ -5,47 +6,46 @@ import OK from "/assets/icon/ic-ok-symbol.svg";
 import trashIcon from "/assets/icon/ic-delete-symbol.svg";
 import editIcon from "/assets/icon/ic-edit-symbol.svg";
 
-/**
- * Fremgangsmåde-sektion (trin) der "udvider" sig opad som samme kasse.
- * - Lukket: viser stor pill med + eller edit-ikon (hvis der findes trin)
- * - Åben: samme kasse bliver fixed i bunden og vokser opad; intern scroll
- * - Body-scroll låses, så kun panelet scroller
- */
+// -- STEPS SECTION COMPONENT --
+// Fremgangsmåde-sektion der åbner som et redigerbart panel i bunden.
+// Lukket: viser en stor "pill" med + eller redigeringsikon.
+// Åben: samme kasse bliver fixed i bunden og vokser opad med intern scroll.
 export default function StepsSection({
-  open,      // om kassen er åben (styres af parent)
-  onOpen,    // åbn-funktion (fra parent)
-  onClose,   // luk-funktion (fra parent)
-  steps,     // gemte trin som strings
-  setSteps,  // setter til gemte trin i parent (RecipeForm)
+  open, // om kassen er åben (styres af parent)
+  onOpen, // åbn-funktion (fra parent)
+  onClose, // luk-funktion (fra parent)
+  steps, // gemte trin som strings
+  setSteps, // setter til gemte trin i parent (RecipeForm)
 }) {
-  const shellRef = useRef(null);           // reference til selve kasse-elementet
-  const [shellH, setShellH] = useState(0); // højde i lukket tilstand (til spacer)
-  const [draftSteps, setDraftSteps] = useState(
-    steps.length ? steps : [""]
-  ); // udkast-liste, som man redigerer i mens kassen er åben
+  // -- REFS OG STATE --
+  const shellRef = useRef(null); // reference til selve kasse-elementet
+  const [shellH, setShellH] = useState(0); // højde i lukket tilstand (spacer)
+  const [draftSteps, setDraftSteps] = useState(steps.length ? steps : [""]); // udkast, som redigeres i mens kassen er åben
 
-  const hasSteps = steps && steps.length > 0; // bruges til at vælge + eller edit-ikon
+  const hasSteps = steps && steps.length > 0; // bruges til at vælge ikon (add/edit)
 
-  // Mål den lukkede kasses højde én gang → bruges som "spacer" i layout,
-  // når kassen skifter til fixed (så resten af siden ikke hopper)
+  // -- USEEFFECT: MÅL HØJDE --
+  // Mål kassen i lukket tilstand for at bevare plads i layoutet, når den bliver fixed
   useEffect(() => {
     if (shellRef.current) {
       setShellH(shellRef.current.getBoundingClientRect().height);
     }
   }, []);
 
-  // Hver gang vi åbner, synkroniser udkastet med gemte trin
+  // -- USEEFFECT: SYNC DRAFT --
+  // Synkroniser redigeringsudkastet med de gemte trin, når panelet åbnes
   useEffect(() => {
     if (open) setDraftSteps(steps.length ? steps : [""]);
   }, [open, steps]);
 
-  // Lås body-scroll når kassen er åben (så kun panelet scroller)
+  // -- USEEFFECT: LOCK BODY SCROLL --
+  // Lås baggrundsscroll når panelet er åbent
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => (document.body.style.overflow = "");
   }, [open]);
 
-  // ——— handlers ———
+  // -- HANDLERS --
 
   // Opdater tekst i et bestemt trin
   function changeStep(index, value) {
@@ -59,37 +59,38 @@ export default function StepsSection({
     setDraftSteps([...draftSteps, ""]);
   }
 
-  // Fjern et trin (lad mindst én tom række blive, så UX er tydelig)
+  // Fjern et trin (mindst én række bevares)
   function removeStep(index) {
     const next = draftSteps.filter((_, i) => i !== index);
     setDraftSteps(next.length ? next : [""]);
   }
 
-  // Bekræft/rediger færdig: trim tomme, gem i parent, luk
+  // Bekræft og gem – fjerner tomme linjer og sender tilbage til parent
   function confirm() {
     const clean = draftSteps
       .map((s) => (typeof s === "string" ? s : s?.text || ""))
       .map((s) => s.trim())
-      .filter(Boolean); // fjern tomme linjer
-    setSteps(clean);    // gem i RecipeForm
-    onClose();          // skift tilbage til lukket
+      .filter(Boolean);
+    setSteps(clean);
+    onClose();
   }
 
+  // -- RENDER OUTPUT --
   return (
     <>
       {/* Spacer: bevarer højde i layout, så siden ikke hopper når .card bliver fixed */}
       <div style={{ height: shellH }} />
 
-      {/* Samme kasse i begge tilstande (lukket/åben) */}
+      {/* Kassen der bruges både i lukket og åben tilstand */}
       <section
         ref={shellRef}
         className={`${styles.card} ${open ? styles.floating : ""}`}
         aria-live="polite"
       >
-        {/* Titel (samme i begge tilstande) */}
+        {/* Titel */}
         <h3 className={styles.title}>FREMGANGSMÅDE</h3>
 
-        {/* LUKKET: stor pill med ikon (add hvis ingen trin, ellers edit) */}
+        {/* -- LUKKET TILSTAND -- */}
         {!open && (
           <button
             type="button"
@@ -107,7 +108,7 @@ export default function StepsSection({
           </button>
         )}
 
-        {/* ÅBEN: indhold i samme kasse — intern scroll, body er låst */}
+        {/* -- ÅBEN TILSTAND -- */}
         {open && (
           <div className={styles.panelInplace}>
             {/* Liste over alle trin */}
@@ -117,7 +118,7 @@ export default function StepsSection({
                   {/* Trin-nummer */}
                   <span className={styles.index}>{i + 1}</span>
 
-                  {/* Input-pill for trin-tekst */}
+                  {/* Input-felt for trin-tekst */}
                   <div className={styles.inputPill}>
                     <input
                       className={styles.inputField}
@@ -127,7 +128,7 @@ export default function StepsSection({
                     />
                   </div>
 
-                  {/* Slet-knap (skjul hvis kun én række, så UX er enklere) */}
+                  {/* Slet-knap (vises kun hvis flere trin) */}
                   {draftSteps.length > 1 && (
                     <button
                       type="button"
@@ -142,7 +143,7 @@ export default function StepsSection({
               ))}
             </ul>
 
-            {/* Tilføj endnu et trin (lille plus-pill) */}
+            {/* Tilføj nyt trin */}
             <button
               type="button"
               className={styles.plusSmall}
@@ -152,7 +153,7 @@ export default function StepsSection({
               <img src={Add} alt="" className={styles.plusSmallIcon} />
             </button>
 
-            {/* Færdig (gem og luk) */}
+            {/* Færdig-knap */}
             <div className={styles.confirmWrap}>
               <button
                 type="button"

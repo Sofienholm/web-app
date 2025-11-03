@@ -1,4 +1,4 @@
-/* Lukket kort */
+/* -- LUKKET KORT (STEPS CARD DEFAULT) -- */
 .card {
   background: #f1e5b7;
   border-radius: 22px;
@@ -17,7 +17,7 @@
   font-family: var(--font-brushup);
 }
 
-/* Lukket: stor plus-pill */
+/* -- LUKKET: STOR PLUS-PILL -- */
 .addPill {
   width: 100%;
   height: 68px;
@@ -33,19 +33,18 @@
   height: 34px;
 }
 
-/* ÅBEN: samme kort bliver fixed og udvider SIG OPAD fra bunden */
+/* -- ÅBEN TILSTAND (FLYDENDE PANEL FRA BUNDEN) -- */
 .floating {
   position: fixed;
   left: 12px;
   right: 12px;
-  bottom: 12px; /* anker i bunden */
+  bottom: 12px;
   max-height: calc(100dvh - 9rem);
-  overflow: hidden; /* indre panel scroller */
+  overflow: hidden;
   transform-origin: bottom center;
   animation: growUp 0.22s ease;
   z-index: 1000;
 }
-
 @keyframes growUp {
   from {
     transform: scaleY(0.92);
@@ -55,27 +54,28 @@
   }
 }
 
-/* Indre panel der kan scrolle */
+/* -- INDRE PANEL MED SCROLL -- */
 .panelInplace {
   flex: 1;
   background: #ede8c6;
   border-radius: 22px;
-  padding: 16px 14px 16px;   /* før: 20px — mindre padding i bunden */
-  max-height: calc(100dvh - 27rem); /* kortere end før */
+  padding: 16px 14px 16px;
+  max-height: calc(100dvh - 27rem);
   min-height: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
 
+/* -- DONE KNAP I PANEL -- */
 .doneWrap {
   display: flex;
   justify-content: center;
-  margin-top: 0.5rem;       /* før: auto — lidt tættere på panelet */
-  margin-bottom: 0.8rem;    /* lille luft under */
+  margin-top: 0.5rem;
+  margin-bottom: 0.8rem;
   padding-top: 0.5rem;
 }
 
-/* Liste & rækker */
+/* -- LISTE OG TRIN-RÆKKER -- */
 .list {
   display: grid;
   gap: 12px;
@@ -97,6 +97,7 @@
   font-family: var(--font-brushup);
 }
 
+/* -- INPUT PILLS OG FELTER -- */
 .inputPill {
   background: #e6dfbd;
   border-radius: 16px;
@@ -118,16 +119,15 @@
   color: var(--morkegroen);
   opacity: 0.7;
 }
-/* Skraldespand */
+
+/* -- SLET-KNAP (TRASH ICON) -- */
 .trashBtn {
   background: none;
   border: 0;
-
   display: grid;
   place-items: center;
   border-radius: 8px;
   background: transparent;
-
   color: #fff;
   cursor: pointer;
 }
@@ -137,7 +137,8 @@
   filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(1021%)
     hue-rotate(97deg) brightness(93%) contrast(94%);
 }
-/* Tilføj-knap i panel */
+
+/* -- LILLE PLUS-KNAP I PANEL -- */
 .plusSmall {
   width: 100%;
   height: 52px;
@@ -155,7 +156,7 @@
     brightness(90%) contrast(85%);
 }
 
-/* OK-knap nederst */
+/* -- OK KNAP (GEM/FÆRDIG) -- */
 .confirmWrap {
   display: grid;
   place-items: center;
@@ -173,6 +174,7 @@
     brightness(90%) contrast(85%);
 }
 
+/* -- IKONVARIANTER -- */
 .addIcon {
   width: 34px;
   height: 34px;
@@ -186,11 +188,33 @@
     brightness(90%) contrast(85%);
 }
 
-/* Når synlig */
+/* -- DETAIL STEPS SEKTION (SCROLL-SHEET I DETAIL VIEW) -- */
 .detailStepsSection.visible {
-  bottom: 0; /* glider op */
+  bottom: 0;
+}
+.detailStepsSection {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80vh;
+  background: #f1e5b7;
+  border-radius: 28px 28px 0 0;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(100%);
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+  z-index: 52;
+  overflow: hidden;
+}
+.detailStepsSection .inner {
+  padding: 1rem 1.2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
+/* -- DETAIL STEPS HEADER -- */
 .detailStepsSection h2 {
   text-align: center;
   font-family: var(--font-brushup);
@@ -198,18 +222,17 @@
   color: var(--brun);
   margin-bottom: 1rem;
 }
-
-.detailStepsSection ol {
-  list-style: decimal;
-  margin: 0;
-  padding-left: 1.5rem;
-  display: grid;
-  gap: 0.6rem;
-  font-family: var(--font-poppins);
-  font-size: 1rem;
-  color: var(--morkegroen);
+.stepsHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 1rem;
+  padding-left: 15%;
 }
-
+.closeStepsBtn {
+  background: none;
+  border: none;
+}
 .closeStepsBtn img {
   width: 28px;
   height: 28px;
@@ -218,20 +241,18 @@
   rotate: 45deg;
 }
 
-/* Altid synlig lille "grabber"-zone i bunden af skærmen */
+/* -- SCROLL-GRABBER I BUNDEN -- */
 .stepsGrabberDock {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 6px; /* lidt op fra bunden */
-  z-index: 51; /* over indhold, under selve sheetet når åbent */
+  bottom: 6px;
+  z-index: 51;
   display: grid;
   place-items: center;
   pointer-events: auto;
-  /* lad ikke siden scrolle pga. touch på grabber */
   touch-action: none;
 }
-
 .stepsGrabberBar {
   width: 56px;
   height: 6px;
@@ -239,48 +260,7 @@
   background: rgba(0, 0, 0, 0.18);
 }
 
-/* Selve sheetet (starter nede) */
-.detailStepsSection {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-
-  height: 80vh; /* fyld det meste af skærmen */
-  background: #f1e5b7; /* match din steps-baggrund */
-  border-radius: 28px 28px 0 0;
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
-
-  transform: translateY(100%);
-  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
-
-  z-index: 52;
-  overflow: hidden; /* vi styrer indre scroll dynamisk */
-}
-
-/* Indre container */
-.detailStepsSection .inner {
-  padding: 1rem 1.2rem 2rem;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-/* Header (titel + luk) */
-.stepsHeaderRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  margin-bottom: 1rem;
-  padding-left: 15%;
-}
-
-.closeStepsBtn {
-  background: none;
-  border: none;
-}
-
+/* -- LÆS-BARE INPUTS (DETAIL VISNING) -- */
 .inputFieldReadOnly {
   width: 100%;
   padding: 0.8rem 1rem;
@@ -289,10 +269,10 @@
   font-size: 0.95rem;
   color: var(--morkegroen);
   line-height: 1.3;
-  pointer-events: none; /* gør den ikke klikbar */
+  pointer-events: none;
 }
 
-/* fallback hvis ingen trin */
+/* -- HVIS INGEN TRIN ER TILFØJET -- */
 .rowEmpty {
   opacity: 0.6;
   text-align: center;
@@ -300,14 +280,13 @@
   padding: 1rem 0;
 }
 
-/* Færdig-knap nederst i detail-step sektionen */
+/* -- FÆRDIG-KNAP I DETAIL-SEKTION -- */
 .doneWrap {
   display: flex;
   justify-content: center;
-  margin-top: 1rem; /* skub ned i bunden af sheetet */
+  margin-top: 1rem;
   padding-top: 1rem;
 }
-
 .doneBtn {
   background: var(--morkegroen);
   color: var(--beige);
@@ -320,11 +299,9 @@
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
   transition: background 0.2s ease, transform 0.1s ease;
 }
-
 .doneBtn:active {
   transform: scale(0.97);
 }
-
 .doneBtn:hover {
   background: #2a5945;
 }

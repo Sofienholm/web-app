@@ -1,9 +1,11 @@
-// billede + titel + beskrivelse + tid + portioner + tags
+// -- IMPORTS --
 import { useRef, useState } from "react";
 import cameraIcon from "/assets/icon/illu-camera-green.svg";
 import styles from "../CreatePage.module.css";
- import WheelPicker from "../../../components/WheelPicker";
- import useAutoFitText from "../../../hooks/useAutoFitText";
+import WheelPicker from "../../../components/WheelPicker";
+import useAutoFitText from "../../../hooks/useAutoFitText";
+
+// -- KONSTANT: TILGÆNGELIGE TAGS --
 const ALL_TAGS = [
   "Budget",
   "Hurtigt & nemt",
@@ -16,6 +18,7 @@ const ALL_TAGS = [
   "Mors Køkken",
 ];
 
+// -- BASICS SECTION COMPONENT --
 export default function BasicsSection({
   image,
   setImage,
@@ -30,26 +33,32 @@ export default function BasicsSection({
   tags,
   setTags,
 }) {
-  const fileRef = useRef(null);
-  // ⬅️ NYT: reference til titel-input
-  const titleRef = useRef(null);
+  // -- REFS --
+  const fileRef = useRef(null); // reference til skjult filinput
+  const titleRef = useRef(null); // reference til titel-input (bruges til auto-fit)
 
-  // ⬅️ NYT: auto-fit når title ændrer sig
+  // -- AUTO FIT TITLE --
+  // Justerer titelstørrelsen dynamisk afhængig af længden
   useAutoFitText(titleRef, [title], {
-    max: 1.8, // svarer til din normale overskriftsstørrelse
-    min: 1.0, // hvor lille vi må gå ned
+    max: 1.8, // normal overskriftsstørrelse
+    min: 1.0, // minimum fontstørrelse
     step: 0.05,
     unit: "rem",
     pad: 0,
   });
 
-  // picker-states
+  // -- PICKER STATES --
+  // Styrer åbne/lyst-tilstand for tid og portioner
   const [openTime, setOpenTime] = useState(false);
   const [openServings, setOpenServings] = useState(false);
 
+  // -- FILHÅNDTERING --
+  // Åbn filvælger
   function pickFile() {
     fileRef.current?.click();
   }
+
+  // Håndter billedupload
   function onFileChange(e) {
     const f = e.target.files?.[0];
     if (!f) return;
@@ -57,15 +66,19 @@ export default function BasicsSection({
     r.onload = () => setImage(r.result);
     r.readAsDataURL(f);
   }
+
+  // -- TAG HÅNDTERING --
+  // Tilføj eller fjern tags fra listen
   function toggleTag(tag) {
     setTags(
       tags.includes(tag) ? tags.filter((t) => t !== tag) : [...tags, tag]
     );
   }
 
+  // -- RENDER OUTPUT --
   return (
     <section>
-      {/* billede */}
+      {/* -- BILLEDESEKTION -- */}
       <div className={styles.imageBox} onClick={pickFile} role="button">
         {image ? (
           <img className={styles.image} src={image} alt="" />
@@ -81,7 +94,7 @@ export default function BasicsSection({
         onChange={onFileChange}
       />
 
-      {/* titel */}
+      {/* -- TITEL -- */}
       <label className={styles.label}>
         <input
           ref={titleRef}
@@ -92,7 +105,7 @@ export default function BasicsSection({
         />
       </label>
 
-      {/* beskrivelse */}
+      {/* -- BESKRIVELSE -- */}
       <label className={styles.label}>
         <textarea
           className={styles.textarea}
@@ -102,7 +115,7 @@ export default function BasicsSection({
         />
       </label>
 
-      {/* tid + portioner */}
+      {/* -- TID OG PORTIONER -- */}
       <div className={styles.row}>
         {/* TID */}
         <button
@@ -123,7 +136,7 @@ export default function BasicsSection({
         </button>
       </div>
 
-      {/* tags */}
+      {/* -- TAGS -- */}
       <h2 className={styles.tagsTitle}>Tilføj Tags</h2>
       <div className={styles.tags}>
         {ALL_TAGS.map((tag) => (
@@ -140,7 +153,7 @@ export default function BasicsSection({
         ))}
       </div>
 
-      {/* WheelPicker til TID */}
+      {/* -- WHEEL PICKER: TID -- */}
       <WheelPicker
         label="Tid"
         open={openTime}
@@ -153,7 +166,7 @@ export default function BasicsSection({
         }}
       />
 
-      {/* WheelPicker til PORTIONER */}
+      {/* -- WHEEL PICKER: PORTIONER -- */}
       <WheelPicker
         label="Portioner"
         open={openServings}
