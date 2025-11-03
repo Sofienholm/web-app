@@ -6,15 +6,14 @@ import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../app/firebase";
 import styles from "./SignupAvatarPage.module.css";
 import backIcon from "../../../public/assets/icon/ic-back-symbol.svg";
+import a1 from "../../../public/assets/illustrations/ill-profil-avatar-woman-eating.svg";
+import a2 from "../../../public/assets/illustrations/ill-profil-avatar-chef.svg";
+import a3 from "../../../public/assets/illustrations/ill-profil-avatar-mom-cooking.svg";
+import a4 from "../../../public/assets/illustrations/ill-profil-avatar-woman-pokadots.svg";
+import a5 from "../../../public/assets/illustrations/ill-profil-avatar-man-burger.svg";
+import a6 from "../../../public/assets/illustrations/ill-profil-avatar-man-garlic.svg";
 
-const AVATARS = [
-  "/assets/illustrations/ill-profil-avatar-woman-eating.svg",
-  "/assets/illustrations/ill-profil-avatar-chef.svg",
-  "/assets/illustrations/ill-profil-avatar-mom-cooking.svg",
-  "/assets/illustrations/ill-profil-avatar-woman-pokadots.svg",
-  "/assets/illustrations/ill-profil-avatar-man-garlic.svg",
-  "/assets/illustrations/ill-profil-avatar-man-burger.svg",
-];
+const AVATARS = [a1, a2, a3, a4, a5, a6];
 
 export default function SignupAvatarPage() {
   const navigate = useNavigate();
