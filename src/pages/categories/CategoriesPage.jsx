@@ -3,34 +3,18 @@ import { useNavigate } from "react-router";
 import styles from "./CategoriesPage.module.css";
 import FilterSheet from "./FilterSheet.jsx";
 import useUnlockScroll from "../../hooks/useUnlockScroll";
-const withBase = (p) => new URL(p, import.meta.env.BASE_URL).href;
 
 const CATEGORIES = [
-  {
-    slug: "Asiatisk",
-    icon: withBase("assets/category/ic-category-asiatisk.svg"),
-  },
-  {
-    slug: "Favorit",
-    icon: withBase("assets/category/ic-category-favorit.svg"),
-  },
-  { slug: "Pasta", icon: withBase("assets/category/ic-category-pasta.svg") },
-  {
-    slug: "Hurtigt & Nemt",
-    icon: withBase("assets/category/ic-category-hurtig.svg"),
-  },
-  { slug: "Mexicansk", icon: withBase("assets/category/ic-category-mexi.svg") },
-  { slug: "Vegetar", icon: withBase("assets/category/ic-category-vegie.svg") },
-  {
-    slug: "Mors Køkken",
-    icon: withBase("assets/category/ic-category-moms-kitchen.svg"),
-  },
-  { slug: "Budget", icon: withBase("assets/category/ic-category-budget.svg") },
-  {
-    slug: "Morgenmad",
-    icon: withBase("assets/category/ic-category-morgenmad.svg"),
-  },
-  { slug: "Plus", icon: withBase("assets/category/ic-category-plus.svg") },
+  { slug: "Asiatisk",  icon: "/assets/categori/ic-category-asiatisk.svg" },
+  { slug: "Favorit",   icon: "/assets/categori/ic-category-favorit.svg" },
+  { slug: "Pasta",     icon: "/assets/categori/ic-category-pasta.svg" },
+  { slug: "Hurtigt & Nemt",   icon: "/assets/categori/ic-category-hurtig.svg" },
+  { slug: "Mexicansk", icon: "/assets/categori/ic-category-mexi.svg" },
+  { slug: "Vegetar",   icon: "/assets/categori/ic-category-vegie.svg" },
+  { slug: "Mors Køkken",      icon: "/assets/categori/ic-category-moms-kitchen.svg" },
+  { slug: "Budget",    icon: "/assets/categori/ic-category-budget.svg" },
+  { slug: "Morgenmad", icon: "/assets/categori/ic-category-morgenmad.svg" },
+  { slug: "plus", icon: "/assets/categori/ic-category-plus.svg" },
 ];
 
 export default function CategoriesPage() {

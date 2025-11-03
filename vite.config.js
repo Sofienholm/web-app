@@ -5,7 +5,7 @@ import react from "@vitejs/plugin-react-swc";
 export default defineConfig(({ command }) => {
   const config = {
     plugins: [react()],
-    base: "/web-app/"
+    base: "/",
   };
 
   // Change base path when building for production
