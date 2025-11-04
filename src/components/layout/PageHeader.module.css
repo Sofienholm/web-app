@@ -14,6 +14,7 @@
   margin-left: calc(-2 * var(--xpad));       /* trækker den ud over venstre kant */
   width: calc(75vw + var(--xpad));           /* så den stadig fylder 75% af skærmen visuelt */
   max-width: calc(720px + var(--xpad));
+ font-family: var(--font-poppins);
 }
 
 /* -- INPUTFELT -- */
@@ -24,7 +25,7 @@
   border-bottom-left-radius: 0;
   border-top-right-radius: 9999px;
   border-bottom-right-radius: 9999px;
-
+ font-family: var(--font-poppins);
   font-size: 1.1rem;            /* samme størrelse som placeholder */
   font-weight: 500;             /* samme vægt som placeholder */
   color: rgba(6, 95, 70, 0.7);  /* samme grønne nuance som placeholder */
