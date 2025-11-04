@@ -72,7 +72,7 @@ export default function ImportFromUrlPage() {
       const { id } = await createRecipe(recipe);
       navigate(`/recipe/${id}`);
     } catch (err) {
-      console.error("❌ Import fejl:", err);
+      console.error(" Import fejl:", err);
       setError("Der opstod en fejl ved importen. Prøv igen.");
     } finally {
       setLoading(false);

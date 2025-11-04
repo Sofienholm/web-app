@@ -8,7 +8,7 @@ import useAutoFitText from "../../../hooks/useAutoFitText";
 // -- KONSTANT: TILGÆNGELIGE TAGS --
 const ALL_TAGS = [
   "Budget",
-  "Hurtigt & nemt",
+  "Hurtigt & Nemt",
   "Vegetar",
   "Asiatisk",
   "Pasta",
