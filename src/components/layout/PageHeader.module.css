@@ -28,8 +28,8 @@
   border-top-right-radius: 9999px;
   border-bottom-right-radius: 9999px;
   font-family: var(--font-poppins);
-  font-size: 0.9rem; /* samme størrelse som placeholder */
-  font-weight: 300; /* samme vægt som placeholder */
+  font-size: 1rem; /* samme størrelse som placeholder */
+  font-weight: 400; /* samme vægt som placeholder */
   color: rgba(6, 95, 70, 0.7); /* samme grønne nuance som placeholder */
   padding-left: 34px; /* lidt mere luft, så teksten kommer mod centrum */
   padding-right: 44px; /* plads til ikon */
@@ -44,8 +44,8 @@
 /* -- PLACEHOLDER STIL -- */
 .searchInput::placeholder {
   color: rgba(6, 95, 70, 0.7);
-  font-size: 0.9rem;
-  font-weight: 300;
+  font-size: 1rem;
+  font-weight: 400;
   font-family: var(--font-poppins);
 }
 
