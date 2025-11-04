@@ -3,18 +3,20 @@
 /* -- HEADER WRAPPER --
    Variabel for side-padding så vi kan kompensere i searchWrap */
 .header {
-  --xpad: 16px;                 /* svarer til px-4 i dit header-padding */
-  --gap: 30px;                  /* afstand mellem søg og profilknap */
-  padding: 16px var(--xpad);    /* py-3 px-4 */
+  --xpad: 16px; /* svarer til px-4 i dit header-padding */
+  --gap: 30px; /* afstand mellem søg og profilknap */
+  padding: 16px var(--xpad); /* py-3 px-4 */
 }
 
 /* -- SEARCH WRAP (input + ikonknap) -- */
 .searchWrap {
   position: relative;
-  margin-left: calc(-2 * var(--xpad));       /* trækker den ud over venstre kant */
-  width: calc(75vw + var(--xpad));           /* så den stadig fylder 75% af skærmen visuelt */
+  margin-left: calc(-2 * var(--xpad)); /* trækker den ud over venstre kant */
+  width: calc(
+    75vw + var(--xpad)
+  ); /* så den stadig fylder 75% af skærmen visuelt */
   max-width: calc(720px + var(--xpad));
- font-family: var(--font-poppins);
+  font-family: var(--font-poppins);
 }
 
 /* -- INPUTFELT -- */
@@ -25,25 +27,26 @@
   border-bottom-left-radius: 0;
   border-top-right-radius: 9999px;
   border-bottom-right-radius: 9999px;
- font-family: var(--font-poppins);
-  font-size: 1.1rem;            /* samme størrelse som placeholder */
-  font-weight: 500;             /* samme vægt som placeholder */
-  color: rgba(6, 95, 70, 0.7);  /* samme grønne nuance som placeholder */
-
-  padding-left: 34px;           /* lidt mere luft, så teksten kommer mod centrum */
-  padding-right: 44px;          /* plads til ikon */
+  font-family: var(--font-poppins);
+  font-size: 0.9rem; /* samme størrelse som placeholder */
+  font-weight: 300; /* samme vægt som placeholder */
+  color: rgba(6, 95, 70, 0.7); /* samme grønne nuance som placeholder */
+  padding-left: 34px; /* lidt mere luft, så teksten kommer mod centrum */
+  padding-right: 44px; /* plads til ikon */
   background: var(--nav-beige);
   border: 1px solid var(--nav-beige);
   outline: none;
-  box-shadow: inset 0 1px 0 rgba(0,0,0,0.04);
-  transition: box-shadow 150ms ease, border-color 150ms ease, background-color 150ms ease;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.04);
+  transition: box-shadow 150ms ease, border-color 150ms ease,
+    background-color 150ms ease;
 }
 
 /* -- PLACEHOLDER STIL -- */
 .searchInput::placeholder {
   color: rgba(6, 95, 70, 0.7);
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: 300;
+  font-family: var(--font-poppins);
 }
 
 /* -- SØGEKNAP (IKON INDE I INPUT) -- */
@@ -68,12 +71,14 @@
 
   /* gør ikonet mørkegrønt (#2A5945) */
   filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(1021%)
-          hue-rotate(97deg) brightness(93%) contrast(94%);
+    hue-rotate(97deg) brightness(93%) contrast(94%);
 }
 
 /* -- REDUCERET ANIMATION -- */
 @media (prefers-reduced-motion: reduce) {
-  .searchInput { transition: none; }
+  .searchInput {
+    transition: none;
+  }
 }
 
 /* -- CONTAINER FOR SØG + PROFILKNAP -- */
