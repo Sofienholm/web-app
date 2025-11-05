@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router";
 import useFilteredRecipes from "../../hooks/useFilteredRecipes.js";
 import styles from "./FilteredResultPage.module.css";
 import backIcon from "/assets/icon/ic-back-symbol.svg";
-import noRusult from "/assets/illustrations/illu-404.svg"; // beholdt navnet uændret
+import noRusult from "/assets/illustrations/illu-404.svg";
 import { getAuth } from "firebase/auth";
 
 // -- COMPONENT: FilteredResultPage --

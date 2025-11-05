@@ -4,6 +4,7 @@ import { getAuth } from "firebase/auth";
 import useSearchRecipes from "../../hooks/useSearchRecipes.js";
 import styles from "./SearchPage.module.css";
 import backIcon from "/assets/icon/ic-back-symbol.svg";
+import noRusult from "/assets/illustrations/illu-404.svg";
 
 // -- COMPONENT: SearchPage --
 export default function SearchPage() {
@@ -28,7 +29,9 @@ export default function SearchPage() {
       <div className={styles.headerRow}>
         <button
           type="button"
-          className={`bubbleButton bubbleGreen bubbleLeft ${styles.backButtonFixed || ""}`}
+          className={`bubbleButton bubbleGreen bubbleLeft ${
+            styles.backButtonFixed || ""
+          }`}
           onClick={() => navigate(-1)}
           aria-label="Tilbage"
         >
@@ -45,7 +48,7 @@ export default function SearchPage() {
       {results.length === 0 ? (
         <div className={styles.illustrationWrap}>
           <img
-            src="/assets/illustrations/illu-404.svg"
+            src={noRusult}
             alt="Ingen opskrifter fundet"
             className={styles.illustration}
           />
@@ -59,18 +62,26 @@ export default function SearchPage() {
                 onClick={() => navigate(`/recipe/${r.id}`)} // gå til opskrift
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => e.key === "Enter" && navigate(`/recipe/${r.id}`)}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && navigate(`/recipe/${r.id}`)
+                }
               >
                 <div className={styles.cardImgWrap}>
                   {r.image ? (
-                    <img src={r.image} alt={r.title} className={styles.cardImg} />
+                    <img
+                      src={r.image}
+                      alt={r.title}
+                      className={styles.cardImg}
+                    />
                   ) : (
                     <div className={styles.cardImgPlaceholder}>🍲</div>
                   )}
                 </div>
 
                 <div className={styles.cardBody}>
-                  <div className={styles.cardTitle}>{r.title || "Uden titel"}</div>
+                  <div className={styles.cardTitle}>
+                    {r.title || "Uden titel"}
+                  </div>
                   <div className={styles.cardMeta}>
                     {r.timeMin || "Ukendt tid"}
                     {r.servings ? ` · ${r.servings} pers.` : ""}
