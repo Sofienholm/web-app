@@ -28,7 +28,7 @@
   justify-content: center;
   cursor: pointer;
   text-decoration: none;
-  margin-left: 0rem;
+margin-left: -0.4rem;
   width: 64px;
   height: 64px;
   border-radius: 16px;
@@ -38,8 +38,8 @@
   width: 54px;
   height: 44px;
   display: block;
-  filter: brightness(0) saturate(100%) invert(23%) sepia(19%) saturate(1021%)
-    hue-rotate(97deg) brightness(93%) contrast(94%);
+  filter: brightness(0) saturate(100%) invert(23%) sepia(19%)
+    saturate(1021%) hue-rotate(97deg) brightness(93%) contrast(94%);
 }
 
 /* -- FAB (plusknap) -- */
